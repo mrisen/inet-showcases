@@ -84,6 +84,8 @@ simulation time interval (5 seconds), and count the number of packets received b
 Both Host A and C frequently transmit simultaneously, thus the number of
 collisions at Host B is high.
 
+TODO: This is just what we think should happen, and not an actual observation! Could we record the actual collision count at HostB so that we can base our statements on facts?
+
 The animation below depicts such a collision. Host C starts transmitting, and Host
 A starts transmitting as well, before Host C's transmission is over. As neither
 packet can be received correctly by Host B (and thus they are not ACKed), Hosts A
@@ -139,6 +141,8 @@ correctly at Host B is approximately the same regardless of the presence of the 
 
 The number of received packets at Host B (wall removed, RTS/CTS off): **1966**<br>
 The number of received packets at Host B (wall removed, RTS/CTS on): **1987**
+
+TODO: display numbers on bar chart?
 
 ## Further information
 

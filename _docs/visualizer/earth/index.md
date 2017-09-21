@@ -20,17 +20,25 @@ Source files location: <a href="https://github.com/inet-framework/inet-showcases
 
 ## About the Visualizer
 
+TODO: In INET, physical link activity can be visualized by including a 
+PhysicalLinkVisualizer module in the simulation. 
+Adding an IntegratedVisualizer module is also an option, because it also contains
+a PhysicalLinkVisualizer module. Physical link activity visualization is disabled
+by default, it can be enabled by setting the visualizer’s displayLinks parameter to true.
+
 The map can be displayed by including a `SceneOsgEarthVisualizer`
 module in the network. It can display the map on the 3D scene by using osgEarth,
-thus any part of the world can be inserted (provided there is a source for the map
-data). The use of the map requires an internet connection, and it is only available
-in the 3D scene.
+so any part of the world can be inserted (provided there is a source for the map
+data). The use of the map requires an internet connection (unless you use
+an offline data source), and it is only available in the 3D scene.
+
+TODO a magyarazat nagy reszet ide athozni
 
 ## Visualization with the Default Settings
 
-This example configuration demonstrates inserting the map of downtown Boston
-into the simulation. It can be run by choosing the `DefaultSettings`
-configuration from the ini file. It uses the following network:
+The following example shows how to insert the map of downtown Boston into a 
+simulation. It can be run by choosing the `DefaultSettings` configuration from
+the ini file. It uses the following network:
 
 <img src="defaultnetwork.png" class="screen" />
 
@@ -59,6 +67,10 @@ It looks like the following when the simulation is run:
 <img class="shadow" src="defaultmap.png" onclick="imageFullSizeZoom(this);">
 
 The map is displayed on the 3D scene. Since there are no nodes or objects in the network, the size of the playground is zero (thus not visible).
+
+TODO mi a playground jelentosege? mit befolyasol?
+
+TODO mi a playground jelentosege? mit befolyasol?
 
 ## Adding Physical Objects
 
@@ -166,7 +178,8 @@ TODO: This paragraph doesn't seem useful
 
 ## Further Information
 
-For further information about the visualizer, refer to the `SceneOsgEarthVisualizer` NED documentation.
+For further information about the visualizer, refer to the `SceneOsgEarthVisualizer`
+NED documentation.
 
 ## Discussion
 

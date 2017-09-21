@@ -42,8 +42,8 @@ the right shows the same information displayed by
 canvas.
 
 The submodules whose states should be visualized can be selected with
-the visualizer's `modules` parameter. This parameter takes full
-path module names. Wildcards can be used to select a certain submodule
+the visualizer's `modules` parameter. This parameter takes a space-separated
+list of module full paths. Wildcards can be used to select a certain submodule
 in multiple nodes. Additionally, one can specify multiple submodules for
 a node. By default, the value of the `modules` parameter is
 `""` (no information displayed.) Also, the visualization can be
@@ -65,6 +65,12 @@ The default format string is `"%s"`.
 
 On the example image above, the display string text is visualized,
 selected with the `"%d"` directive.
+
+
+TODO questions about the visualizer:
+- why does `modules` take full paths, and why not relative paths as other modules (with the base being the host module)? then the wildcard magic would not be needed
+- there is only one format string per visualizer, so they are shared among all submodules --> it's not possible to print something like "MAC info: <%d of mac submodule>" and "Queue info: <%d of queue submodule>"
+- if multiple such visualizers are needed for the above, why isn't there an infovisualizer[] submudule array?
 
 ## The visualization
 
