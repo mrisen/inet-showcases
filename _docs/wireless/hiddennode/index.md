@@ -146,6 +146,5 @@ More information can be found in the <a href="https://omnetpp.org/doc/inet/api-c
 
 ## Discussion
 
-Use <a href="https://github.com/inet-framework/inet-showcases/issues/16"
-target="_blank">this page</a> in the GitHub issue tracker for commenting on
+Use <a href="https://github.com/inet-framework/inet-showcases/issues/16" target="_blank">this page</a> in the GitHub issue tracker for commenting on
 this showcase.
