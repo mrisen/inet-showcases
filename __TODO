@@ -25,3 +25,5 @@ Eventually all sensor nodes get into this state and the number of successfully s
 - SuperpositioningMobility should have faceForward (maybe all mobilities should?)
 - SuperpositioningMobility: support for enabling orientation and position separatelly
 - EntangledMobility vs AttachedMobility: support for enabling orientation and position separatelly
+- MobilityVisualizer: the commit a674546 ("Visualizer: Fixed crash caused by dynamically deleted mobility modules.", 2018-06-14) breaks visualization
+Lots of figures are added to the canvas
