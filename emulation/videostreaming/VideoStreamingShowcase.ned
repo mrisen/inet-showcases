@@ -32,3 +32,19 @@ network VideoStreamingShowcase
         incomingHost.ethg++ <--> Eth100M <--> switch.ethg++;
         switch.ethg++ <--> Eth100M <--> outgoingHost.ethg++;
 }
+
+network VideoStreamingShowcaseOneHost
+{
+    @display("bgb=400,400");
+    submodules:
+        host: StandardHost {
+            @display("p=202,197;i2=misc/rightdown;i=misc/laptop2");
+        }
+        configurator: Ipv4NetworkConfigurator {
+            @display("p=51,36");
+        }
+        visualizer: IntegratedVisualizer {
+            @display("p=145,39");
+        }
+    connections:
+}
