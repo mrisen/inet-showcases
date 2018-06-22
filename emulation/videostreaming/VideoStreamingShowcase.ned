@@ -48,3 +48,23 @@ network VideoStreamingShowcaseOneHost
         }
     connections:
 }
+
+network VideoStreamingShowcaseNoSwitch
+{
+    @display("bgb=400,400");
+    submodules:
+        incomingHost: StandardHost {
+            @display("p=64,129;i2=misc/rightdown;i=misc/laptop2");
+        }
+        outgoingHost: StandardHost {
+            @display("p=328,129;i2=misc/rightup;i=misc/laptop2");
+        }
+        configurator: Ipv4NetworkConfigurator {
+            @display("p=51,36");
+        }
+        visualizer: IntegratedVisualizer {
+            @display("p=145,39");
+        }
+    connections:
+        incomingHost.ethg++ <--> Eth100M <--> outgoingHost.ethg++;
+}
