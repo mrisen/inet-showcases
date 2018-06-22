@@ -6,6 +6,7 @@ import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.ethernet.Eth100M;
 import inet.node.ethernet.EtherSwitch;
 import inet.node.inet.StandardHost;
+import inet.visualizer.integrated.IntegratedVisualizer;
 
 
 network VideoStreamingShowcase
@@ -23,6 +24,9 @@ network VideoStreamingShowcase
         }
         configurator: Ipv4NetworkConfigurator {
             @display("p=51,36");
+        }
+        visualizer: IntegratedVisualizer {
+            @display("p=145,39");
         }
     connections:
         incomingHost.ethg++ <--> Eth100M <--> switch.ethg++;
