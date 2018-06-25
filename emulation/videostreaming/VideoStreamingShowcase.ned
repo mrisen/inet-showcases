@@ -83,3 +83,23 @@ network SwitchWithExtInterfaceTest
             @display("p=117,183");
         }
 }
+
+network SwitchWithExtInterfaceTest2
+{
+    @display("bgb=400,400");
+    submodules:
+        configurator: Ipv4NetworkConfigurator {
+            @display("p=30,36");
+        }
+        visualizer: IntegratedVisualizer {
+            @display("p=178,29");
+        }
+        switch: EtherSwitch {
+            @display("p=117,183");
+        }
+        etherSwitch: EtherSwitch {
+            @display("p=285,188");
+        }
+    connections:
+        switch.ethg++ <--> Eth100M <--> etherSwitch.ethg++;
+}
