@@ -68,3 +68,18 @@ network VideoStreamingShowcaseNoSwitch
     connections:
         incomingHost.ethg++ <--> Eth100M <--> outgoingHost.ethg++;
 }
+
+network SwitchWithExtInterfaceTest
+{
+    @display("bgb=400,400");
+    submodules:
+        configurator: Ipv4NetworkConfigurator {
+            @display("p=30,36");
+        }
+        visualizer: IntegratedVisualizer {
+            @display("p=178,29");
+        }
+        switch: EtherSwitch {
+            @display("p=117,183");
+        }
+}
