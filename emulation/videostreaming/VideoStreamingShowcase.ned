@@ -128,3 +128,27 @@ network VideoStreamingWithSwitches
         switch1.ethg++ <--> Eth100M <--> router.ethg++;
         router.ethg++ <--> Eth100M <--> switch2.ethg++;
 }
+
+network VideoStreamingWithRouters
+{
+    @display("bgb=400,400");
+    submodules:
+        configurator: Ipv4NetworkConfigurator {
+            @display("p=70,59");
+        }
+        visualizer: IntegratedVisualizer {
+            @display("p=186,59");
+        }
+        router1: Router {
+            @display("p=73,175");
+        }
+        router2: Router {
+            @display("p=302,175");
+        }
+        switch: EtherSwitch {
+            @display("p=186,174");
+        }
+    connections:
+        router1.ethg++ <--> Eth100M <--> switch.ethg++;
+        switch.ethg++ <--> Eth100M <--> router2.ethg++;
+}
