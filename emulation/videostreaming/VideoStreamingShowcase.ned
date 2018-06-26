@@ -5,6 +5,7 @@ package inet.showcases.emulation.videostreaming;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.ethernet.Eth100M;
 import inet.node.ethernet.EtherSwitch;
+import inet.node.inet.Router;
 import inet.node.inet.StandardHost;
 import inet.visualizer.integrated.IntegratedVisualizer;
 
@@ -102,4 +103,28 @@ network SwitchWithExtInterfaceTest2
         }
     connections:
         switch.ethg++ <--> Eth100M <--> etherSwitch.ethg++;
+}
+
+network VideoStreamingWithSwitches
+{
+    @display("bgb=400,400");
+    submodules:
+        configurator: Ipv4NetworkConfigurator {
+            @display("p=70,71");
+        }
+        visualizer: IntegratedVisualizer {
+            @display("p=194,71");
+        }
+        switch1: EtherSwitch {
+            @display("p=62,216");
+        }
+        switch2: EtherSwitch {
+            @display("p=317,216");
+        }
+        router: Router {
+            @display("p=184,217");
+        }
+    connections:
+        switch1.ethg++ <--> Eth100M <--> router.ethg++;
+        router.ethg++ <--> Eth100M <--> switch2.ethg++;
 }
