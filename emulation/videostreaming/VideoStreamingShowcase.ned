@@ -140,10 +140,10 @@ network VideoStreamingWithRouters
             @display("p=186,59");
         }
         router1: Router {
-            @display("p=73,175");
+            @display("p=73,175;t=ext-->,l");
         }
         router2: Router {
-            @display("p=302,175");
+            @display("p=302,175;t=-->ext,r");
         }
         switch: EtherSwitch {
             @display("p=186,174");
