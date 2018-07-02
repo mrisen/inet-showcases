@@ -152,3 +152,38 @@ network VideoStreamingWithRouters
         router1.ethg++ <--> Eth100M <--> switch.ethg++;
         switch.ethg++ <--> Eth100M <--> router2.ethg++;
 }
+
+network VideoStreamingPing
+{
+    @display("bgb=400,400");
+    submodules:
+        host: StandardHost {
+            @display("p=184,181");
+        }
+        configurator: Ipv4NetworkConfigurator {
+            @display("p=76,61");
+        }
+        visualizer: IntegratedVisualizer {
+            @display("p=250,51");
+        }
+}
+
+network VideoStreamingPingSwitch
+{
+    @display("bgb=400,400");
+    submodules:
+        host: StandardHost {
+            @display("p=184,181");
+        }
+        configurator: Ipv4NetworkConfigurator {
+            @display("p=76,61");
+        }
+        visualizer: IntegratedVisualizer {
+            @display("p=250,51");
+        }
+        switch: EtherSwitch {
+            @display("p=182,289");
+        }
+    connections:
+        host.ethg++ <--> Eth100M <--> switch.ethg++;
+}
