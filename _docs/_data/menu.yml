@@ -55,5 +55,7 @@
      - page: _docs/general/pcaprecording/index.md
      - page: _docs/general/dynamic/index.md
      - page: _docs/general/mobility/index.md
+     - page: _docs/general/diffserv/index.md
+     - page: _docs/general/ethernet/index.md
 - name: Back to INET
   link: https://inet.omnetpp.org/

@@ -12,4 +12,6 @@ These simulations demonstrate general aspects of running simulations in INET.
   {%include link.i page='_docs/general/pcaprecording/index.md' %}
   {%include link.i page='_docs/general/dynamic/index.md' %}
   {%include link.i page='_docs/general/mobility/index.md' %}
+  {%include link.i page='_docs/general/diffserv/index.md' %}
+  {%include link.i page='_docs/general/ethernet/index.md' %}
 </ul>
