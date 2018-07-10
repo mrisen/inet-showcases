@@ -209,10 +209,10 @@ network VideoStreamingTapHost
             @display("p=194,217");
         }
         tapHost1: TapHost {
-            @display("p=45,217;i=,white,30");
+            @display("p=45,217;i=,white,100");
         }
         tapHost2: TapHost {
-            @display("p=357,217;i=,white,30");
+            @display("p=357,217;i=,white,100");
         }
     connections:
         switch1.ethg++ <--> Eth100M <--> router.ethg++;
