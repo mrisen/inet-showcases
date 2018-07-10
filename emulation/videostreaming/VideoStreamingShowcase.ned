@@ -4,7 +4,9 @@ package inet.showcases.emulation.videostreaming;
 
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.emulation.TapHost;
+import inet.node.ethernet.Eth100G;
 import inet.node.ethernet.Eth100M;
+import inet.node.ethernet.Eth1G;
 import inet.node.ethernet.EtherSwitch;
 import inet.node.inet.Router;
 import inet.node.inet.StandardHost;
@@ -217,6 +219,6 @@ network VideoStreamingTapHost
     connections:
         switch1.ethg++ <--> Eth100M <--> router.ethg++;
         router.ethg++ <--> Eth100M <--> switch2.ethg++;
-        tapHost1.ethg++ <--> Eth100M <--> switch1.ethg++;
-        switch2.ethg++ <--> Eth100M <--> tapHost2.ethg++;
+        tapHost1.ethg++ <--> Eth100G <--> switch1.ethg++;
+        switch2.ethg++ <--> Eth100G <--> tapHost2.ethg++;
 }
