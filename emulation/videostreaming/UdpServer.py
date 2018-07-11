@@ -4,7 +4,7 @@ import socket
 import sys
 
 # config
-server_address = ('10.0.0.2', 4004)
+server_address = ('10.0.1.2', 4004)
 echo = False
 
 # Create a TCP/IP socket
