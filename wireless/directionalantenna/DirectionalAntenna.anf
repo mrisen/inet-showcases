@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scave:Analysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:scave="http://www.omnetpp.org/omnetpp/scave">
+  <inputs>
+    <inputs name="/inet/showcases/wireless/directionalantenna/results/DirectionalAntennaIsotropic-*.vec"/>
+    <inputs name="/inet/showcases/wireless/directionalantenna/results/DirectionalAntennaIsotropic-*.sca"/>
+    <inputs name="/inet/showcases/wireless/directionalantenna/results/DirectionalAntennaParabolic-#0.sca"/>
+    <inputs name="/inet/showcases/wireless/directionalantenna/results/DirectionalAntennaParabolic-#0.vec"/>
+  </inputs>
+  <datasets>
+    <datasets name="receptionPower:vector DirectionalAntennaShowcaseA">
+      <items xsi:type="scave:Add" filterPattern="module(DirectionalAntennaShowcaseA) AND name(receptionPower:vector)" type="VECTOR"/>
+      <items xsi:type="scave:Add" filterPattern="module(DirectionalAntennaShowcaseA) AND name(receptionPower:vector)" type="VECTOR"/>
+      <items xsi:type="scave:Compute" operation="expression">
+        <params name="expression" value="360/140*t-90"/>
+      </items>
+      <items xsi:type="scave:LineChart" name="receptionPower:vector DirectionalAntennaShowcaseA" lineNameFormat="">
+        <properties name="Y.Axis.Log" value="true"/>
+      </items>
+      <items xsi:type="scave:Apply" operation="expression">
+        <params name="expression" value="36/14*t-90"/>
+      </items>
+    </datasets>
+  </datasets>
+  <chartSheets/>
+</scave:Analysis>
