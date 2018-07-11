@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scave:Analysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:scave="http://www.omnetpp.org/omnetpp/scave">
+  <inputs>
+    <inputs name="/inet/showcases/wireless/directionalantenna/results/DirectionalAntennaAll-*"/>
+  </inputs>
+  <datasets>
+    <datasets name="receptionPower:vector DirectionalAntennaShowcaseA">
+      <items xsi:type="scave:Add" filterPattern="module(DirectionalAntennaShowcaseA) AND name(receptionPower:vector)" type="VECTOR"/>
+      <items xsi:type="scave:Add" filterPattern="module(DirectionalAntennaShowcaseA) AND name(receptionPower:vector)" type="VECTOR"/>
+      <items xsi:type="scave:LineChart" name="receptionPower:vector DirectionalAntennaShowcaseA" lineNameFormat="">
+        <properties name="Legend.Display" value="true"/>
+        <properties name="Line.Name//inet/showcases/wireless/directionalantenna/results/DirectionalAntennaAll-antennaType=CosineAntenna-#0.vec DirectionalAntennaAll-3-20180711-16:00:17-9617 3 $antennaType=&quot;CosineAntenna&quot;" value="CosineAntenna"/>
+        <properties name="Line.Name//inet/showcases/wireless/directionalantenna/results/DirectionalAntennaAll-antennaType=DipoleAntenna-#0.vec DirectionalAntennaAll-2-20180711-15:59:56-9617 2 $antennaType=&quot;DipoleAntenna&quot;" value="DipoleAntenna"/>
+        <properties name="Line.Name//inet/showcases/wireless/directionalantenna/results/DirectionalAntennaAll-antennaType=IsotropicAntenna-#0.vec DirectionalAntennaAll-0-20180711-15:59:35-9617 0 $antennaType=&quot;IsotropicAntenna&quot;" value="IsotropicAntenna"/>
+        <properties name="Line.Name//inet/showcases/wireless/directionalantenna/results/DirectionalAntennaAll-antennaType=ParabolicAntenna-#0.vec DirectionalAntennaAll-1-20180711-15:59:46-9617 1 $antennaType=&quot;ParabolicAntenna&quot;" value="ParabolicAntenna"/>
+      </items>
+    </datasets>
+  </datasets>
+  <chartSheets/>
+</scave:Analysis>
