@@ -217,8 +217,8 @@ network VideoStreamingTapHost
             @display("p=357,217;i=,white,100");
         }
     connections:
-        switch1.ethg++ <--> Eth100M <--> router.ethg++;
-        router.ethg++ <--> Eth100M <--> switch2.ethg++;
+        switch1.ethg++ <--> Eth100G <--> router.ethg++;
+        router.ethg++ <--> Eth100G <--> switch2.ethg++;
         tapHost1.ethg++ <--> Eth100G <--> switch1.ethg++;
         switch2.ethg++ <--> Eth100G <--> tapHost2.ethg++;
 }
