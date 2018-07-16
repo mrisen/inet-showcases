@@ -1,14 +1,14 @@
 ---
 layout: page
-title: Ethernet networks
+title: Interconnecting Ethernet networks
 hidden: true
 ---
 
 ## Goals
 
-Ethernet is the most widely installed local area network (LAN) technology. It could seem to need an enormous amount of time and effort to create a network interconnecting different LANs. However, INET features various models for simulating Ethernet networks using different topologies and technologies. These include Ethernet LAN models ranging from the simplest ones, like two hosts directly connected to each other via twisted pair, to more complex ones using mixed connection types and a higher number of hosts.
+Ethernet is the most widely installed local area network (LAN) technology. It could seem to take an enormous amount of time and effort to create a network of interconnected Ethernet LANs. However, INET features various models with different topologies and technologies for simulating Ethernet networks, and a simple way to connect them. These include Ethernet LAN models ranging from the simplest ones, like two hosts directly connected to each other via twisted pair, to more complex ones using mixed connection types and a higher number of hosts.
 
-This showcase presents the `LargeNet` model, which demonstrates how one can put together models of LANs of different topologies and technologies with little effort, and how it can be used for network analysis.
+This showcase presents the `LargeNet` model, which demonstrates how one can fit models of LANs together with little effort, and how it can be used for network analysis.
 
 INET version: `3.6.4`<br>
 Source files location: <a href="https://github.com/inet-framework/inet-showcases/tree/master/general/ethernet/lans" target="_blank">`inet/showcases/general/ethernet`</a>
@@ -58,11 +58,13 @@ The topology of the `LargeNet` model can be seen in the `LargeNet.ned` file:
 
 <a href="LargeNet_layout.png" target="_blank"><img class="screen" src="LargeNet_layout.png"></a>
 
-The application model which generates load on the simulated LAN is simple yet powerful. It can be used as a rough model for any request-response based protocol such as SMB/CIFS (the Windows file sharing protocol), HTTP, or a database client-server protocol. Every computer runs a client application (`EtherAppCli`) which connects to one of the servers, while the servers run `EtherAppSrv`. Clients periodically send a request to the server, and the request packet contains how many bytes the client wants the server to send back.
+The application model which generates load on the simulated LAN is simple yet powerful. It can be used as a rough model for any request-response based protocol such as SMB/CIFS (the Windows file sharing protocol), HTTP, or a database client-server protocol. 
+
+Every computer runs a client application (`EtherAppCli`) which connects to one of the servers, while the servers run `EtherAppSrv`. Clients periodically send a request to the server, and the request packet contains how many bytes the client wants the server to send back.
 
 ### Configuration and behaviour
 
-As stated above, this showcase demonstrates how Ethernet LANs using different technologies and devices can easily be connected making use of MAC auto-configuration. This means that after setting up the connection in the `LargeNet.ned` file, no complex configuration is needed in the `LargeNet.ini` file:
+As stated above, this showcase demonstrates how easily different Ethernet LANs can be connected making use of MAC auto-configuration. After setting up the connections in the `LargeNet.ned` file, no complex configuration is needed in the `LargeNet.ini` file:
 
 <p><pre class="snippet">
 # MAC settings
@@ -93,12 +95,6 @@ LargeNet.*.b = 7	# number of hosts connected to a bus in each LAN
 #
 </pre></p>
 
-For further examination of the model, let's assume that the goal is to design a high performance Ethernet campus area network (CAN). A campus network is a computer network made up of an interconnection of local area networks (LANs) within a limited geographical area. In real life, the requirements for performance, capacity and network ports are given by the client. This example is only concerned about the number of hosts connected to the network and the performance of the LAN. Three different simulations are run:
-
-- `LargeNet_notOverloaded:` Nearly 500 hosts are connected to the network, each performing low data rate. As a result, the network is not overloaded, and no packets are dropped.
-- `LargeNet_overloadedBySendIntervall:` Nearly 500 hosts are connected to the network, each performing high data rate. As a result, the network is overloaded, and packets are dropped.
-- `LargeNet_overloadedByNumberOfHosts:` Nearly 7500 hosts are connected to the network, each performing low data rate. As a result, the network is overloaded, and packets are dropped.
-
 By default, no finite buffer is used in hosts, so MAC contains an internal queue named `txQueue` to queue up packets waiting for transmission. Conceptually, `txQueue` is of infinite size, but for better diagnostics one can specify a hard limit in the `txQueueuLimit` parameter. If this limit is exceeded, the simulation stops with an error. In this example `DropTailQueue` is used instead, in order to observe the drop statistics (as well):
 
 <p><pre class="snippet">
@@ -109,7 +105,7 @@ By default, no finite buffer is used in hosts, so MAC contains an internal queue
 
 The flow control is managed with `PAUSE` frames. These frames contain a timer value that specifies how long the transmitter should remain quiet. For allowing a transmitter to resume immediately (if the receiver becomes uncongested), a `PAUSE` frame with a timer value of zero can be sent.
 
-CRC checks are modeled by the `bitError` flag of the packets. Packets will be dropped by the MAC in case of error.
+CRC checks are modeled by the `bitError` flag of the packets. Packets are dropped by the MAC in case of error.
 
 The model (especially with the third configuration) generates extensive statistics, so it is recommended to keep both scalar- and vector-recording disabled, and cherry-pick the desired statistics, if necessary, because the generated file could easily reach gigabyte size:
 
@@ -120,7 +116,7 @@ The model (especially with the third configuration) generates extensive statisti
 **.vector-recording = false
 </pre></p>
 
-In this showcase, two statistics are observed in order to demonstrate how the traffic rate (and congestion rate) at critical parts of the network changes with the different configurations, meaning a changing number of LANs (and hosts). These two generated statistics are the number of dropped packets (`dropPk`) at switches, and the number of collisions (`collision`):
+In this showcase, two statistics are observed in order to demonstrate how the traffic rate (and congestion rate) at critical parts of the network changes with the different configurations. These two generated statistics are the number of dropped packets (`dropPk`) at switches, and the number of collisions (`collisions`):
 
 <p><pre class="snippet">
 # statistics for this example
@@ -132,19 +128,25 @@ In this showcase, two statistics are observed in order to demonstrate how the tr
 
 **Note:** *The `collision` signal is an extra signal generated by the `EtherMAC` module. Collision occurs, when a frame is received, while the transmission or reception of another signal is in progress, or when transmission is started, while receiving a frame is in progress.*
 
+For further examination of the model, let's assume that the goal is to design a high performance Ethernet campus area network (CAN). A campus network is a computer network made up of an interconnection of local area networks (LANs) within a limited geographical area. In real life, the requirements for performance, capacity and network ports are given by the client. This example is only concerned about the number of hosts connected to the network and the performance of the LAN. Three different simulations are run:
+
+- `LargeNet_notOverloaded:` Nearly 500 hosts are connected to the network, each performing low data rate. As a result, the network is not overloaded, and no packets are dropped.
+- `LargeNet_overloadedBySendIntervall:` Nearly 500 hosts are connected to the network, each performing high data rate. As a result, the network is overloaded, and packets are dropped.
+- `LargeNet_overloadedByNumberOfHosts:` Nearly 7500 hosts are connected to the network, each performing low data rate. As a result, the network is overloaded, and packets are dropped.
+
 ## Results
 
 ### LargeNet_notOverloaded
 
-As expected, the 500 hosts, producing an average of 2 requests in a second, can not consume the network's capacity. As the statistic shows, no packets are dropped. That means that the performed traffic is not high enough to overload the network.
+As expected, the 500 hosts, producing an average of 2 requests in a second, can not consume the network's capacity. As the statistic shows, no packets are dropped.
 
-The number of collisions with this configuration is also insignificant. The greatest collision rates are observed in the `largeLAN` models, because these subnetworks contain the highest number of hosts.
+The number of collisions with this configuration is also insignificant. We can see that the critical parts of the network from the point of view of `collisions` are the `largeLAN` models. This occurs, because these subnetworks inplement a topology containing bus and hub, and these networks contain the highest number of hosts as well.
 
-This would be a high performance Ethernet local area network with no data-loss and low delay.
+A network of this topology, technology and configuration (traffic rate, number of hosts) would be a high performance Ethernet network with no data-loss and low delay.
 
 ### LargeNet_overloadedBySendIntervall
 
-The volume of the traffic can most easily be controlled by changing the elapsed time between the sending of requests. In this configuration the `sendIntervall` parameter is set to be much smaller than it was in the `LargeNet_notOverloaded` configuration (an average of 25 requests per second):
+The volume of the traffic can most easily be controlled by changing the elapsed time between the sending of requests. With this configuration, the `sendIntervall` parameter is set to be much smaller than it was in the `LargeNet_notOverloaded` configuration (an average of 25 requests per second):
 
 <p><pre class="snippet">
 # each host generates more requests in a second
@@ -153,7 +155,7 @@ LargeNet.**.cli.respLength = intWithUnit(truncnormal(5000B,5000B))
 LargeNet.**.cli.sendInterval = exponential(0.04s)
 </pre></p>
 
-As a result, the generated traffic is more than 10 times bigger than it was with the previous configuration. The number of packets dropped by the `DropTailQueue` of switches increased dramatically. Not surprisingly the highest drop rate occurs at the connection between the switches `switchBB[]`, `switchB`, `switchC` and `switchD`, because the majority of the packets travel on this route.
+As a result, the generated traffic is more than 10 times higher than it was with the previous configuration. The number of packets dropped by the `DropTailQueue` of switches increased dramatically. It is not surprising that the highest drop rates occur at the connections between the switches `switchBB[]`, `switchB`, `switchC` and `switchD`, because the majority of the packets follow this route.
 
 The number of collisions conspicuously increased. This phenomena occurs, because although the number of hosts on the LANs is the same as it was with the `LargeNet_notOverloaded` configuration, the data rate of the hosts is much higher.
 
@@ -161,7 +163,7 @@ If the estimated traffic of the hosts would be as high as it is set in this conf
 
 ### LargeNet_overloadedByNumberOfHosts
 
-The other way to control the traffic is to increase or decrease the number of hosts. With this configuration, there are nearly 8000 hosts present on the `LargeNet` network:
+The other way to control the traffic is to increase or decrease the number of hosts. With this configuration, there are nearly 7500 hosts present on the `LargeNet` network:
 
 <p><pre class="snippet">
 # configuring a high number of hosts
@@ -180,9 +182,9 @@ LargeNet.*.h = 5
 LargeNet.*.b = 7
 </pre></p>
 
-Conceptually the same result is get with the this configuration, as with the `LargeNet_overloadedBySendIntervall` one, meaning an overloaded network. The highest drop rate occurs at `switchB.eth[18]`, meaning that the connection between the backbone switches and `switchB` is the most congested. This is due to the fact that the number of switches on the backbone (`n` = 15) is relatively large. As a consequence of this, a high traffic is present on that single connection.
+Conceptually the same result is get with the this configuration, as with the `LargeNet_overloadedBySendIntervall` one, meaning an overloaded network. The highest drop rate occurs at `switchB.eth[18]`, meaning that the connection between the backbone switches and `switchB` is the most congested. This is due to the fact that the number of switches on the backbone (`n` = 15) is relatively large. As a consequence of this, a high traffic is present on that single connection, causing it to become the most critical part of the network.
 
-Although the overall number of hosts increased compared to the `LargeNet_overloadedBySendIntervall` configuration, the number of hosts connected to a subnet LAN remained the same. The traffic rate of the hosts is the same as it was with the `LargeNet_notOverloaded` configuration, so nearly the same `collision` rate was expected. If we take a look at the statistics, we can see that the `collision` is in the same order of magnitude with the first configuration.
+Although the overall number of hosts increased compared to the `LargeNet_overloadedBySendIntervall` configuration, the number of hosts connected to each subnet LAN remained the same. The traffic rate (`sendIntervall` parameter) of the hosts is the same as it was with the `LargeNet_notOverloaded` configuration, so nearly the same collision rate was expected. If we take a look at the statistics, we can see that the `collisions` is in the same order of magnitude as it was with the first configuration.
 
 ## Further Information
 
