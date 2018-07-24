@@ -3,7 +3,7 @@
 package inet.showcases.emulation.videostreaming;
 
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
-import inet.node.emulation.TapHost;
+import inet.node.emulation.ExtHost;
 import inet.node.ethernet.Eth100G;
 import inet.node.ethernet.Eth100M;
 import inet.node.ethernet.Eth1G;
@@ -191,7 +191,7 @@ network VideoStreamingPingSwitch
         host.ethg++ <--> Eth100M <--> switch.ethg++;
 }
 
-network VideoStreamingTapHost
+network VideoStreamingExtHost
 {
     @display("bgb=400,400");
     submodules:
@@ -210,15 +210,15 @@ network VideoStreamingTapHost
         router: Router {
             @display("p=194,217");
         }
-        tapHost1: TapHost {
+        extHost1: ExtHost {
             @display("p=45,217;i=,white,100");
         }
-        tapHost2: TapHost {
+        extHost2: ExtHost {
             @display("p=357,217;i=,white,100");
         }
     connections:
         switch1.ethg++ <--> Eth100G <--> router.ethg++;
         router.ethg++ <--> Eth100G <--> switch2.ethg++;
-        tapHost1.ethg++ <--> Eth100G <--> switch1.ethg++;
-        switch2.ethg++ <--> Eth100G <--> tapHost2.ethg++;
+        extHost1.ethg++ <--> Eth100G <--> switch1.ethg++;
+        switch2.ethg++ <--> Eth100G <--> extHost2.ethg++;
 }
