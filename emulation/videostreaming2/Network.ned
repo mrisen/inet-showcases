@@ -9,7 +9,12 @@ import inet.visualizer.integrated.IntegratedVisualizer;
 network VideoStreamingShowcase
 {
     parameters:
-        @display("bgb=800,400");
+        @display("bgb=1000,400");
+        @figure[link1](type=line; points=150,300,300,300; lineOpacity=0.2);
+        @figure[link2](type=line; points=700,300,850,300; lineOpacity=0.2);
+        @figure[host1](type=icon; image="device/pc2"; pos=100,300; opacity=0.2);
+        @figure[host2](type=icon; image="device/pc2"; pos=900,300; opacity=0.2);
+        @figure[submodules];
     submodules:
         configurator: Ipv4NetworkConfigurator {
             parameters:
@@ -21,7 +26,7 @@ network VideoStreamingShowcase
         }
         switch1: EtherSwitch {
             parameters:
-                @display("p=100,300");
+                @display("p=300,300");
         }
         switch2: EtherSwitch {
             parameters:
@@ -29,7 +34,7 @@ network VideoStreamingShowcase
         }
         router: Router {
             parameters:
-                @display("p=400,300");
+                @display("p=500,300");
         }
     connections:
         switch1.ethg++ <--> Eth100M <--> router.ethg++;
