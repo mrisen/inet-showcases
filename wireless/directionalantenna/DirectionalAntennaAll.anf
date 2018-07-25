@@ -17,7 +17,12 @@
         <properties name="Line.Name//inet/showcases/wireless/directionalantenna/results/DirectionalAntennaAll-antennaType=CosineAntenna-#0.vec DirectionalAntennaAll-3-20180719-17:52:36-31614 3 $antennaType=&quot;CosineAntenna&quot;" value="CosineAntenna"/>
         <properties name="Line.Name//inet/showcases/wireless/directionalantenna/results/DirectionalAntennaAll-antennaType=DipoleAntenna-#0.vec DirectionalAntennaAll-2-20180719-17:52:36-31614 2 $antennaType=&quot;DipoleAntenna&quot;" value="DipoleAntenna"/>
       </items>
+      <items xsi:type="scave:LineChart">
+        <filters xsi:type="scave:Select" filterPattern="itervar:antennaType(&quot;\&quot;IsotropicAntenna\&quot;&quot;) OR itervar:antennaType(&quot;\&quot;DipoleAntenna\&quot;&quot;) " type="VECTOR"/>
+      </items>
     </datasets>
   </datasets>
-  <chartSheets/>
+  <chartSheets>
+    <chartSheets name="default" charts="//@datasets/@datasets.0/@items.3"/>
+  </chartSheets>
 </scave:Analysis>
