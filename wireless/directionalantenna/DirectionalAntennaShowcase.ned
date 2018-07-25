@@ -8,22 +8,22 @@ import inet.visualizer.integrated.IntegratedVisualizer;
 
 network DirectionalAntennaShowcaseA
 {
-    @display("bgb=400,400");
+    @display("bgb=600,400");
     @statistic[receptionPower](source="receptionMinSignalPower(radioMedium.signalArrivalStarted)"; record=vector);
     submodules:
         configurator: Ipv4NetworkConfigurator {
-            @display("p=33,43");
+            @display("p=62,43");
         }
         visualizer: IntegratedVisualizer {
-            @display("p=34,122");
+            @display("p=62,121");
         }
         radioMedium: Ieee80211ScalarRadioMedium {
-            @display("p=34,207");
+            @display("p=62,199");
         }
         source: WirelessHost {
-            @display("p=161,193");
+            @display("p=400,200");
         }
         destination: WirelessHost {
-            @display("p=339,328");
+            @display("p=400,350");
         }
 }
