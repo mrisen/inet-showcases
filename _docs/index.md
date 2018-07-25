@@ -22,3 +22,4 @@ The following groups of showcases are available:
 * [Wireless Showcases](wireless)
 * [Routing Showcases](routing)
 * [General Showcases](general)
+* [Emulation Showcases](emulation)
