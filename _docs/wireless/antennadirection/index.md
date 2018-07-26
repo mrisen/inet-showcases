@@ -56,4 +56,20 @@ maybe shouldnt list all parameters here ?
 
 The default antenna type in all radio modules is `IsotropicAntenna`
 
-## The model
+
+
+In INET, radio modules contain transmitter, receiver, and antenna submodules. The success of receiving a wireless transmission depends on the strength of the signal present at the receiver, among other things, such as interference from other signals. Both the transmitter and the receiver submodules use the antenna submodules when sending and receiving transmissions. Actually, the antenna can have its own mobility submodule, thus its own position and orientation, which also affects reception.
+
+The antenna module affects transmission and reception in multiple ways. For example:
+- Its position and orientation is used when calculating reception signal strength. By default, the antenna uses the containing network node's mobility submodule to describe its position and orientation, i.e. it has the same position and orientation as the network node. However, antenna modules have optional mobility submodules of their own.
+- The antenna module type can affect reception and transmission by applying a gain to the transmitted/received signal, depending on the antenna module's directional characteristics.
+
+- the success depends on the signal power at the antenna
+- actually, the receiver and transmitter uses the antennas position for receiving
+- but the antenna also sets the reception power, depending on the direction and the antenna characteristic
+
+- actually, the
+
+what does the antenna do ? does it apply gain to the signal when trasmitting ? does it apply gain when receiving ? seems so
+
+"Applies a gain to the signal which is taken into account when calculating reception"
