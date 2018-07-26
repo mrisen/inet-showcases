@@ -1,4 +1,4 @@
-package inet.showcases.wireless.directionalantenna;
+package inet.showcases.wireless.antennadirection;
 
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.inet.WirelessHost;
@@ -6,7 +6,7 @@ import inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium;
 import inet.visualizer.integrated.IntegratedVisualizer;
 
 
-network DirectionalAntennaShowcaseA
+network AntennaDirectionShowcase
 {
     @display("bgb=600,400");
     @statistic[receptionPower](source="receptionMinSignalPower(radioMedium.signalArrivalStarted)"; record=vector);
