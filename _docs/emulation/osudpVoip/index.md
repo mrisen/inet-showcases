@@ -35,7 +35,7 @@ There are only two modules per "network". There is a `VoipStreamSender` in the s
 
 These two simulations work completily separated form each other, meaning that they could also be run on different devices. However, for the sake of simplicity, during this showcase both are run on the same computer. As the names of the applications indicate, the `VoipStreamSenderApplication` produces a VoIP traffic and sends the packets to the `VoipStreamReceiverApplication` as destination, while the `VoipStreamReceiverApplication` receives and processes the VoIP packets.
 
-The simulations are run until all the packets arrive.
+The simulation is run until all the packets arrive.
 
 ### Configuration and behaviour
 
@@ -65,8 +65,6 @@ As stated above, in this showcase both simulations are run on the same computer.
 
 The `high_quality` configuration is run in order to demonstrate that the sound is actually transmitted from the sender to the receiver.
 
-Although the `udp` module does not need any configuration, it is the key module of the emulation. This module acts as a bridge between the simulated and the real world. When instead of `UdpApp` this `ExtUdp` is used, it means that from that point on the emulation is run in the real world. In this case it means that here the VoIP traffic exits the simulation and enters the real operating environment of the OS, and vice versa.
-
 **`VoipStreamReceiver:`**
 
 <p><pre class="snippet">
@@ -74,6 +72,8 @@ Although the `udp` module does not need any configuration, it is the key module 
 *.app.localPort = 1000
 *.app.resultFile = "results/sound.wav"
 </pre></p>
+
+Although the `udp` module is the key module of the emulation, it does not need any configuration. This module acts as a bridge between the simulated and the real world. When instead of `UdpApp` this `ExtUdp` is used, it means that from that point on the emulation is run in the real world. In this case it means that here the VoIP traffic exits the simulation and enters the real operating environment of the OS, and vice versa.
 
 Another important point of the emulation is to set the `RealTimeScheduler` as the mean of synchronization:
 
@@ -94,16 +94,18 @@ As a reference, you can listen to the original audio file by clicking on the pla
 
 #### `high_quality` configuration
 
-Due to the high sampling rate, the quality of the received sound is nearly as of the original file:
+Due to the high sampling rate, the quality of the received sound is nearly as good as of the original file:
 
 <p><audio controls> <source src="sound.wav" type="audio/wav">Your browser does not support the audio tag.</audio></p>
 
-It is stated above that the two simulations run separately on the same device using the computers loopback interface. To provide some evidence for this statement, we can take a look at the network traffic rate of the interfaces of the computer. It is clearly visible that the traffic rate of the loopback interface (named `lo`) increases from the formerly 0 value to a much higher, relatively constant value. As soon as the sender simulation ends, meaning that there are no more data to be sent, the traffic rate falls back to 0.
+It is stated above that the two simulations run separately on the same device using the computers loopback interface. To provide some evidence for supporting this statement, we can take a look at the network traffic rate of the interfaces of the computer. The following video shows how the traffic rate of the loopback interface (named `lo`) changes while the simulation is run:
 
 <p>
 <video autoplay loop controls src="ExtUdp_EDIT.mp4" type="video/mp4" onclick="this.paused ? this.play() : this.pause();">Your browser does not support HTML5 video.</video>
 <!--Emulation proof-->
 </p>
+
+It is clearly visible that the traffic rate of the loopback interface increases from the formerly 0 value to a much higher, relatively constant value, as soon as the sender side of the simulation is started. After the end of the simulation, meaning that there are no more data to be sent, the traffic rate falls back to 0.
 
 ## Further Information
 
