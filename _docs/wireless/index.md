@@ -15,6 +15,7 @@ General Wireless:
   {%include link.i page='_docs/wireless/pathloss/index.md' %}
   {%include link.i page='_docs/wireless/ieee802154/index.md' %}
   {%include link.i page='_docs/wireless/sensornetwork/index.md' %}
+  {%include link.i page='_docs/wireless/antennadirection/index.md' %}
 </ul>
 
 IEEE 802.11:
