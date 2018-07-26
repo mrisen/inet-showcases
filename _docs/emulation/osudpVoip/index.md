@@ -6,7 +6,7 @@ hidden: true
 
 ## Goals
 
-Voice over IP (VoIP) was developed in order to provide access to voice communication in any place around the world. Media streams are transported using special media delivery protocols that encode audio and video with audio codecs, and video codecs. Various codecs exist that optimize the media stream based on application requirements and network bandwidth. INET framework features various modules for emulating different models, including VoIP traffic.
+Voice over IP (VoIP) was developed in order to provide access to voice communication in any place around the world. Media streams are transported using special media delivery protocols that encode audio and video with audio codecs, and video codecs. INET framework features various modules in order to emulate different models and scenarios, including VoIP traffic.
 
 This showcase demonstrates how one can run simulated VoIP applications over real network using INET components.
 
@@ -25,7 +25,7 @@ The `ExtUdp` module makes it possible for the model to be extracted from the sim
 
 ### The network
 
-Usually a network in a simulation contains some nodes and connections in between. In this case it is different. Only a sender application and a receiver application are needed in order to send the packets into the real network on one side and receive them on the other side.
+Usually a network in a simulation contains some nodes and connections in between. In this case it is different. Only a simulated sender application and a simulated receiver application are needed in order to send the packets into the real network on one side and receive them on the other side.
 
 There are only two modules per "network". There is a `VoipStreamSender` in the sender application and a `VoipStreamReceiver` in the receiver application, both called `app`. Both Applications contain a `ExtUdp` module, called `udp`. The layout of the two applications can be seen on the following image:
 
@@ -73,7 +73,7 @@ The `high_quality` configuration is run in order to demonstrate that the sound i
 *.app.resultFile = "results/sound.wav"
 </pre></p>
 
-Although the `udp` module is the key module of the emulation, it does not need any configuration. This module acts as a bridge between the simulated and the real world. When instead of `UdpApp` this `ExtUdp` is used, it means that from that point on the emulation is run in the real world. In this case it means that here the VoIP traffic exits the simulation and enters the real operating environment of the OS, and vice versa.
+Although the `udp` module is the key module of the emulation, it does not need any configuration. This module acts as a bridge between the simulated and the real world. When instead of `UdpApp` this `ExtUdp` is used, it means that from that point on the emulation is run in the real world. In this case it means that at the `ExtUdp` the VoIP traffic exits the simulation and enters the real operating environment of the OS, and vice versa.
 
 Another important point of the emulation is to set the `RealTimeScheduler` as the mean of synchronization:
 
@@ -105,7 +105,11 @@ It is stated above that the two simulations run separately on the same device us
 <!--Emulation proof-->
 </p>
 
-It is clearly visible that the traffic rate of the loopback interface increases from the formerly 0 value to a much higher, relatively constant value, as soon as the sender side of the simulation is started. After the end of the simulation, meaning that there are no more data to be sent, the traffic rate falls back to 0.
+It is clearly visible that the traffic rate of the loopback interface increases from the former value of 0 to a much higher, relatively constant value, as soon as the sender side of the emulation is started. After the end of the simulation, meaning that there are no more data to be sent, the traffic rate falls back to 0.
+
+## Conclusion
+
+It is not necessary to rewrite the simulated model into a suitable form for testing it in the real world. Using external interfaces, parts of the simulation can easily be extracted into the real operating environment. This feature of INET makes developing, simulating and testing much simpler.
 
 ## Further Information
 
