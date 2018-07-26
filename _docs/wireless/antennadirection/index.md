@@ -18,6 +18,8 @@ INET contains various isotropic, omnidirectional and directional antenna models.
 
 as wireless connectivity can often depend on antenna characteristics
 
+INET contains various antenna modules, such as the isotropic antenna, which has no directionality, or the high-gain parabolic antenna.
+
 TODO
 
 This showcase aims to highlight the antenna models available in INET, and their directional characteristics. The showcase contains an example simulation which demonstrates the direcionality of four antenna models.
@@ -60,3 +62,18 @@ INET contains the following antenna module types:
   - `InterpolatingAntenna`: models any antenna characteristic using linear interpolation
 
 The default antenna module in all radios is `IsotropicAntenna`.
+
+## The model
+
+The showcase contains an example simulation, which consists of four simulation runs, each with a different antenna module type.
+
+The showcase contains an example simulation with four runs, which demonstrates the directional characteristics of four antenna modules. The simulation uses the `AntennaDirectionShowcase` network:
+
+<img class="screen" src="network.png">
+
+The playground size is 400x400 meters.
+It contains two `WirelessHost`s, named `source` and `destination`. There is also an `Ipv4NetworkConfigurator`, an `IntegratedVisualizer`, and an `Ieee80211ScalarRadioMedium` module.
+
+The source host is positioned in the center of the playground. The destination host is configured to circle the source host, while the source host pings the destination. We'll record the signal power of the received signal...
+
+the goal is to get the directional characteristic, so the host goes around the other, and send probing transmission from each direction. we record the reception power. the distance stays the same, so its not dependent on that...the host does 1 lap, and in the result, the time maps to degrees.
