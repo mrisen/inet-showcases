@@ -58,8 +58,6 @@
      - page: _docs/general/mobility/index.md
      - page: _docs/general/diffserv/index.md
      - page: _docs/general/ethernet/index.md
-     - page: _docs/general/dhcp/index.md
-     - page: _docs/general/tcp/index.md
 - name: Emulation
   link: /inet-showcases/emulation
   submenu:
