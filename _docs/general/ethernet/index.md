@@ -10,7 +10,7 @@ Ethernet is the most widely installed local area network (LAN) technology. It co
 
 This showcase presents the `LargeNet` model, which demonstrates how one can fit models of LANs together with little effort, and how it can be used for network analysis.
 
-INET version: `3.6.4`<br>
+INET version: `4.0`<br>
 Source files location: <a href="https://github.com/inet-framework/inet-showcases/tree/master/general/ethernet/lans" target="_blank">`inet/showcases/general/ethernet`</a>
 
 ## About Ethernet
