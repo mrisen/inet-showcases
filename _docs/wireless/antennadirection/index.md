@@ -59,7 +59,7 @@ INET contains the following antenna module types:
   - `ParabolicAntenna`: models a parabolic antenna's main radiation lobe<!--, has `minGain`, `maxGain`, and `beamWidth` parameters-->
   - `CosineAntenna`: models directional antenna characteristics with a cosine pattern<!--, has `maxGain` and `beamWidth` parameters-->
 - **Other**:
-  - `InterpolatingAntenna`: models any antenna characteristic using linear interpolation
+  - `InterpolatingAntenna`: can model many complex antenna characteristics using linear interpolation
 
 The default antenna module in all radios is `IsotropicAntenna`.
 

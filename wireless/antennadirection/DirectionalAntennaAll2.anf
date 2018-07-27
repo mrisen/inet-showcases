@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scave:Analysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:scave="http://www.omnetpp.org/omnetpp/scave">
   <inputs>
-    <inputs name="/inet/showcases/wireless/directionalantenna/results/General-*"/>
+    <inputs name="/inet/showcases/wireless/antennadirection/results/General-*"/>
   </inputs>
   <datasets>
     <datasets name="receptionPower:vector DirectionalAntennaShowcaseA">
-      <items xsi:type="scave:Add" filterPattern="module(DirectionalAntennaShowcaseA) AND name(receptionPower:vector)" type="VECTOR"/>
-      <items xsi:type="scave:Add" filterPattern="module(DirectionalAntennaShowcaseA) AND name(receptionPower:vector)" type="VECTOR"/>
+      <items xsi:type="scave:Add" filterPattern="module(AntennaDirectionShowcase) AND name(receptionPower:vector)" type="VECTOR"/>
+      <items xsi:type="scave:Add" filterPattern="module(AntennaDirectionShowcase) AND name(receptionPower:vector)" type="VECTOR"/>
       <items xsi:type="scave:LineChart" name="Reception Power" lineNameFormat="">
         <properties name="X.Axis.Title" value="Angle [deg]"/>
         <properties name="Y.Axis.Title" value="Reception power [W]"/>
