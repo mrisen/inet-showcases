@@ -6,12 +6,12 @@ hidden: true
 
 ## Goals
 
-Voice over IP (VoIP) was developed in order to provide access to voice communication in any place around the world. Media streams are transported using special media delivery protocols that encode audio and video with audio codecs, and video codecs. INET framework features various modules in order to emulate different models and scenarios, including VoIP traffic.
+Voice over IP (VoIP) was developed in order to provide access to voice communication in any place around the world. Media streams are transported using special media delivery protocols that encode audio and video with audio codecs, and video codecs. INET framework features various modules for emulating different models and scenarios, including VoIP traffic.
 
-This showcase demonstrates how one can run simulated VoIP applications over real network using INET components.
+This showcase demonstrates how one can run simulated VoIP applications over a real network using INET components.
 
 INET version: `4.0`<br>
-Source files location: <a href="https://github.com/inet-framework/inet-showcases/tree/master/emulation/osudpVoip" target="_blank">`inet/showcases/emulation/osudpVoip`</a>
+Source files location: <a href="https://github.com/inet-framework/inet-showcases/tree/master/emulation/osudpVoip" target="_blank">`inet/showcases/emulation/ExtUdpVoip`</a>
 
 ## About VoIP
 
@@ -21,7 +21,7 @@ VoIP uses codecs to encapsulate audio into data packets, transmit the packets ac
 
 ## The model
 
-The `ExtUdp` module makes it possible for the model to be extracted from the simulation and be used in a real operating environment. The model executes the configured behaviour in the real world while still producing the same statistics as used to.
+The `ExtUdp` module makes it possible for the model to be extracted from the simulation and be used in a real operating environment. The model executes the configured behavior in the real world while still producing the same statistics as used to.
 
 ### The network
 
@@ -33,13 +33,13 @@ There are only two modules per "network". There is a `VoipStreamSender` in the s
 | :---: |:---:| :---: |
 | <a href="VoipStreamSenderApplication.png" target="_blank"><img class="screen" src="VoipStreamSenderApplication.png"></a> || <a href="VoipStreamReceiverApplication.png" target="_blank"><img class="screen" src="VoipStreamReceiverApplication.png"></a> |
 
-These two simulations work completily separated form each other, meaning that they could also be run on different devices. However, for the sake of simplicity, during this showcase both are run on the same computer. As the names of the applications indicate, the `VoipStreamSenderApplication` produces a VoIP traffic and sends the packets to the `VoipStreamReceiverApplication` as destination, while the `VoipStreamReceiverApplication` receives and processes the VoIP packets.
+These two simulations work completely separated form each other, meaning that they could also be run on different devices. However, for the sake of simplicity, during this showcase both are run on the same computer. As the names of the applications indicate, the `VoipStreamSenderApplication` produces a VoIP traffic and sends the packets to the `VoipStreamReceiverApplication` as destination, while the `VoipStreamReceiverApplication` receives and processes the VoIP packets.
 
 The simulation is run until all the packets arrive.
 
 ### Configuration and behaviour
 
-`VoipStreamSender` and `VoipStreamReceiver` modules are parts of the simulation. There is no difference in the configuration of these modules compared to a fully simulated scenario. This means that the `ExtUdp` module looks and behaves just like the `UdpApp` from the point of view of the modules above them.
+`VoipStreamSender` and `VoipStreamReceiver` modules are part of the simulation. There is no difference in the configuration of these modules compared to a fully simulated scenario. This means that the `ExtUdp` module looks and behaves just like the `UdpApp` from the point of view of the modules above them.
 
 **`VoipStreamSender:`**
 
@@ -58,12 +58,12 @@ As stated above, in this showcase both simulations are run on the same computer.
 *.app.destPort = 1000
 *.app.destAddress = "127.0.0.1"
 
-[Config high_quality]
+[Config VoIP]
 *.app.codec = "pcm_s16le"
 *.app.sampleRate = 32000Hz
 </pre></p>
 
-The `high_quality` configuration is run in order to demonstrate that the sound is actually transmitted from the sender to the receiver.
+The `VoIP` configuration is run in order to demonstrate that the sound is actually transmitted from the sender to the receiver.
 
 **`VoipStreamReceiver:`**
 
@@ -73,7 +73,7 @@ The `high_quality` configuration is run in order to demonstrate that the sound i
 *.app.resultFile = "results/sound.wav"
 </pre></p>
 
-Although the `udp` module is the key module of the emulation, it does not need any configuration. This module acts as a bridge between the simulated and the real world. When instead of `UdpApp` this `ExtUdp` is used, it means that from that point on the emulation is run in the real world. In this case it means that at the `ExtUdp` the VoIP traffic exits the simulation and enters the real operating environment of the OS, and vice versa.
+Although the `udp` module is the key module of the emulation, it does not need any configuration. This module acts as a bridge between the simulated and the real world. When instead of `UdpApp` this `ExtUdp` is used, it means that from that point on the emulation is running in the real world. In this case it means that at the `ExtUdp` the VoIP traffic exits the simulation and enters the real operating environment of the OS, and vice versa.
 
 Another important point of the emulation is to set the `RealTimeScheduler` as the mean of synchronization:
 
@@ -92,13 +92,13 @@ As a reference, you can listen to the original audio file by clicking on the pla
 
 <p><audio controls> <source src="original.mp3" type="audio/mpeg">Your browser does not support the audio tag.</audio></p>
 
-#### `high_quality` configuration
+#### `VoIP` configuration
 
 Due to the high sampling rate, the quality of the received sound is nearly as good as of the original file:
 
 <p><audio controls> <source src="sound.wav" type="audio/wav">Your browser does not support the audio tag.</audio></p>
 
-It is stated above that the two simulations run separately on the same device using the computers loopback interface. To provide some evidence for supporting this statement, we can take a look at the network traffic rate of the interfaces of the computer. The following video shows how the traffic rate of the loopback interface (named `lo`) changes while the simulation is run:
+It is stated above that the two simulations run separately on the same device using the computer's loopback interface. To provide some evidence for supporting this statement, we can take a look at the network traffic rate of the interfaces of the computer. The following video shows how the traffic rate of the loopback interface (named `lo`) changes while the simulation is running:
 
 <p>
 <video autoplay loop controls src="ExtUdp_EDIT.mp4" type="video/mp4" onclick="this.paused ? this.play() : this.pause();">Your browser does not support HTML5 video.</video>
@@ -109,7 +109,7 @@ It is clearly visible that the traffic rate of the loopback interface increases 
 
 ## Conclusion
 
-It is not necessary to rewrite the simulated model into a suitable form for testing it in the real world. Using external interfaces, parts of the simulation can easily be extracted into the real operating environment. This feature of INET makes developing, simulating and testing much simpler.
+It is not necessary to rewrite the simulated model into a suitable form for testing it in the real world. Using external interfaces, parts of a simulation can easily be extracted into the real operating environment. This feature of INET makes developing, simulating and testing much simpler.
 
 ## Further Information
 
