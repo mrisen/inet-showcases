@@ -1,7 +1,7 @@
 package inet.showcases.wireless.antennadirection;
 
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
-import inet.node.inet.WirelessHost;
+import inet.node.inet.AdhocHost;
 import inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium;
 import inet.visualizer.integrated.IntegratedVisualizer;
 
@@ -20,10 +20,10 @@ network AntennaDirectionShowcase
         radioMedium: Ieee80211ScalarRadioMedium {
             @display("p=62,199");
         }
-        source: WirelessHost {
+        source: AdhocHost {
             @display("p=400,200");
         }
-        destination: WirelessHost {
+        destination: AdhocHost {
             @display("p=400,350");
         }
 }
