@@ -18,6 +18,7 @@
      - page: _docs/visualizer/networknode/index.md
      - page: _docs/visualizer/mobility/index.md
      - page: _docs/visualizer/earth/index.md
+     - page: _docs/visualizer/osgdemo/index.md
 #     - separator: true
      - page: _docs/visualizer/instrument/index.md
      - page: _docs/visualizer/statistic/index.md
