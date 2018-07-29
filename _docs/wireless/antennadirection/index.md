@@ -156,6 +156,8 @@ The `DipoleAntenna` module models a dipole antenna. It has one parameter, `lengt
 
 The configuration sets the antenna type to `DipoleAntenna`, and the antenna length to 0.1m. The elevation and bank parameters are used to rotate the source node, so that the radiation pattern is more interesting from the point of view of the simulation (the dipole radiation pattern's donut shape is the same as the isotropic antenna's when viewed from above).
 
+TODO config
+
 It looks like this when the simulation is run:
 
 <img class="screen" src="dipole1.png">
@@ -170,3 +172,27 @@ There is no successfull communication when the destination node is at the null d
 TODO: the visualization pattern...is that the gain at a given direction is proportional to the line connecting the edge of the lobe shape and the node ?
 
 ### `CosineAntenna`
+
+The `CosineAntenna` module approximates a directional antenna with a cosine pattern. In this model, the shape of the radiation pattern is given by a cosine exponent. The module has two parameters, `MaxGain` and `Beamwidth`.
+
+The radiation pattern is similar to the parabolic antenna's. It looks like the following:
+
+<img class="screen" src="cosine1.png">
+
+Here is a video of the simulation:
+
+<p><video autoplay loop controls onclick="this.paused ? this.play() : this.pause();" src="cosine2.mp4"></video></p>
+
+### `InterpolatingAntenna`
+
+The `InterpolatingAntenna` module can model complex antenna characteristics with linear interpolation. It has three parameters: `HeadingGains`, `ElevationGains` and `BankGains`. The parameters take a sequence of gain and angle pairs (given in decibels and degrees), the first pair must be `0 0`. The characteristic at the intermediate angles are calculated using linear interpolation. The gains can be specified independently for the three Euler angles. The default for all three parameters is `"0 0"`, thus by default the antenna models an isotropic antenna.
+
+The configuration for this antenna is `InterpolatingAntenna` in omnetpp.ini:
+
+<p><pre class="include" src="omnetpp.ini" from="InterpolatingAntenna"></pre></p>
+
+The antenna type in `source`'s radio is set to `InterpolatingAntenna`. Only the heading gains are set, specifying a hypothetical rectangular radiation pattern. It looks like the following:
+
+<img class="screen" src="interpolating1.png">
+
+TODO: insert the charts here as well ?
