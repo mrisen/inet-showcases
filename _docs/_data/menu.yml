@@ -45,7 +45,7 @@
      - page: _docs/wireless/crosstalk/index.md
      - page: _docs/wireless/infrastructure/index.md
      - page: _docs/wireless/multiradio/index.md
-     - page: _docs/wireless/antennadirection/index.md
+     - page: _docs/wireless/directionalselectivity/index.md
 - name: Routing
   link: /inet-showcases/routing
   submenu:

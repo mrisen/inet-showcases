@@ -1,4 +1,4 @@
-package inet.showcases.wireless.antennadirection;
+package inet.showcases.wireless.directionalselectivity;
 
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.inet.AdhocHost;
@@ -6,7 +6,7 @@ import inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium;
 import inet.visualizer.integrated.IntegratedVisualizer;
 
 
-network AntennaDirectionShowcase
+network DirectionalSelectivityShowcase
 {
     @display("bgb=1400,400");
     @statistic[receptionPower](source="receptionMinSignalPower(radioMedium.signalArrivalStarted)"; record=vector);
