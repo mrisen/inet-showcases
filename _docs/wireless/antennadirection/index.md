@@ -93,3 +93,7 @@ We'll run the simulation with five antenna types in `source`: `IsotropicAntenna`
 The configurations for the five simulations differ in the antenna settings, most of the settings are in the `General` configuration section:
 
 <p><pre class="include" src="omnetpp.ini" from="General" upto="displayLinks"></pre></p>
+
+The source host is configured to send ping requests every 0.5s. This is effectively the probe interval, the antenna characteristic data can be made more fine-grained by setting a more frequent ping rate. The destination is configured to circle the source with a radius of 150m. The simulation runs for 360s, and the speed of `destination` is set so it does one full circle. This way, when plotting the reception power, the time can be directly mapped to the direction angle.
+
+The visualizer is set to display antenna lobes (the `displayRadios` is the master switch in `RadioVisualizer`, so it needs to be set to `true`), signal arrivals (for the reception power indication), and active data links (indicating successfully received transmissions). 

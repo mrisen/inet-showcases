@@ -8,7 +8,7 @@ import inet.visualizer.integrated.IntegratedVisualizer;
 
 network AntennaDirectionShowcase
 {
-    @display("bgb=600,400");
+    @display("bgb=1400,400");
     @statistic[receptionPower](source="receptionMinSignalPower(radioMedium.signalArrivalStarted)"; record=vector);
     submodules:
         configurator: Ipv4NetworkConfigurator {
