@@ -111,8 +111,8 @@ The configuration for this antenna is `IsotropicAntenna` in omnetpp.ini. The con
 
 When the simulation is run, it looks like the following:
 
-TODO lobe image
+<img class="screen" src="isotropic1.png">
 
-TODO video here
+<p><video autoplay loop controls onclick="this.paused ? this.play() : this.pause();" src="isotropic3.mp4"></video></p>
 
 TODO some explanation (its a circle)
