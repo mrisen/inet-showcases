@@ -196,3 +196,7 @@ The antenna type in `source`'s radio is set to `InterpolatingAntenna`. Only the 
 <img class="screen" src="interpolating1.png">
 
 TODO: insert the charts here as well ?
+
+<p><video autoplay loop controls onclick="this.paused ? this.play() : this.pause();" src="interpolating2.mp4"></video></p>
+
+The edges of the rectangular radiation pattern can be made less rounded by specifying more points in the gain parameter (the points are given by the 1/cos(x) equation).
