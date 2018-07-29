@@ -72,6 +72,8 @@ The visualizer can display the antenna's radiation pattern, and the antenna lobe
 
 This visualization feature can be enabled by setting the visualizer's `DisplayAntennaLobes` parameter to `true` (false by default).
 
+TODO about viewing angles
+
 ## The model
 
 The showcase contains an example simulation, which consists of four simulation runs, each with a different antenna module type.
@@ -96,4 +98,21 @@ The configurations for the five simulations differ in the antenna settings, most
 
 The source host is configured to send ping requests every 0.5s. This is effectively the probe interval, the antenna characteristic data can be made more fine-grained by setting a more frequent ping rate. The destination is configured to circle the source with a radius of 150m. The simulation runs for 360s, and the speed of `destination` is set so it does one full circle. This way, when plotting the reception power, the time can be directly mapped to the direction angle.
 
-The visualizer is set to display antenna lobes (the `displayRadios` is the master switch in `RadioVisualizer`, so it needs to be set to `true`), signal arrivals (for the reception power indication), and active data links (indicating successfully received transmissions). 
+The visualizer is set to display antenna lobes (the `displayRadios` is the master switch in `RadioVisualizer`, so it needs to be set to `true`), signal arrivals (for the reception power indication), and active data links (indicating successfully received transmissions).
+
+The antenna specific settings are defined in distinct configurations, named according to the antenna type used (`IsotropicAntenna`, `ParabolicAntenna`, `DipoleAntenna`, `CosineAntenna`, and `InterpolatingAntenna`).
+
+### `IsotropicAntenna`
+
+The `IsotropicAntenna` is the default in all radio modules. This module models a hypothetical antenna which radiates with the same power in all directions. It is useful if the emphasis of the simulation is not no on the details of antennas. This module can be used to approximate real world directionless antennas. The module has no parameters.
+The configuration for this antenna is `IsotropicAntenna` in omnetpp.ini. The configuration just sets the antenna type in `source`:
+
+<p><pre class="include" src="omnetpp.ini" from="IsotropicAntenna" until="ParabolicAntenna"></pre></p>
+
+When the simulation is run, it looks like the following:
+
+TODO lobe image
+
+TODO video here
+
+TODO some explanation (its a circle)
