@@ -63,6 +63,15 @@ INET contains the following antenna module types:
 
 The default antenna module in all radios is `IsotropicAntenna`.
 
+### Visualizing antenna directionality
+
+It is often useful to visualize antenna directional characteristics. The `RadioVisualizer` module can visualize this, using its antenna lobe visualization feature.
+The visualizer can display the antenna's radioation pattern, and the antenna lobes, i.e. the directions in which the antenna's gain is strong. <!--More precisely, it displays the antenna characteristics around antennas as poligonal shape corresponding to the characteristic. -->For example, the radiation patterns of an isotropic and a diretional antenna:
+
+<img class="screen" src="antennalobe2.png">
+
+This visualization feature can be enabled by setting the visualizer's `DisplayAntennaLobes` parameter to `true` (false by default).
+
 ## The model
 
 The showcase contains an example simulation, which consists of four simulation runs, each with a different antenna module type.
