@@ -89,6 +89,7 @@ The source host is positioned in the center of the playground. The destination h
 We'll use the ping transmissions to probe the directional characteristics of `source`'s antenna, by recording the power of the received signal in `destination`.
 The destination host will do one full circle around the source. The distance of the two hosts will be constant to get meaningful data about the antenna characteristics.
 We'll run the simulation with five antenna types in `source`: `IsotropicAntenna`, `ParabolicAntenna`, `DipoleAntenna`, `CosineAntenna`, and `InterpolatingAntenna`.
+The destination has the default `IsotropicAntenna` in all simulations.
 
 <!-- the goal is to get the directional characteristic, so the host goes around the other, and send probing transmission from each direction. we record the reception power. the distance stays the same, so its not dependent on that...the host does 1 lap, and in the result, the time maps to degrees. -->
 
@@ -98,7 +99,7 @@ The configurations for the five simulations differ in the antenna settings, most
 
 The source host is configured to send ping requests every 0.5s. This is effectively the probe interval, the antenna characteristic data can be made more fine-grained by setting a more frequent ping rate. The destination is configured to circle the source with a radius of 150m. The simulation runs for 360s, and the speed of `destination` is set so it does one full circle. This way, when plotting the reception power, the time can be directly mapped to the direction angle.
 
-The visualizer is set to display antenna lobes (the `displayRadios` is the master switch in `RadioVisualizer`, so it needs to be set to `true`), signal arrivals (for the reception power indication), and active data links (indicating successfully received transmissions).
+The visualizer is set to display antenna lobes in `source` (the `displayRadios` is the master switch in `RadioVisualizer`, so it needs to be set to `true`), signal arrivals (for the reception power indication), and active data links (indicating successfully received transmissions).
 
 The antenna specific settings are defined in distinct configurations, named according to the antenna type used (`IsotropicAntenna`, `ParabolicAntenna`, `DipoleAntenna`, `CosineAntenna`, and `InterpolatingAntenna`).
 
@@ -113,6 +114,8 @@ When the simulation is run, it looks like the following:
 
 <img class="screen" src="isotropic1.png">
 
+The radiation pattern is a circle, as the antenna is directionless (actually, the isotropic antenna's radiation pattern is a circle from any viewpoint). Here is a video of the simulation running:
+
 <p><video autoplay loop controls onclick="this.paused ? this.play() : this.pause();" src="isotropic3.mp4"></video></p>
 
-TODO some explanation (its a circle)
+The destination node circles the source node, all ping messages are successfully received.
