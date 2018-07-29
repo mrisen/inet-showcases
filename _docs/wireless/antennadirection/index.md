@@ -117,6 +117,7 @@ When the simulation is run, it looks like the following:
 The radiation pattern is a circle, as the antenna is directionless (actually, the isotropic antenna's radiation pattern is a circle from any viewpoint). Here is a video of the simulation running:
 
 <p><video autoplay loop controls onclick="this.paused ? this.play() : this.pause();" src="isotropic3.mp4"></video></p>
+<!--internal video recording, animation speed 1, playback speed 21.88, normal run, crop 25 25 150 750-->
 
 The destination node circles the source node, all ping messages are successfully received.
 
@@ -136,6 +137,36 @@ When the simulation is run, it looks like the following:
 
 <img class="screen" src="parabolic1.png">
 
-The radiation pattern is a narrow lobe. Note that in directions off from the main direction, the radiation pattern appears zero, but actually, it is just very small. Note that small protrusion to the left on the following, zoomed-in image:
+The radiation pattern is a narrow lobe. Note that in directions off from the main direction, the radiation pattern might appear to be zero, but actually, it is just very small. Note the small protrusion to the left on the following, zoomed-in image:
 
 <img class="screen" src="parabolicsidelobe.png">
+
+Here is a video of the simulation:
+
+<p><video autoplay loop controls onclick="this.paused ? this.play() : this.pause();" src="parabolic3.mp4"></video></p>
+<!--internal video recording, animation speed 1, playback speed 21.88, normal run, crop 25 25 150 750-->
+
+The ping probe messages are successfully received when the destination node is near the main lobe of `source`'s antenna.
+
+### `DipoleAntenna`
+
+The `DipoleAntenna` module models a dipole antenna. It has one parameter, `length`. The configuration in omnetpp.ini is the following:
+
+<p><pre class="include" src="omnetpp.ini" from="DipoleAntenna" until="CosineAntenna"></pre></p>
+
+The configuration sets the antenna type to `DipoleAntenna`, and the antenna length to 0.1m. The elevation and bank parameters are used to rotate the source node, so that the radiation pattern is more interesting from the point of view of the simulation (the dipole radiation pattern's donut shape is the same as the isotropic antenna's when viewed from above).
+
+It looks like this when the simulation is run:
+
+<img class="screen" src="dipole1.png">
+
+The radiation pattern is the dipole's donut shape, when viewed from the side. Here is a video of the simulation:
+
+<p><video autoplay loop controls onclick="this.paused ? this.play() : this.pause();" src="dipole2.mp4"></video></p>
+<!--internal video recording, animation speed 1, playback speed 21.88, normal run, crop 25 25 150 750-->
+
+There is no successfull communication when the destination node is at the null direction.
+
+TODO: the visualization pattern...is that the gain at a given direction is proportional to the line connecting the edge of the lobe shape and the node ?
+
+### `CosineAntenna`
