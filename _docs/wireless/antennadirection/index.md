@@ -66,7 +66,7 @@ The default antenna module in all radios is `IsotropicAntenna`.
 ### Visualizing antenna directionality
 
 It is often useful to visualize antenna directional characteristics. The `RadioVisualizer` module can visualize this, using its antenna lobe visualization feature.
-The visualizer can display the antenna's radioation pattern, and the antenna lobes, i.e. the directions in which the antenna's gain is strong. <!--More precisely, it displays the antenna characteristics around antennas as poligonal shape corresponding to the characteristic. -->For example, the radiation patterns of an isotropic and a diretional antenna:
+The visualizer can display the antenna's radiation pattern, and the antenna lobes, i.e. the directions in which the antenna's gain is stronger. <!--More precisely, it displays the antenna characteristics around antennas as poligonal shape corresponding to the characteristic. -->For example, the radiation patterns of an isotropic and a diretional antenna:
 
 <img class="screen" src="antennalobe2.png">
 
@@ -76,13 +76,20 @@ This visualization feature can be enabled by setting the visualizer's `DisplayAn
 
 The showcase contains an example simulation, which consists of four simulation runs, each with a different antenna module type.
 
-The showcase contains an example simulation with four runs, which demonstrates the directional characteristics of four antenna modules. The simulation uses the `AntennaDirectionShowcase` network:
+The showcase contains five example simulations, which demonstrates the directional characteristics of four antenna modules. The simulation uses the `AntennaDirectionShowcase` network:
 
 <img class="screen" src="network.png">
 
-The playground size is 400x400 meters.
-It contains two `WirelessHost`s, named `source` and `destination`. There is also an `Ipv4NetworkConfigurator`, an `IntegratedVisualizer`, and an `Ieee80211ScalarRadioMedium` module.
+<!--The playground size is 600x400 meters. <- it doesnt matter-->
+The network contains two `AdhocHost`s, named `source` and `destination`. There is also an `Ipv4NetworkConfigurator`, an `IntegratedVisualizer`, and an `Ieee80211ScalarRadioMedium` module.
 
-The source host is positioned in the center of the playground. The destination host is configured to circle the source host, while the source host pings the destination. We'll record the signal power of the received signal...
+The source host is positioned in the center of the playground. The destination host is configured to circle the source host, while the source host pings the destination every 0.5 seconds.
+We'll use the ping transmissions to probe the directional characteristics of `source`'s antenna, by recording the power of the received signal in `destination`.
+The destination host will do one full circle around the source. The distance of the two hosts will be constant to get meaningful data about the antenna characteristics.
+We'll run the simulation with five antenna types in `source`: `IsotropicAntenna`, `ParabolicAntenna`, `DipoleAntenna`, `CosineAntenna`, and `InterpolatingAntenna`.
 
-the goal is to get the directional characteristic, so the host goes around the other, and send probing transmission from each direction. we record the reception power. the distance stays the same, so its not dependent on that...the host does 1 lap, and in the result, the time maps to degrees.
+<!-- the goal is to get the directional characteristic, so the host goes around the other, and send probing transmission from each direction. we record the reception power. the distance stays the same, so its not dependent on that...the host does 1 lap, and in the result, the time maps to degrees. -->
+
+The configurations for the five simulations differ in the antenna settings, most of the settings are in the `General` configuration section:
+
+<p><pre class="include" src="omnetpp.ini" from="General" upto="displayLinks"></pre></p>
