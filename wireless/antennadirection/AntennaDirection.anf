@@ -30,9 +30,24 @@
       <items xsi:type="scave:LineChart">
         <filters xsi:type="scave:Select" filterPattern="itervar:antennaType(&quot;\&quot;ParabolicAntenna\&quot;&quot;) OR itervar:antennaType(&quot;\&quot;CosineAntenna\&quot;&quot;) " type="VECTOR"/>
       </items>
+      <items xsi:type="scave:LineChart" name="IsotropicAntenna" lineNameFormat="">
+        <filters xsi:type="scave:Select" filterPattern="param:*.source.wlan[*].radio.antenna.typename(&quot;\&quot;IsotropicAntenna\&quot;&quot;) " type="VECTOR"/>
+      </items>
+      <items xsi:type="scave:LineChart" name="ParabolicAntenna" lineNameFormat="">
+        <filters xsi:type="scave:Select" filterPattern="param:*.source.wlan[*].radio.antenna.typename(&quot;\&quot;ParabolicAntenna\&quot;&quot;) " type="VECTOR"/>
+      </items>
+      <items xsi:type="scave:LineChart" name="DipoleAntenna" lineNameFormat="">
+        <filters xsi:type="scave:Select" filterPattern="param:*.source.wlan[*].radio.antenna.typename(&quot;\&quot;DipoleAntenna\&quot;&quot;) " type="VECTOR"/>
+      </items>
+      <items xsi:type="scave:LineChart" name="CosineAntenna" lineNameFormat="">
+        <filters xsi:type="scave:Select" filterPattern="param:*.source.wlan[*].radio.antenna.typename(&quot;\&quot;CosineAntenna\&quot;&quot;) " type="VECTOR"/>
+      </items>
+      <items xsi:type="scave:LineChart" name="InterpolatingAntenna" lineNameFormat="">
+        <filters xsi:type="scave:Select" filterPattern="param:*.source.wlan[*].radio.antenna.typename(&quot;\&quot;InterpolatingAntenna\&quot;&quot;) " type="VECTOR"/>
+      </items>
     </datasets>
   </datasets>
   <chartSheets>
-    <chartSheets name="default" charts="//@datasets/@datasets.0/@items.3 //@datasets/@datasets.0/@items.4"/>
+    <chartSheets name="default" charts="//@datasets/@datasets.0/@items.3 //@datasets/@datasets.0/@items.4 //@datasets/@datasets.0/@items.5 //@datasets/@datasets.0/@items.6 //@datasets/@datasets.0/@items.7 //@datasets/@datasets.0/@items.8 //@datasets/@datasets.0/@items.9"/>
   </chartSheets>
 </scave:Analysis>
