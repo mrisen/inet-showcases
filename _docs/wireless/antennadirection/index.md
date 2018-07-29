@@ -119,3 +119,23 @@ The radiation pattern is a circle, as the antenna is directionless (actually, th
 <p><video autoplay loop controls onclick="this.paused ? this.play() : this.pause();" src="isotropic3.mp4"></video></p>
 
 The destination node circles the source node, all ping messages are successfully received.
+
+### `ParabolicAntenna`
+
+The `ParabolicAntenna` module simulates the main lobe radiation pattern of a parabolic antenna. The antenna module has the following parameters:
+
+- `MaxGain`: the maximum gain of the antenna
+- `MinGain`: the minimum gain of the antenna
+- `BeamWidth`: the 3 dB beam width
+
+The configuration for this antenna is `ParabolicAntenna` in omnetpp.ini:
+
+<p><pre class="include" src="omnetpp.ini" from="ParabolicAntenna" until="DipoleAntenna"></pre></p>
+
+When the simulation is run, it looks like the following:
+
+<img class="screen" src="parabolic1.png">
+
+The radiation pattern is a narrow lobe. Note that in directions off from the main direction, the radiation pattern appears zero, but actually, it is just very small. Note that small protrusion to the left on the following, zoomed-in image:
+
+<img class="screen" src="parabolicsidelobe.png">
