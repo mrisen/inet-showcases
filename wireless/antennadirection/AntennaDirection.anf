@@ -32,18 +32,33 @@
       </items>
       <items xsi:type="scave:LineChart" name="IsotropicAntenna" lineNameFormat="">
         <filters xsi:type="scave:Select" filterPattern="param:*.source.wlan[*].radio.antenna.typename(&quot;\&quot;IsotropicAntenna\&quot;&quot;) " type="VECTOR"/>
+        <properties name="X.Axis.Title" value="Angle [degrees]"/>
+        <properties name="Y.Axis.Title" value="Reception power [W]"/>
+        <properties name="X.Axis.Max" value="360.0"/>
       </items>
       <items xsi:type="scave:LineChart" name="ParabolicAntenna" lineNameFormat="">
         <filters xsi:type="scave:Select" filterPattern="param:*.source.wlan[*].radio.antenna.typename(&quot;\&quot;ParabolicAntenna\&quot;&quot;) " type="VECTOR"/>
+        <properties name="X.Axis.Title" value="Angle [degrees]"/>
+        <properties name="Y.Axis.Title" value="Reception power [W]"/>
+        <properties name="X.Axis.Max" value="360.0"/>
       </items>
       <items xsi:type="scave:LineChart" name="DipoleAntenna" lineNameFormat="">
         <filters xsi:type="scave:Select" filterPattern="param:*.source.wlan[*].radio.antenna.typename(&quot;\&quot;DipoleAntenna\&quot;&quot;) " type="VECTOR"/>
+        <properties name="X.Axis.Title" value="Angle [degrees]"/>
+        <properties name="Y.Axis.Title" value="Reception power [W]"/>
+        <properties name="X.Axis.Max" value="360.0"/>
       </items>
       <items xsi:type="scave:LineChart" name="CosineAntenna" lineNameFormat="">
         <filters xsi:type="scave:Select" filterPattern="param:*.source.wlan[*].radio.antenna.typename(&quot;\&quot;CosineAntenna\&quot;&quot;) " type="VECTOR"/>
+        <properties name="X.Axis.Title" value="Angle [degrees]"/>
+        <properties name="Y.Axis.Title" value="Reception power [W]"/>
+        <properties name="X.Axis.Max" value="360.0"/>
       </items>
       <items xsi:type="scave:LineChart" name="InterpolatingAntenna" lineNameFormat="">
         <filters xsi:type="scave:Select" filterPattern="param:*.source.wlan[*].radio.antenna.typename(&quot;\&quot;InterpolatingAntenna\&quot;&quot;) " type="VECTOR"/>
+        <properties name="X.Axis.Title" value="Angle [degrees]"/>
+        <properties name="Y.Axis.Title" value="Reception power [W]"/>
+        <properties name="X.Axis.Max" value="360.0"/>
       </items>
     </datasets>
   </datasets>

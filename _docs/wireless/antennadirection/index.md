@@ -121,6 +121,8 @@ The radiation pattern is a circle, as the antenna is directionless (actually, th
 
 The destination node circles the source node, all ping messages are successfully received.
 
+<img class="screen" src="isotropicchart.png" onclick="imageFullSizeZoom(this);">
+
 ### `ParabolicAntenna`
 
 The `ParabolicAntenna` module simulates the main lobe radiation pattern of a parabolic antenna. The antenna module has the following parameters:
@@ -148,6 +150,8 @@ Here is a video of the simulation:
 
 The ping probe messages are successfully received when the destination node is near the main lobe of `source`'s antenna.
 
+<img class="screen" src="parabolicchart.png" onclick="imageFullSizeZoom(this);">
+
 ### `DipoleAntenna`
 
 The `DipoleAntenna` module models a dipole antenna. It has one parameter, `length`. The configuration in omnetpp.ini is the following:
@@ -171,6 +175,8 @@ There is no successfull communication when the destination node is at the null d
 
 TODO: the visualization pattern...is that the gain at a given direction is proportional to the line connecting the edge of the lobe shape and the node ?
 
+<img class="screen" src="dipolechart.png" onclick="imageFullSizeZoom(this);">
+
 ### `CosineAntenna`
 
 The `CosineAntenna` module approximates a directional antenna with a cosine pattern. In this model, the shape of the radiation pattern is given by a cosine exponent. The module has two parameters, `MaxGain` and `Beamwidth`.
@@ -182,6 +188,8 @@ The radiation pattern is similar to the parabolic antenna's. It looks like the f
 Here is a video of the simulation:
 
 <p><video autoplay loop controls onclick="this.paused ? this.play() : this.pause();" src="cosine2.mp4"></video></p>
+
+<img class="screen" src="cosinechart.png" onclick="imageFullSizeZoom(this);">
 
 ### `InterpolatingAntenna`
 
@@ -200,3 +208,5 @@ TODO: insert the charts here as well ?
 <p><video autoplay loop controls onclick="this.paused ? this.play() : this.pause();" src="interpolating2.mp4"></video></p>
 
 The edges of the rectangular radiation pattern can be made less rounded by specifying more points in the gain parameter (the points are given by the 1/cos(x) equation).
+
+<img class="screen" src="interpolatingchart.png" onclick="imageFullSizeZoom(this);">
