@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scave:Analysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:scave="http://www.omnetpp.org/omnetpp/scave">
   <inputs>
-    <inputs name="/inet/showcases/wireless/antennadirection/results/*Antenna-*"/>
+    <inputs name="/inet/showcases/wireless/directionalselectivity/results/*Antenna-*"/>
   </inputs>
   <datasets>
     <datasets name="receptionPower:vector DirectionalAntennaShowcaseA">
-      <items xsi:type="scave:Add" filterPattern="module(AntennaDirectionShowcase) AND name(receptionPower:vector)" type="VECTOR"/>
-      <items xsi:type="scave:Add" filterPattern="module(AntennaDirectionShowcase) AND name(receptionPower:vector)" type="VECTOR"/>
-      <items xsi:type="scave:LineChart" name="Reception Power" lineNameFormat="">
+      <items xsi:type="scave:Add" filterPattern="module(DirectionalSelectivityShowcase) AND name(receptionPower:vector)" type="VECTOR"/>
+      <items xsi:type="scave:LineChart" name="Reception Power - All antennas" lineNameFormat="">
         <properties name="X.Axis.Title" value="Angle [deg]"/>
         <properties name="Y.Axis.Title" value="Reception power [W]"/>
         <properties name="Legend.Display" value="true"/>
@@ -24,37 +23,31 @@
         <properties name="Symbols.Type" value="Dot"/>
         <properties name="Symbols.Size" value="2"/>
       </items>
-      <items xsi:type="scave:LineChart" name="Isotropic and Dipole" lineNameFormat="">
-        <filters xsi:type="scave:Select" filterPattern="itervar:antennaType(&quot;\&quot;IsotropicAntenna\&quot;&quot;) OR itervar:antennaType(&quot;\&quot;DipoleAntenna\&quot;&quot;) " type="VECTOR"/>
-      </items>
-      <items xsi:type="scave:LineChart">
-        <filters xsi:type="scave:Select" filterPattern="itervar:antennaType(&quot;\&quot;ParabolicAntenna\&quot;&quot;) OR itervar:antennaType(&quot;\&quot;CosineAntenna\&quot;&quot;) " type="VECTOR"/>
-      </items>
-      <items xsi:type="scave:LineChart" name="IsotropicAntenna" lineNameFormat="">
+      <items xsi:type="scave:LineChart" name="Reception Power - IsotropicAntenna" lineNameFormat="">
         <filters xsi:type="scave:Select" filterPattern="param:*.source.wlan[*].radio.antenna.typename(&quot;\&quot;IsotropicAntenna\&quot;&quot;) " type="VECTOR"/>
         <properties name="X.Axis.Title" value="Angle [degrees]"/>
         <properties name="Y.Axis.Title" value="Reception power [W]"/>
         <properties name="X.Axis.Max" value="360.0"/>
       </items>
-      <items xsi:type="scave:LineChart" name="ParabolicAntenna" lineNameFormat="">
+      <items xsi:type="scave:LineChart" name="Reception Power - ParabolicAntenna" lineNameFormat="">
         <filters xsi:type="scave:Select" filterPattern="param:*.source.wlan[*].radio.antenna.typename(&quot;\&quot;ParabolicAntenna\&quot;&quot;) " type="VECTOR"/>
         <properties name="X.Axis.Title" value="Angle [degrees]"/>
         <properties name="Y.Axis.Title" value="Reception power [W]"/>
         <properties name="X.Axis.Max" value="360.0"/>
       </items>
-      <items xsi:type="scave:LineChart" name="DipoleAntenna" lineNameFormat="">
+      <items xsi:type="scave:LineChart" name="Reception Power - DipoleAntenna" lineNameFormat="">
         <filters xsi:type="scave:Select" filterPattern="param:*.source.wlan[*].radio.antenna.typename(&quot;\&quot;DipoleAntenna\&quot;&quot;) " type="VECTOR"/>
         <properties name="X.Axis.Title" value="Angle [degrees]"/>
         <properties name="Y.Axis.Title" value="Reception power [W]"/>
         <properties name="X.Axis.Max" value="360.0"/>
       </items>
-      <items xsi:type="scave:LineChart" name="CosineAntenna" lineNameFormat="">
+      <items xsi:type="scave:LineChart" name="Reception Power - CosineAntenna" lineNameFormat="">
         <filters xsi:type="scave:Select" filterPattern="param:*.source.wlan[*].radio.antenna.typename(&quot;\&quot;CosineAntenna\&quot;&quot;) " type="VECTOR"/>
         <properties name="X.Axis.Title" value="Angle [degrees]"/>
         <properties name="Y.Axis.Title" value="Reception power [W]"/>
         <properties name="X.Axis.Max" value="360.0"/>
       </items>
-      <items xsi:type="scave:LineChart" name="InterpolatingAntenna" lineNameFormat="">
+      <items xsi:type="scave:LineChart" name="Reception Power - InterpolatingAntenna" lineNameFormat="">
         <filters xsi:type="scave:Select" filterPattern="param:*.source.wlan[*].radio.antenna.typename(&quot;\&quot;InterpolatingAntenna\&quot;&quot;) " type="VECTOR"/>
         <properties name="X.Axis.Title" value="Angle [degrees]"/>
         <properties name="Y.Axis.Title" value="Reception power [W]"/>
@@ -63,6 +56,6 @@
     </datasets>
   </datasets>
   <chartSheets>
-    <chartSheets name="default" charts="//@datasets/@datasets.0/@items.3 //@datasets/@datasets.0/@items.4 //@datasets/@datasets.0/@items.5 //@datasets/@datasets.0/@items.6 //@datasets/@datasets.0/@items.7 //@datasets/@datasets.0/@items.8 //@datasets/@datasets.0/@items.9"/>
+    <chartSheets name="default" charts="//@datasets/@datasets.0/@items.2 //@datasets/@datasets.0/@items.3 //@datasets/@datasets.0/@items.4 //@datasets/@datasets.0/@items.5 //@datasets/@datasets.0/@items.6"/>
   </chartSheets>
 </scave:Analysis>

@@ -76,9 +76,7 @@ TODO about viewing angles
 
 ## The model
 
-The showcase contains an example simulation, which consists of four simulation runs, each with a different antenna module type.
-
-The showcase contains five example simulations, which demonstrates the directional characteristics of four antenna modules. The simulation uses the `AntennaDirectionShowcase` network:
+The showcase contains five example simulations, which demonstrate the directional characteristics of five antenna modules. The simulation uses the `AntennaDirectionShowcase` network:
 
 <img class="screen" src="network.png">
 
