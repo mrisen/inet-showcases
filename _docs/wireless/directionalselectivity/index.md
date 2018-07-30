@@ -164,7 +164,7 @@ The configuration sets the antenna type to `DipoleAntenna`, and the antenna leng
 
 TODO config
 
-<p><pre class="include" src="omnetpp.ini" from="DipoleAntenna" until="InterpolatingAnteenna"
+<p><pre class="include" src="omnetpp.ini" from="DipoleAntenna" until="InterpolatingAntenna"></pre></p>
 
 It looks like this when the simulation is run:
 
