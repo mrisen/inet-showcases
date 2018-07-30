@@ -22,6 +22,21 @@
         <properties name="Line.Name//inet/showcases/wireless/directionalantenna/results/General-antennaType=ParabolicAntenna-#0.vec General-1-20180725-17:38:40-12617 1 $antennaType=&quot;ParabolicAntenna&quot;" value="ParabolicAntenna"/>
         <properties name="Symbols.Type" value="Dot"/>
         <properties name="Symbols.Size" value="2"/>
+        <properties name="Symbols.Type//inet/showcases/wireless/directionalselectivity/results/CosineAntenna-#0.vec CosineAntenna-0-20180730-12:13:08-9429 CosineAntenna" value="Dot"/>
+        <properties name="Symbols.Size//inet/showcases/wireless/directionalselectivity/results/CosineAntenna-#0.vec CosineAntenna-0-20180730-12:13:08-9429 CosineAntenna" value="2"/>
+        <properties name="Line.Name//inet/showcases/wireless/directionalselectivity/results/CosineAntenna-#0.vec CosineAntenna-0-20180730-12:13:08-9429 CosineAntenna" value="CosineAntenna"/>
+        <properties name="Symbols.Type//inet/showcases/wireless/directionalselectivity/results/DipoleAntenna-#0.vec DipoleAntenna-0-20180730-12:13:07-9418 DipoleAntenna" value="Dot"/>
+        <properties name="Symbols.Size//inet/showcases/wireless/directionalselectivity/results/DipoleAntenna-#0.vec DipoleAntenna-0-20180730-12:13:07-9418 DipoleAntenna" value="2"/>
+        <properties name="Line.Name//inet/showcases/wireless/directionalselectivity/results/DipoleAntenna-#0.vec DipoleAntenna-0-20180730-12:13:07-9418 DipoleAntenna" value="DipoleAntenna"/>
+        <properties name="Symbols.Type//inet/showcases/wireless/directionalselectivity/results/InterpolatingAntenna-#0.vec InterpolatingAntenna-0-20180730-12:13:10-9444 InterpolatingAntenna" value="Dot"/>
+        <properties name="Symbols.Size//inet/showcases/wireless/directionalselectivity/results/InterpolatingAntenna-#0.vec InterpolatingAntenna-0-20180730-12:13:10-9444 InterpolatingAntenna" value="2"/>
+        <properties name="Line.Name//inet/showcases/wireless/directionalselectivity/results/InterpolatingAntenna-#0.vec InterpolatingAntenna-0-20180730-12:13:10-9444 InterpolatingAntenna" value="InterpolatingAntenna"/>
+        <properties name="Symbols.Type//inet/showcases/wireless/directionalselectivity/results/IsotropicAntenna-#0.vec IsotropicAntenna-0-20180730-12:13:04-9392 IsotropicAntenna" value="Dot"/>
+        <properties name="Symbols.Size//inet/showcases/wireless/directionalselectivity/results/IsotropicAntenna-#0.vec IsotropicAntenna-0-20180730-12:13:04-9392 IsotropicAntenna" value="2"/>
+        <properties name="Line.Name//inet/showcases/wireless/directionalselectivity/results/IsotropicAntenna-#0.vec IsotropicAntenna-0-20180730-12:13:04-9392 IsotropicAntenna" value="IsotropicAntenna"/>
+        <properties name="Symbols.Type//inet/showcases/wireless/directionalselectivity/results/ParabolicAntenna-#0.vec ParabolicAntenna-0-20180730-12:13:06-9403 ParabolicAntenna" value="Dot"/>
+        <properties name="Symbols.Size//inet/showcases/wireless/directionalselectivity/results/ParabolicAntenna-#0.vec ParabolicAntenna-0-20180730-12:13:06-9403 ParabolicAntenna" value="2"/>
+        <properties name="Line.Name//inet/showcases/wireless/directionalselectivity/results/ParabolicAntenna-#0.vec ParabolicAntenna-0-20180730-12:13:06-9403 ParabolicAntenna" value="ParabolicAntenna"/>
       </items>
       <items xsi:type="scave:LineChart" name="Reception Power - IsotropicAntenna" lineNameFormat="">
         <filters xsi:type="scave:Select" filterPattern="param:*.source.wlan[*].radio.antenna.typename(&quot;\&quot;IsotropicAntenna\&quot;&quot;) " type="VECTOR"/>

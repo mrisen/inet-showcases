@@ -70,9 +70,11 @@ The visualizer can display the antenna's radiation pattern, and the antenna lobe
 
 <img class="screen" src="antennalobe2.png">
 
-This visualization feature can be enabled by setting the visualizer's `DisplayAntennaLobes` parameter to `true` (false by default).
+The visualization of the radiation pattern depends on the viewing angle. TODO
 
-TODO about viewing angles
+This visualization feature can be enabled by setting the visualizer's `displayAntennaLobes` parameter to `true` (false by default).
+
+<!-- TODO about viewing angles -->
 
 ## The model
 
@@ -96,6 +98,8 @@ The configurations for the five simulations differ in the antenna settings, most
 <p><pre class="include" src="omnetpp.ini" from="General" upto="displayLinks"></pre></p>
 
 The source host is configured to send ping requests every 0.5s. This is effectively the probe interval, the antenna characteristic data can be made more fine-grained by setting a more frequent ping rate. The destination is configured to circle the source with a radius of 150m. The simulation runs for 360s, and the speed of `destination` is set so it does one full circle. This way, when plotting the reception power, the time can be directly mapped to the direction angle.
+
+TODO: about the angle time mapping -> degrees is actually 90
 
 The visualizer is set to display antenna lobes in `source` (the `displayRadios` is the master switch in `RadioVisualizer`, so it needs to be set to `true`), signal arrivals (for the reception power indication), and active data links (indicating successfully received transmissions).
 
@@ -160,6 +164,8 @@ The configuration sets the antenna type to `DipoleAntenna`, and the antenna leng
 
 TODO config
 
+<p><pre class="include" src="omnetpp.ini" from="DipoleAntenna" until="InterpolatingAnteenna"
+
 It looks like this when the simulation is run:
 
 <img class="screen" src="dipole1.png">
@@ -205,6 +211,10 @@ TODO: insert the charts here as well ?
 
 <p><video autoplay loop controls onclick="this.paused ? this.play() : this.pause();" src="interpolating2.mp4"></video></p>
 
-The edges of the rectangular radiation pattern can be made less rounded by specifying more points in the gain parameter (the points are given by the 1/cos(x) equation).
+The edges of the rectangular radiation pattern can be made less rounded by specifying more points in the gain parameter (the points are given by the 1/cos(x) equation). TODO: not sure the last part is needed
 
 <img class="screen" src="interpolatingchart.png" onclick="imageFullSizeZoom(this);">
+
+TODO: not sure the individual characteristics are needed
+
+<img class="screen" src="allantennas.png" onclick="imageFullSizeZoom(this);" style="cursor:zoom-in">
