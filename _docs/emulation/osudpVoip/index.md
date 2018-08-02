@@ -27,7 +27,7 @@ The `ExtUdp` module makes it possible for the model to be extracted from the sim
 
 Usually a network in a simulation contains some nodes and connections in between. In this case it is different. Only a simulated sender application and a simulated receiver application are needed in order to send the packets into the real network on one side and receive them on the other side.
 
-There are only two modules per "network". There is a `VoipStreamSender` in the sender application and a `VoipStreamReceiver` in the receiver application, both called `app`. Both Applications contain a `ExtUdp` module, called `udp`. The layout of the two applications can be seen on the following image:
+There are only two modules per "network". There is a `VoipStreamSender` in the sender application and a `VoipStreamReceiver` in the receiver application, both called `app`. Both Applications contain a `ExtUdp` module, called `udp`. The layout of the two applications can be seen in the following image:
 
 | Voip Stream Sender Application || Voip Stream Receiver Application |
 | :---: |:---:| :---: |
@@ -82,15 +82,19 @@ Another important point of the emulation is to set the `RealTimeScheduler` as th
 scheduler-class = "inet::RealTimeScheduler"
 </pre></p>
 
-Using this scheduler, the simulation is run according to the real time of the CPU.
+Using this scheduler, the execution of the simulation is synchronized to the real time of the CPU.
+
+**Note:** *Operation of the real-time scheduler: a "base time" is determined when `startRun()` is called. Later on, the scheduler object calls `usleep()` from `getNextEvent()` to synchronize the simulation time to real time, that is, to wait until the current time minus base time becomes equal to the simulation time. Should the simulation lag behind real time, this scheduler will try to catch up by omitting sleep calls altogether.*
 
 ## Results
 
 #### Original music
 
-As a reference, you can listen to the original audio file by clicking on the play button below:
+As a reference, you can listen to the original audio file by clicking the play button below:
 
 <p><audio controls> <source src="original.mp3" type="audio/mpeg">Your browser does not support the audio tag.</audio></p>
+
+This music is then sampled and forwarded by the `VoipStreamSender` module and received by the `VoipStreamReceiver` module. The packets exit the simulation at the `ExtUdp` of the sender side and enter the other simulation at the `ExtUdp` of the receiver side. In between the packets travel across the real network (the computer's loopback interface in our case).
 
 #### `VoIP` configuration
 
@@ -105,7 +109,7 @@ It is stated above that the two simulations run separately on the same device us
 <!--Emulation proof-->
 </p>
 
-It is clearly visible that the traffic rate of the loopback interface increases from the former value of 0 to a much higher, relatively constant value, as soon as the sender side of the emulation is started. After the end of the simulation, meaning that there are no more data to be sent, the traffic rate falls back to 0.
+It is clearly visible that the traffic rate of the loopback interface increases from the former value of zero to a higher, relatively constant value, as soon as the sender side of the emulation is started. After the end of the simulation, meaning that there are no more data to be sent, the traffic rate falls back to zero.
 
 ## Conclusion
 
@@ -114,7 +118,7 @@ It is not necessary to rewrite the simulated model into a suitable form for test
 ## Further Information
 
 The following link provides more information about VoIP in general:
-- <a href="https://hu.wikipedia.org/wiki/Voice_over_IP" target="_blank">VoIP</a>
+- <a href="https://en.wikipedia.org/wiki/Voice_over_IP" target="_blank">VoIP</a>
 
 The network traffic was observed using <a href="https://github.com/tgraf/bmon" target="_blank">bmon</a>, which is a monitoring and debugging tool to capture networking related statistics and prepare them visually in a human friendly way.
 
