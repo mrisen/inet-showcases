@@ -62,5 +62,6 @@
   link: /inet-showcases/emulation
   submenu:
      - page: _docs/emulation/osudpVoip/index.md
+     - page: _docs/emulation/pingpong/index.md
 - name: Back to INET
   link: https://inet.omnetpp.org/
