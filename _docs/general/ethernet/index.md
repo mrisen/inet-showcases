@@ -95,6 +95,8 @@ LargeNet.*.b = 7	# number of hosts connected to a bus in each LAN
 #
 </pre></p>
 
+<p><pre class="snippet" src="../../general/ethernet/largeNet/largeNet.ini" from="number of hosts" until="request-response" comment="#!"></pre></p>
+
 By default, no finite buffer is used in hosts, so MAC contains an internal queue named `txQueue` to queue up packets waiting for transmission. Conceptually, `txQueue` is of infinite size, but for better diagnostics one can specify a hard limit in the `txQueueuLimit` parameter. If this limit is exceeded, the simulation stops with an error. In this example `DropTailQueue` is used instead, in order to observe the drop statistics (as well):
 
 <p><pre class="snippet">

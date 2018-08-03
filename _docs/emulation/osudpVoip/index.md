@@ -45,42 +45,19 @@ The simulation is run until all the packets arrive.
 
 As stated above, in this showcase both simulations are run on the same computer. That is why the `destAddress` parameter is set to `27.0.0.1` address, called the loopback address, referring to *this computer*.
 
-<p><pre class="snippet">
-# Example configuration of the VoipStreamSender module
-*.app.packetTimeLength = 20ms
-*.app.voipHeaderSize = 4B
-*.app.voipSilenceThreshold = 100
-*.app.repeatCount = 1
-
-*.app.soundFile = "Beatify_Dabei_cut.mp3"
-
-*.app.localPort = -1
-*.app.destPort = 1000
-*.app.destAddress = "127.0.0.1"
-
-[Config VoIP]
-*.app.codec = "pcm_s16le"
-*.app.sampleRate = 32000Hz
-</pre></p>
+<p><pre class="snippet" src="../../emulation/osudpVoip/sender.ini" from="packetTimeLength" comment="#!"></pre></p>
 
 The `VoIP` configuration is run in order to demonstrate that the sound is actually transmitted from the sender to the receiver.
 
 **`VoipStreamReceiver:`**
 
-<p><pre class="snippet">
-# Example configuration of the VoipStreamReceiver module
-*.app.localPort = 1000
-*.app.resultFile = "results/sound.wav"
-</pre></p>
+<p><pre class="snippet" src="../../emulation/osudpVoip/receiver.ini" from="localPort" comment="#!"></pre></p>
 
 Although the `udp` module is the key module of the emulation, it does not need any configuration. This module acts as a bridge between the simulated and the real world. When instead of `UdpApp` this `ExtUdp` is used, it means that from that point on the emulation is running in the real world. In this case it means that at the `ExtUdp` the VoIP traffic exits the simulation and enters the real operating environment of the OS, and vice versa.
 
 Another important point of the emulation is to set the `RealTimeScheduler` as the mean of synchronization:
 
-<p><pre class="snippet">
-# Synchronization
-scheduler-class = "inet::RealTimeScheduler"
-</pre></p>
+<p><pre class="snippet" src="../../emulation/osudpVoip/receiver.ini" from="RealTimeScheduler" until="tkenv-plugin-path" comment="#!"></pre></p>
 
 Using this scheduler, the execution of the simulation is synchronized to the real time of the CPU.
 
