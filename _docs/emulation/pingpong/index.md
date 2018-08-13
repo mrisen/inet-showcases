@@ -1,6 +1,6 @@
 ---
 layout: page
-title: pingpong
+title: Connecting the Real and the Simulated World
 hidden: true
 ---
 
@@ -27,7 +27,7 @@ This showcase presents three different scenarios.
 
 **Fully Simulated Network**
 
-The first example presented in this showcase is a fully simulated network. The network consist of two hosts (`host1` and `host2`) and a 100Mbps ethernet connection between them. The following image shows the layout of the first network:
+The first example presented in this showcase is a fully simulated network. The network consist of two hosts (`host1` and `host2`) and a 100Mbps Ethernet connection between them. The following image shows the layout of the first network:
 
 <a href="pingpong_layout_1.png" target="_blank"><img class="screen" src="pingpong_layout_1.png"></a>
 
@@ -48,9 +48,9 @@ In the third example, there is a simulated node, `host1`, and a a simulated conn
 **Important!** Please make sure to follow the steps on the [previous page](../) to set the application permissions!
 
 The showcase involves three different configurations:
-- `Simulated:` A fully simulated model with two nodes and a 100Mbps ethernet connection between them.
+- `Simulated:` A fully simulated model with two nodes and a 100Mbps Ethernet connection between them.
 - `Emulated1:` One of the nodes is simulated, the other node and the connection is in the real operating environment.
-- `Emulated2:` One of the nodes and the 100Mbps ethernet connection is simulated, the other node is in the real operating environment.
+- `Emulated2:` One of the nodes and the 100Mbps Ethernet connection is simulated, the other node is in the real operating environment.
 
 In all the three examples the `PingApp` of the simulated `host1` sends ping packets with the destination address of `192.168.2.2`.
 
@@ -98,7 +98,7 @@ This time the simulations are run from the terminal in order to show the above d
 
 #### `Simulated` configuration
 
-There are no preparations needed for the `Simulated` configuration to run. As the video confirms, this is a fully simulated model, which runs in a dimulated environment. No real network interfaces of the computer are influenced by the simulation, meaning that no extra traffic appears on them:
+There are no preparations needed for the `Simulated` configuration to run. As the video confirms, this is a fully simulated model, which runs in a simulated environment. No real network interfaces of the computer are influenced by the simulation, meaning that no extra traffic appears on them:
 
 <p>
 <video autoplay loop controls src="Simulated_EDIT.mp4" type="video/mp4" onclick="this.paused ? this.play() : this.pause();">Your browser does not support HTML5 video.</video>
@@ -107,7 +107,7 @@ There are no preparations needed for the `Simulated` configuration to run. As th
 
 #### `Emulated1` configuration
 
-As mentioned above, this configuration uses the `ExtLowerEthernetInterface` offered by INET. This external interface acts as a bridge between the simulated and the real world. From this modul on, the emulation enters the real operation environment of the OS. The following video shows how the traffic rate of the virtual ethernet devices changes, while the emulation is running. Right at the beginning of the video, you can also take a look at the previous configurations that needed to be done for the emulation to run without errors:
+As mentioned above, this configuration uses the `ExtLowerEthernetInterface` offered by INET. This external interface acts as a bridge between the simulated and the real world. From this module on, the emulation enters the real operation environment of the OS. The following video shows how the traffic rate of the virtual ethernet devices changes, while the emulation is running. Right at the beginning of the video, you can also take a look at the previous configurations that needed to be done for the emulation to run without errors:
 
 <p>
 <video autoplay loop controls src="Emulated1_EDIT.mp4" type="video/mp4" onclick="this.paused ? this.play() : this.pause();">Your browser does not support HTML5 video.</video>
@@ -127,7 +127,7 @@ In this configuration, the `ExtUpperEthernetInterface` is used. In a sense this 
 
 ## Conclusion
 
-We can crealry see that using the external interfaces, the emulation can switch between the real and the simulated environment. This emulation feature of INET makes it possible for the user to "cut" the network at arbitrary points into many pieces and leave some of them in the simulation while extracting the others into the real world.
+We can clearly see that using the external interfaces, the emulation can switch between the real and the simulated environment. This emulation feature of INET makes it possible for the user to "cut" the network at arbitrary points into many pieces and leave some of it in the simulation while extracting the others into the real world.
 
 ## Further Information
 
