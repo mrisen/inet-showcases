@@ -8,7 +8,7 @@ hidden: true
 
 Ping is a basic Internet program that allows a user to verify that a particular IP address exists and can accept requests. Ping is used diagnostically to ensure that a host computer the user is trying to reach is actually operating. INET features a way to simulate ping between hosts.
 
-This showcase presents the emulation feature of the INET framework by performing "ping traffic" in simulated and emulated models.
+This showcase presents the emulation feature of the INET framework by performing ping communication in simulated and emulated models.
 
 INET version: `4.0`<br>
 Source files location: <a href="https://github.com/inet-framework/inet-showcases/tree/master/emulation/pingpong" target="_blank">`inet/showcases/emulation/pingpong`</a>
@@ -23,7 +23,7 @@ Ping operates by sending Internet Control Message Protocol (ICMP) echo request p
 
 ### The network
 
-This showcase presents three different scenarios.
+This showcase presents three different scenarios in order to present how an emulated network can be divided at different parts in contrast with a fully simulated one.
 
 **Fully Simulated Network**
 
@@ -127,7 +127,7 @@ In this configuration, the `ExtUpperEthernetInterface` is used. In a sense this 
 
 ## Conclusion
 
-We can clearly see that using the external interfaces, the emulation can switch between the real and the simulated environment. This emulation feature of INET makes it possible for the user to "cut" the network at arbitrary points into many pieces and leave some of it in the simulation while extracting the others into the real world.
+We can clearly see that using the external interfaces, the emulation can switch between the real and the simulated environment. This emulation feature of INET makes it possible for the user to "cut" the network at arbitrary points into many pieces and leave some of them in the simulation while extracting the others into the real world.
 
 ## Further Information
 
