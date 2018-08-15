@@ -82,7 +82,7 @@ Due to the high sampling rate, the quality of the received sound is nearly as go
 It is stated above that the two simulations run separately on the same device using the computer's loopback interface. To provide some evidence for supporting this statement, we can take a look at the network traffic rate of the interfaces of the computer. The following video shows how the traffic rate of the loopback interface (named `lo`) changes while the simulation is running:
 
 <p>
-<video autoplay loop controls src="ExtUdp_EDIT.mp4" type="video/mp4" onclick="this.paused ? this.play() : this.pause();">Your browser does not support HTML5 video.</video>
+<video autoplay loop controls src="loopback.mp4" type="video/mp4" onclick="this.paused ? this.play() : this.pause();">Your browser does not support HTML5 video.</video>
 <!--Emulation proof-->
 </p>
 
