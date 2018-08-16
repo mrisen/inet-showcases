@@ -15,6 +15,8 @@
 
 package inet.showcases.visualizer.osgdemo;
 import inet.common.geometry.common.OsgGeographicCoordinateSystem;
+import inet.environment.common.PhysicalEnvironment;
+import inet.environment.ground.OsgEarthGround;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.inet.AdhocHost;
 import inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium;
@@ -24,9 +26,45 @@ import inet.visualizer.integrated.IntegratedVisualizer;
 //
 // TODO documentation
 //
-network osgDemoNetworkShowcase
+network osgDemoHumveeShowcase
 {
-    @display("bgb=1000,1000");
+    parameters:
+        int hosts;
+        @display("bgb=5000,5000");
+    submodules:
+        visualizer: IntegratedVisualizer {
+            parameters:
+                @display("p=120,50");
+        }
+        coordinateSystem: OsgGeographicCoordinateSystem {
+            parameters:
+                @display("p=120,150");
+        }
+        radioMedium: Ieee80211ScalarRadioMedium {
+            @display("p=120,250");
+        }
+        configurator: Ipv4NetworkConfigurator {
+            @display("p=120,350");
+        }
+        ground: OsgEarthGround {
+            @display("p=120,450");
+        }
+        physicalEnvironment: PhysicalEnvironment {
+            @display("p=120,550");
+        }
+        humvee[hosts]: AdhocHost {
+            @display("p=456.365,219.9225;i=misc/truck2");
+        }
+}
+
+//
+// TODO documentation
+//
+network osgDemoDroneShowcase
+{
+    parameters:
+        int hosts;
+        @display("bgb=5000,5000");
     submodules:
         visualizer: IntegratedVisualizer {
             parameters:
@@ -42,8 +80,11 @@ network osgDemoNetworkShowcase
         configurator: Ipv4NetworkConfigurator {
             @display("p=100,350");
         }
-        man[5]: AdhocHost {
-            @display("p=456.365,219.9225;i=misc/person3");
+        drone[hosts]: AdhocHost {
+            @display("p=456.365,219.9225;i=misc/drone");
+        }
+        ground: OsgEarthGround {
+            @display("p=100.399994,477.904");
         }
 }
 
