@@ -316,7 +316,7 @@ broadcasts an ``AodvRreq`` message. The RREQ is re-broadcast by the
 adjacent nodes, until it gets to ``destination``. The destination node
 sends a unicast ``AodvRrep``. It is forwarded on the reverse path the
 RREQ message arrived on
-(``destination``->``node6``->``node1``->``source``). As the intermediate
+(``destination`` ⮕ ``node6`` ⮕ ``node1`` ⮕ ``source``). As the intermediate
 nodes receive the RREP message, the routes to ``destination`` are
 created. The routes are visualized with black arrows, the
 ``RoutingTableVisualizer`` is configured to only visualize routes
@@ -331,13 +331,13 @@ the packet a few times, but it doesn't get an ACK). So ``host6``
 broadcasts an ``AodvRerr`` message, indicating that the link no longer
 works. When the RERR gets back to ``host1``, it initates route discovery
 by broadcasting a RREQ message. When a new route is discovered
-(``source``->``node1``->``destination``), the ping traffic can continue.
+(``source`` ⮕ ``node1`` ⮕ ``destination``), the ping traffic can continue.
 
 The following log excerpt shows ``node6`` handling the first RREQ and
 RREP messages:
 
 .. figure:: aodvlog3.png
-   :width: 100% 
+   :width: 100%
 
 DSDV
 ~~~~
@@ -406,7 +406,7 @@ configuration in :download:`omnetpp.ini <../omnetpp.ini>`. It uses the
 following:
 
 .. figure:: networkB.png
-   :width: 100% 
+   :width: 100%
 
 Just as with the previous two configurations, the nodes are
 ``ManetRouter``\ s. The nodes are laid out along a chain. The
@@ -465,7 +465,7 @@ that for routing decisions. Here is ``node12``'s neightbor position
 table:
 
 .. figure:: positions.png
-   :width: 100% 
+   :width: 100%
 
 The table links node positions with IP addresses (it also contains the
 beacon arrival time).

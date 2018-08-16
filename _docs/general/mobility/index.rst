@@ -23,8 +23,6 @@ Source files location: `inet/showcases/general/mobility <https://github.com/inet
 Concepts
 --------
 
-
-
 .. <!-- What are moblity models? -->
 
 In general, mobility models describe motion in a 3D right-handed
@@ -62,8 +60,6 @@ projection using angle, scaling and translation parameters. For more
 information, see `Visualizing the Physical
 Environment </showcases/visualizater/environment>`__
 
-
-
 .. <!-- How are mobility models implemented in INET?-->
 
 In INET, mobility models are usually implemented as OMNeT++ simple
@@ -72,8 +68,6 @@ mobility models. Some only determine initial position, some describe a
 motion over time, some allows combining other mobility models to create
 complex motions. The available mobility modules can be found in the
 ``inet/src/inet/mobility`` directory.
-
-
 
 .. <!-- How are moblity models used? -->
 
@@ -312,7 +306,7 @@ of the simulation:
 
 
 
-   .. video:: Simplest1.mp4
+.. video:: Simplest1.mp4
 
 
 
@@ -375,7 +369,7 @@ Here is the simulation when running:
 
 
 
-   .. video:: Simplest2.mp4
+.. video:: Simplest2.mp4
 
 
 
@@ -424,7 +418,7 @@ this showcase are the following:
 Note that this showcase describes the featured mobility modules and
 their important parameters. For all parameters, check the NED
 documentation of the different mobility modules
-(```inet/src/inet/mobility`` <https://github.com/inet-framework/inet/tree/master/src/inet/mobility>`__).
+(`inet/src/inet/mobility <https://github.com/inet-framework/inet/tree/master/src/inet/mobility>`__).
 
 .. <!-- TODO: somewhere -> mobilitybase -->
 
@@ -621,10 +615,10 @@ speed (the speed is 0 by default).
 
 
 
-   .. video:: Deterministic2.mp4
+.. video:: Deterministic2.mp4
 
-\ **Stochastic movement**
-'''''''''''''''''''''''''
+Stochastic movement
+'''''''''''''''''''
 
 Mobility models in this category contain random elements when describing
 the movement (although in a sense the movement is deterministic, as the
@@ -676,11 +670,7 @@ Here is the configuration in omnetpp.ini:
 The mobility module is set to totally random motion, with a variance of
 0.5.
 
-
-
-   .. video:: Stochastic2.mp4
-
-
+.. video:: Stochastic2.mp4
 
 .. <!--internal video recording, animation speed 1, playback speed 4.37, zoom 1.3, normal run, about 100s simulation time-->
 
@@ -821,7 +811,7 @@ configured to face towards ``host7``'s mobility submodule.
 
 
 
-   .. video:: Facing1.mp4
+.. video:: Facing1.mp4
 
 Categorizing mobility models according to **method of configuration**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -852,7 +842,7 @@ etc. These motion elements can be used as building blocks for descibing
 complex motion. Motion elements can be repeated as well. See the example
 below. For the complete description of the XML language, see the `NED
 documentation of
-``TurtleMobility`` <https://github.com/inet-framework/inet/blob/master/src/inet/mobility/single/TurtleMobility.ned>`__.
+`TurtleMobility <https://github.com/inet-framework/inet/blob/master/src/inet/mobility/single/TurtleMobility.ned>`__.
 The mobility model's only ini parameter is ``turtleScript``, which
 specifies the XML file to use.
 
@@ -889,12 +879,7 @@ The script describes the hexagon motion pattern:
 
 It looks like the following when the simulation is run:
 
-
-
-   <p>
-   .. video:: scriptable.mp4
-   </p>
-
+.. video:: scriptable.mp4
 
 
 .. <!--internal video recording, animation speed 1, playback speed 5.5, zoom 1.3-->
@@ -914,8 +899,8 @@ mobilities use multiple mobility modules to describe a motion. There are
 two examples, ``AttachedMobility`` and ``SuperpositioningMobility``.
 Both are demonstrated below.
 
-\ **Compound** mobilities
-'''''''''''''''''''''''''
+**Compound** mobilities
+'''''''''''''''''''''''
 
 ``AttachedMobility`` can "attach" itself to another mobility module,
 with a certain offset. I.e. the ``AttachedMobility`` module takes the
@@ -935,7 +920,7 @@ coordinate offset parameters for position and orientation:
 -  ``offsetX``, ``offsetY``, ``offsetZ``
 -  ``offsetHeading``, ``offsetElevation``, ``offsetBank``
 
-**``AttachedMobility``**: Example 1
+**AttachedMobility**: Example 1
 '''''''''''''''''''''''''''''''''''
 
 In the first example, ``host[0]`` is moving using ``LinearMobility``.
@@ -963,9 +948,7 @@ offset 45 degrees.
 
 Here is a video of the simulation running:
 
-
-
-   .. video:: Attached2_2.mp4
+.. video:: Attached2_2.mp4
 
 The hosts keep a formation around ``host[0]``. Note that as ``host[0]``
 bounces back from the boundary of the constraint area, there is a jump
@@ -979,8 +962,8 @@ in the position of the other hosts.
 
 .. <!-- The nodes move circularly, but keep the offset from the source node. They move circularly as the coordinate system of the source node rotates. -->
 
-**``AttachedMobility``**: Example 2
-'''''''''''''''''''''''''''''''''''
+**AttachedMobility**: Example 2
+'''''''''''''''''''''''''''''''
 
 In the second example simulation, one of the hosts will be moving along
 a circle, with other hosts "attached". The example simulation uses the
@@ -1010,9 +993,7 @@ following image:
 The attached hosts will keep the offset from ``host[0]``, and they'll
 move circularly as the coordinate system of ``host[0]`` rotates.
 
-
-
-   .. video:: Attached3.mp4
+.. video:: Attached3.mp4
 
 The relative position of the hosts is constant. ``host[4]`` is
 configured to orbit on the opposite side of the circle. It appears as if
@@ -1020,8 +1001,8 @@ host[4] is orbiting on the same circle, and in the same direction, but
 actually it is just offset in ``host[0]``'s coordinate system by the
 circle radius and -180 degrees.
 
-**``SuperpositioningMobility``**
-''''''''''''''''''''''''''''''''
+**SuperpositioningMobility**
+''''''''''''''''''''''''''''
 
 ``SuperpositioningMobility`` combines the effect of multiple mobility
 models. It is a compound module containing other mobility modules. The
@@ -1046,8 +1027,8 @@ were ordinary mobility submodules in a host, but they are one level
 deeper. So instead of ``mobility.typeName = XY``, the mobility
 submodules can be referenced with ``mobility.element[0].typeName = XY``
 
-**``SuperpositioningMobility``**: Example 1
-'''''''''''''''''''''''''''''''''''''''''''
+**SuperpositioningMobility**: Example 1
+'''''''''''''''''''''''''''''''''''''''
 
 .. todo::
 
@@ -1079,16 +1060,13 @@ circlemobility and a gauss markov mobility. The two mobility submodules
 are set up similarly as in the previous examples that featured them. The
 constraint area TODO
 
-
-
-   .. video:: Superposition1.mp4
+.. video:: Superposition1.mp4
 
 More superpositioning examples here
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**``SuperpositioningMobility``**: Example 2
+**SuperpositioningMobility**: Example 2
 '''''''''''''''''''''''''''''''''''''''''''
-
 .. todo::
 
    it combines attached and superpositioning
@@ -1104,15 +1082,11 @@ uses ``SuperpositioningMobility``, with the superposition of an
 ``MobilityShowcaseB`` network with two hosts. Here is the configuration
 in omnetpp.ini:
 
-
-
 .. <p><pre class="include" src="omnetpp.ini" from="Superpositioning2" upto="-50mps"></pre></p>
 
 .. literalinclude:: ../omnetpp.ini
    :start-at: Superpositioning2
    :end-at: -50mps
-
-
 
 .. <!-- TODO how it is attached. why the constraint area needed. The network, 2 hosts... -->
 
@@ -1129,9 +1103,7 @@ would bounce back. Thus the constraint area of the ``CircleMobility``
 module need to be set to allow negative values for the X and Y
 coordinates.
 
-
-
-   .. video:: Superposition2.mp4
+.. video:: Superposition2.mp4
 
 TODO:
 
@@ -1174,8 +1146,6 @@ while facing towards it.
 
 Here is the configuration in omnetpp.ini:
 
-
-
 .. <p><pre class="include" src="omnetpp.ini" from="InitialVsOvertimePositioning" upto="targetMobility"></pre></p>
 
 .. literalinclude:: ../omnetpp.ini
@@ -1189,8 +1159,6 @@ Here is the configuration in omnetpp.ini:
 ``host[7]`` stays at the center of the playground, using
 ``StationaryMobility``:
 
-
-
 .. <p><pre class="include" src="omnetpp.ini" from="InitialVsOvertimePositioning" upto="initialZ"></pre></p>
 
 .. literalinclude:: ../omnetpp.ini
@@ -1200,8 +1168,6 @@ Here is the configuration in omnetpp.ini:
 The other hosts have a ``SuperpositioningMobility`` module, with three
 elements. Initial positioning is done by ``element[0]``, a
 ``StaticConcentricMobility`` module:
-
-
 
 .. <p><pre class="include" src="omnetpp.ini" from="static concentric circles" upto="distance" comment="#"></pre></p>
 
@@ -1216,8 +1182,6 @@ achieved by ``element[1]`` in ``host[0]``, which is a
 .. todo::
 
    why is the center of the circle not 200,200 ?
-
-
 
 .. <p><pre class="include" src="omnetpp.ini" from="larger circle following" upto="speed" comment="#"></pre></p>
 
@@ -1234,8 +1198,6 @@ The other hosts (``host[1]`` to ``host[6]``) have an
    only attached mobility, they are at the same position, but later will be
    superponed with the initial circle positioning
 
-
-
 .. <p><pre class="include" src="omnetpp.ini" from="other hosts follow" upto="mobilityModule" comment="#"></pre></p>
 
 .. literalinclude:: ../omnetpp.ini
@@ -1243,8 +1205,6 @@ The other hosts (``host[1]`` to ``host[6]``) have an
    :end-at: mobilityModule
 
 Also, all moving hosts face towards ``host[7]`` with ``FacingMobility``:
-
-
 
 .. <p><pre class="include" src="omnetpp.ini" from="towards the last host" upto="targetMobility" comment="#"></pre></p>
 
@@ -1260,8 +1220,6 @@ create very complex motion patterns.
 
    maybe rewrite this ?
 
-
-
 .. <!-- ### The mars rover example -> using the mobility to orient antennas -->
 
 Using mobility to orient antennas
@@ -1271,16 +1229,10 @@ Mobility modules can be used to orient antennas independently from the
 orientation of their containing network node. This section describes
 just that, and demonstrates it with an example simulation.
 
-
-
 .. <!-- TODO: actually, the receiver and transmitter submodule uses the antenna's position and orientation -->
-
-
 
 .. <!-- antennas can have mobility submodules (so own position and orientation)
    it is useful for orienting antennas independently of the network node -->
-
-
 
 .. <!--how can antennas themselves be oriented, without changing the orientation of the network node itself?-->
 
@@ -1304,8 +1256,6 @@ sense to attach the antenna position to the network nodes' at some
 offset. This allows for creating nodes that are extended objects (as
 opposed to being point objects)(they are by default point objects)
 
-
-
 .. <!-- Orienting antennas might not make sense when they lack directionality, but in this example, yes. TODO.
 
 .. Antenna orientation might be irrelevant when the antenna lacks directionality, but -->
@@ -1315,17 +1265,11 @@ antennas. This example uses isotropic antennas (and there is no
 communication), because the goal is to just demonstrate how antennas can
 be oriented independently.
 
-
-
 .. <!-- Thus it is more realistic, because antennas can be oriented independently of the network node's orientation. They can be elsewhere. This only makes sense when the antenna position somehow depends on the network node's position, e.g. it is attached. This implies a kind of extended body for the network node. I.e. the network node has a position XY, and the antennas are offset from that.
 
 .. Antenna modules have optinal mobility submodule. In LinkLayerNodeBase, the mobility submodule of the contained antenna module is set to be the network node's mobility module. The antenna module can have its own mobility submodule. Thus its own position and orientation. Thus antennas can be oriented independently of the containing network node's orientation, and can be also positioned independently. The latter makes sense if it is somehow attached to the network node. -->
 
-
-
 .. <!-- TODO: antenna orientation doesn't make sense with isotropic antennas. -->
-
-
 
 .. <!-- Which leads to there should be directional antennas. Which leads to there should be communication, the success of which depends on the properly oriented antennas. Which leads to the idea that this example is kind of an outlier, and might belong in another (but connected) showcase.
 
@@ -1337,11 +1281,7 @@ be oriented independently.
 
 .. this example should be here, and use isotropic antennas...and it should be noted that this whole thing doesn't make sense with isotropic antennas which is kind of dumb -->
 
-
-
 .. <!-- - the scenario -->
-
-
 
 .. <!-- The scenario is the following: a mars rover prototype is being tested in the desert. It has two antennas, each of them oriented differently. -->
 
@@ -1354,8 +1294,6 @@ the antennas tracks the drone, the other one is directed at the base.
 The simulation is defined in the ``AntennaOrientation`` configuration.
 It uses the ``MobilityShowcaseC`` network:
 
-
-
 .. <p><pre class="include" src="MobilityShowcase.ned" from="MobilityShowcaseC" until="until"></pre></p>
 
 .. literalinclude:: ../MobilityShowcase.ned
@@ -1366,11 +1304,7 @@ The size of the network is 800x800 meters. The network contains an
 ``Ieee80211ScalarRadioMedium`` and an ``IntegratedMultiVisualizer``
 module. The ``rover``, ``base`` and ``drone`` are ``StandardHost``\ s.
 
-
-
 .. <!-- <p><pre class="include" src="omnetpp.ini" from="AntennaOrientation8" upto="yellow"></pre></p> -->
-
-
 
 .. <!-- TODO: this is too long - the antenna mobility settings only? -->
 
@@ -1380,19 +1314,13 @@ center of the playground. The ``rover`` has two wireless interfaces, and
 thus two antennas, which have a mobility submodule. The configuration in
 omnetpp.ini related to antenna mobility is the following:
 
-
-
 .. <p><pre class="include" src="omnetpp.ini" from="antenna.mobility" upto="initFromDisplayString"></pre></p>
 
 .. literalinclude:: ../omnetpp.ini
    :start-at: antenna.mobility
    :end-at: initFromDisplayString
 
-
-
 .. <!--this include should work after ini cleanup-->
-
-
 
 .. <!-- TODO: about the mobility configuration -->
 
@@ -1408,8 +1336,6 @@ host. Element[1] is a ``FacingMobility``, the antenna tracks its target.
    happens to the facing ? does it need face forward = false ? -> meaning
    it doesnt move in the 0,0,0 direction
 
-
-
 .. <!-- the antennas have superpositioning mobility -> attached, and facing
    they are attached at an offset
 
@@ -1418,8 +1344,6 @@ host. Element[1] is a ``FacingMobility``, the antenna tracks its target.
    actually, the offset is like 45m...this is ridiculous -> but it is more visible that way. -->
 
 -  the results
-
-
 
 .. video:: antennaorientation2.mp4
 

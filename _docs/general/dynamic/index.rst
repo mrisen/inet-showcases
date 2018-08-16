@@ -170,7 +170,7 @@ be deleted after some time. The example simulation for this showcase
 uses the following network:
 
 .. figure:: network2.png
-   :width: 100% 
+   :width: 100%
 
 The network contains an ``IntegratedCanvasVisualizer``, an
 ``Ieee80211ScalarRadioMedium``, and a ``ScenarioManager`` module. It
@@ -227,8 +227,6 @@ Results
 -------
 
 What happens when the simulation is run is shown in the following video:
-
-
 
 .. video:: General1.mp4
    :width: 698
