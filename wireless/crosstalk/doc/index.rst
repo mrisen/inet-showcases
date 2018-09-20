@@ -27,15 +27,14 @@ channels into three cases:
 -  **Completely overlapping frequency bands**: all nodes communicate on
    the same wifi channel
 -  **Independent frequency bands**: nodes communicate on different
-   channels that doesn't affect each other
+   channels that don't affect each other
 -  **Partially overlapping frequency bands**: nodes communicate on
    adjacent channels, which interfere with each other
 
 There is a simulation for each case in omnetpp.ini.
 
-INET version: ``4.0``
-
-Source files location: `inet/showcases/wireless/crosstalk <https://github.com/inet-framework/inet-showcases/tree/master/wireless/crosstalk>`__
+| INET version: ``4.0``
+| Source files location: `inet/showcases/wireless/crosstalk <https://github.com/inet-framework/inet-showcases/tree/master/wireless/crosstalk>`__
 
 The model
 ---------
@@ -96,7 +95,8 @@ modules are to be used with :ned:`Ieee80211ScalarRadio` and
 which kind of analog model is used by radio medium and radio modules.)
 
 .. figure:: scalar.png
-   :width: 100%
+   :width: 60%
+   :align: center
 
 In a dimensional representation, the signal can have a power level that
 is not constant in time and frequency. The "shape" of the signal can be
@@ -107,7 +107,8 @@ frequency and bandwidth. However, dimensional analog models require more
 processing power.
 
 .. figure:: dimensional.png
-   :width: 100%
+   :width: 60%
+   :align: center
 
 Example simulations
 ~~~~~~~~~~~~~~~~~~~
@@ -117,7 +118,8 @@ section. All simulations use variations of the same network, which is
 illustrated by the image below:
 
 .. figure:: basenetwork.png
-   :width: 100%
+   :width: 80%
+   :align: center
 
 The networks contains four ``adhocHost``\ s, named ``host1`` to
 ``host4``. The networks also contains an :ned:`Ipv4NetworkConfigurator`
@@ -143,7 +145,7 @@ same wifi channel, the default channel 1. The simulation can be run by
 selecting the ``CompletelyOverlappingFrequencyBands`` configuration from
 the ini file. Since the frequency and bandwidth of transmissions for all
 hosts is exactly the same, inferring which transmissions interfere is
-trivial (all of them). In this case a scalar analog model is sufficient.
+obvious (all of them). In this case a scalar analog model is sufficient.
 The following video shows the node-pairs communicating:
 
 .. video:: overlapping1.mp4
@@ -166,7 +168,7 @@ Nodes on non-overlapping wifi channels (independent frequency bands)
 
 In this case, we are modeling host-pairs that are communicating on
 different, non-overlapping wifi channels (e.g. channels 1 and 6.) Since
-the channels are independent, it is trivial that there won't be any
+the channels are independent, it is obvious that there won't be any
 interference. The scalar analog model is sufficient for this case.
 
 .. todo::
@@ -192,16 +194,16 @@ their transmissions are correctly receivable by both destination hosts.
 Note that all transmissions are sent to all hosts by the radio medium
 module.
 
-In the above, it was trivial that ``host4`` cannot receive ``host1``'s
+In the above, it was obvious that ``host4`` cannot receive ``host1``'s
 transmissions, just as ``host2`` cannot receive ``host3``'s
 transmissions. Yet the radio medium module sent all transmissions to all
 hosts, where the radio module decided that some of the transmissions
 cannot be received because the host's receiver is set to a different
 channel.
 
-The simulation can be optimized by ommiting these unnecessary message
-sends by the radio medium, by using two radio medium modules and placing
-the trivially non-interfering host-pairs on a different radio medium.
+The simulation can be optimized by omitting these unnecessary message
+sends by the radio medium, by using two radio medium modules and configuring
+the obviously non-interfering host-pairs to use different radio mediums.
 
 .. todo:: it scales better
 
