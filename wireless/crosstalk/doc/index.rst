@@ -85,14 +85,7 @@ described by two values: a center frequency and a bandwidth. Two scalar
 transmissions can only interfere if the frequency and bandwidth of two
 transmission are exactly identical. Partially overlapping signals cause
 an error, but completely non-overlapping signals are allowed by the
-scalar model.)
-
-For example, :ned:`Ieee80211ScalarRadioMedium` and
-:ned:`Ieee80211DimensionalRadioMedium` are radio medium modules which use a
-scalar and a dimensional analog model by default. These two radio medium
-modules are to be used with :ned:`Ieee80211ScalarRadio` and
-:ned:`Ieee80211DimensionalRadio` in hosts. (Generally, the name hints as to
-which kind of analog model is used by radio medium and radio modules.)
+scalar model.
 
 .. figure:: scalar.png
    :width: 60%
@@ -109,6 +102,13 @@ processing power.
 .. figure:: dimensional.png
    :width: 60%
    :align: center
+
+For example, :ned:`Ieee80211ScalarRadioMedium` and
+:ned:`Ieee80211DimensionalRadioMedium` are radio medium modules which use a
+scalar and a dimensional analog model by default. These two radio medium
+modules are to be used with :ned:`Ieee80211ScalarRadio` and
+:ned:`Ieee80211DimensionalRadio` in hosts. (Generally, the name hints as to
+which kind of analog model is used by radio medium and radio modules.)
 
 Example simulations
 ~~~~~~~~~~~~~~~~~~~
@@ -250,6 +250,20 @@ Notice that there are only message sends between hosts using the same radio medi
 
 Nodes on adjacent wifi channels (partially overlapping frequency bands)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In this case, the host pairs communicate on different wifi channels, which overlap in frequency.
+The scalar analog model is insufficient to simulate partially overlapping channels, thus we use the dimensional analog model.
+The example simulation for this case uses the `CrosstalkShowcasePartiallyOverlappingFrequencyBands` network, which contains a `Ieee80211DimensionalRadioMedium` module.
+The simulation is specified in the `PartiallyOverlappingFrequencyBands` configuration in omnetpp.ini:
+
+.. literalinclude:: ../omnetpp.ini
+   :start-at: PartiallyOverlappingFrequencyBands
+   :end-at: host{3..4}
+   :language: ini
+
+The hosts are configured to have `Ieee80211DimensionalRadio` modules. The host pairs are set to adjacent wifi channels 1 and 2.
+
+TODO: about the dimensional radio ... by default its a flat signal...how to configure something else ?
 
 .. todo::
 
