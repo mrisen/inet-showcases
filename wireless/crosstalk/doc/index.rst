@@ -264,6 +264,14 @@ The simulation is specified in the `PartiallyOverlappingFrequencyBands` configur
 The hosts are configured to have `Ieee80211DimensionalRadio` modules. The host pairs are set to adjacent wifi channels 1 and 2.
 
 TODO: about the dimensional radio ... by default its a flat signal...how to configure something else ?
+the logs
+
+The following video shows the host pairs communicating:
+
+.. video:: partial2.mp4
+   :width: 698
+
+Even though they are on different channels, the transmissions interfere. At the beginning, `host1` and `host3` transmit simultaneously, and neither transmission can be succesfully received. Due to the collision avoidance mechanism, one of the transmitting hosts defer from transmitting, and the subsequent transmissions are successful. 
 
 .. todo::
 
