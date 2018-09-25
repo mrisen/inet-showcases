@@ -131,7 +131,7 @@ a rectangle, and each host is configured to send UDP packets to the host
 on the far side of the rectangle (i.e. ``host1`` to ``host2``, and
 ``host3`` to ``host4``.) The configuration keys common to all
 simulations, specifying e.g. traffic generation and visualization, are
-defined in the ``General`` configuration.
+defined in the ``General`` configuration in :download:`omnetpp.ini <../omnetpp.ini>`.
 
 Nodes on same wifi channel (completely overlapping frequency bands)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -143,10 +143,19 @@ Nodes on same wifi channel (completely overlapping frequency bands)
 The simulation for this case demonstrates the hosts communicating on the
 same wifi channel, the default channel 1. The simulation can be run by
 selecting the ``CompletelyOverlappingFrequencyBands`` configuration from
-the ini file. Since the frequency and bandwidth of transmissions for all
+the ini file. The configuration doesn't specify anything beyond the keys of the `General` configuration, so it's empty:
+
+.. literalinclude:: ../omnetpp.ini
+   :start-at: CompletelyOverlappingFrequencyBands
+   :end-before: IndependentFrequencyBandsOneScalarRadioMediumModule
+   :language: ini
+
+Since the frequency and bandwidth of transmissions for all
 hosts is exactly the same, inferring which transmissions interfere is
 obvious (all of them). In this case a scalar analog model is sufficient.
-The following video shows the node-pairs communicating:
+The following video shows the node-pairs communicating, the number of
+sent/received packets is displayed above the nodes, as well as the state
+of the contention modules of the transmitting hosts.
 
 .. video:: overlapping1.mp4
   :width: 698
@@ -181,7 +190,14 @@ interference. The scalar analog model is sufficient for this case.
 In the first configuration for this case, the hosts use the same radio
 medium module. The simulation can be run by choosing the
 ``IndependentFrequencyBandsOneScalarRadioMediumModule`` configuration
-from the ini file. The video below shows the hosts communicating:
+from the ini file. The radios of the two host pairs are set to use non-overlapping channels:
+
+.. literalinclude:: ../omnetpp.ini
+   :start-at: IndependentFrequencyBandsOneScalarRadioMediumModule
+   :end-at: 6
+   :language: ini
+
+The video below shows the hosts communicating:
 
 .. video:: independent2.mp4
   :width: 698
@@ -194,7 +210,7 @@ their transmissions are correctly receivable by both destination hosts.
 Note that all transmissions are sent to all hosts by the radio medium
 module.
 
-In the above, it was obvious that ``host4`` cannot receive ``host1``'s
+As they transmit/receive on different, non-interfering channels, it is obvious that ``host4`` cannot receive ``host1``'s
 transmissions, just as ``host2`` cannot receive ``host3``'s
 transmissions. Yet the radio medium module sent all transmissions to all
 hosts, where the radio module decided that some of the transmissions
@@ -204,13 +220,22 @@ channel.
 The simulation can be optimized by omitting these unnecessary message
 sends by the radio medium, by using two radio medium modules and configuring
 the obviously non-interfering host-pairs to use different radio mediums.
-
-.. todo:: it scales better
+By using two radio medium modules, the simulation scales better as the number of nodes increases.
 
 The second example simulation demonstrates the use of two radio medium
 modules to optimize the simulation. The simulation can be run by
 choosing the ``IndependentFrequencyBandsTwoScalarRadioMediumModules``
-configuration from the ini file. The following video shows the
+configuration from the ini file:
+
+.. literalinclude:: ../omnetpp.ini
+   :start-at: IndependentFrequencyBandsTwoScalarRadioMediumModules
+   :end-at: 6
+   :language: ini
+
+Here, the radios of each host pair are set to use one of the two radio medium modules (by default, radios use the one named `radioMedium`).
+(Also, the non-overlapping channels are configured, but from the perspective of interference, it doesn't make any difference, as the use of two radio modules prevent interference anyway.)
+
+The following video shows the
 host-pairs communicating:
 
 
@@ -220,8 +245,8 @@ host-pairs communicating:
 
    <!--internal video recording, animation speed none, playback speed 0.59, zoom 1.69, display message name and message class off, run until #129-->
 
-Notice that there are only message sends between hosts on the same
-channel.
+The host pairs communicate without interference.
+Notice that there are only message sends between hosts using the same radio medium module.
 
 Nodes on adjacent wifi channels (partially overlapping frequency bands)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
