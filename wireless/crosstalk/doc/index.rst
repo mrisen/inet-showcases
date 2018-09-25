@@ -232,8 +232,11 @@ configuration from the ini file:
    :end-at: 6
    :language: ini
 
-Here, the radios of each host pair are set to use one of the two radio medium modules (by default, radios use the one named `radioMedium`).
-(Also, the non-overlapping channels are configured, but from the perspective of interference, it doesn't make any difference, as the use of two radio modules prevent interference anyway.)
+Here, the radios of each host pair are set to use one of the two radio medium modules
+(by default, radios use the one named `radioMedium`).
+(Also, the non-overlapping channels are configured,
+but from the perspective of interference, it doesn't make any difference,
+as the use of two radio modules prevent interference anyway.)
 
 The following video shows the
 host-pairs communicating:
@@ -252,8 +255,10 @@ Nodes on adjacent wifi channels (partially overlapping frequency bands)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this case, the host pairs communicate on different wifi channels, which overlap in frequency.
-The scalar analog model is insufficient to simulate partially overlapping channels, thus we use the dimensional analog model.
-The example simulation for this case uses the `CrosstalkShowcasePartiallyOverlappingFrequencyBands` network, which contains a `Ieee80211DimensionalRadioMedium` module.
+The scalar analog model is insufficient to simulate partially overlapping channels,
+thus we use the dimensional analog model.
+The example simulation for this case uses the `CrosstalkShowcasePartiallyOverlappingFrequencyBands` network,
+which contains a `Ieee80211DimensionalRadioMedium` module.
 The simulation is specified in the `PartiallyOverlappingFrequencyBands` configuration in omnetpp.ini:
 
 .. literalinclude:: ../omnetpp.ini
@@ -271,7 +276,11 @@ The following video shows the host pairs communicating:
 .. video:: partial2.mp4
    :width: 698
 
-Even though they are on different channels, the transmissions interfere. At the beginning, `host1` and `host3` transmit simultaneously, and neither transmission can be succesfully received. Due to the collision avoidance mechanism, one of the transmitting hosts defer from transmitting, and the subsequent transmissions are successful. 
+Even though they are on different channels, the transmissions interfere. At the beginning, `host1` and `host3`
+transmit simultaneously, and neither transmission can be succesfully received. Due to the collision avoidance mechanism,
+one of the transmitting hosts defer from transmitting, and the subsequent transmissions are successful.
+
+Sources: :download:`omnetpp.ini <../omnetpp.ini>`, :download:`Crosstalk.ned <../Crasstalk.ned>`
 
 .. todo::
 
@@ -286,3 +295,10 @@ Even though they are on different channels, the transmissions interfere. At the 
    nodes on independent wifi channels
 
    nodes on adjacent wifi channels
+
+Discussion
+----------
+
+Use `this
+page <https://github.com/inet-framework/inet-showcases/issues/TODO>`__ in
+the GitHub issue tracker for commenting on this showcase.
