@@ -276,6 +276,8 @@ The following video shows the host pairs communicating:
 .. video:: partial2.mp4
    :width: 698
 
+.. internal video recording, animation speed none, playback speed 1, zoom 1.69
+
 Even though they are on different channels, the transmissions interfere. At the beginning, `host1` and `host3`
 transmit simultaneously, and neither transmission can be succesfully received. Due to the collision avoidance mechanism,
 one of the transmitting hosts defer from transmitting, and the subsequent transmissions are successful.
