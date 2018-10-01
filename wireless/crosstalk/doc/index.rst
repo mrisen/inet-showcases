@@ -282,7 +282,7 @@ Even though they are on different channels, the transmissions interfere. At the 
 transmit simultaneously, and neither transmission can be succesfully received. Due to the collision avoidance mechanism,
 one of the transmitting hosts defer from transmitting, and the subsequent transmissions are successful.
 
-Sources: :download:`omnetpp.ini <../omnetpp.ini>`, :download:`Crosstalk.ned <../Crasstalk.ned>`
+Sources: :download:`omnetpp.ini <../omnetpp.ini>`, :download:`Crosstalk.ned <../Crosstalk.ned>`
 
 .. todo::
 
