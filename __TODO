@@ -26,7 +26,9 @@ Eventually all sensor nodes get into this state and the number of successfully s
 - Throughput: run 15: handleCommand(): no commands supported -- in module (inet::ieee80211::Ieee80211MgmtAdhoc) Throughput.sourceHost.wlan[0].mgmt (id=24), at t=0.108461533953s, event #8801
 - RateControl:		rate adaptation instead of rate control?
 - Earth & Network node visualization showcases (and possibly others):
-*.visualizer.osgVisualizer.typename = "IntegratedOsgVisualizer" # TODO: remove when enabled by default 
+*.visualizer.osgVisualizer.typename = "IntegratedOsgVisualizer" # TODO: remove when enabled by default
+- Transportconnection showcase: A runtime error occurred:
+Tag 'inet::Ipv4InterfaceData' is absent -- in module (inet::visualizer::TransportConnectionCanvasVisualizer) TransportConnectionVisualizationMultipleConnectionsShowcase.visualizer.canvasVisualizer.transportConnectionVisualizer (id=222), at t=0.00006972s, event #232 
 
 IPv4NetworkConfigurator:
 ?- a netmaskRoutes miatt olyan szabály is hozzáadódik a routing táblához, ami hibás. Pont a korrekt szabály felett van, és a csomagok nem találnak oda
