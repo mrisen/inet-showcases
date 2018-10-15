@@ -78,7 +78,7 @@ The analog signal representation refers to how signal power is
 represented physically in the time and frequency domains. The analog
 signal representation is implemented by the analog models in INET. The
 analog model is part of the radio medium module. INET has various analog
-signal representation model types. The two main types are **scalar** and
+signal representation model types, the main ones are **scalar** and
 **dimensional**. In a scalar representation, the signal is represented
 by a power level that is constant in both frequency and time, and is
 described by two values: a center frequency and a bandwidth. Two scalar
@@ -121,10 +121,10 @@ illustrated by the image below:
    :width: 80%
    :align: center
 
-The networks contains four ``adhocHost``\ s, named ``host1`` to
+The networks contains four :ned:`AdhocHost`'s, named ``host1`` to
 ``host4``. The networks also contains an :ned:`Ipv4NetworkConfigurator`
-module, an :ned:`IntegratedVisualizer` module, and radioMedium module(s).
-The number and type of the radio medium modules varies in the networks
+module, an :ned:`IntegratedVisualizer` module, and radio medium module(s).
+The number and type of the radio medium modules vary in the networks
 for the different simulations, either containing one or two. All hosts
 are within communication range of each other. The hosts are arranged in
 a rectangle, and each host is configured to send UDP packets to the host
@@ -158,7 +158,8 @@ sent/received packets is displayed above the nodes, as well as the state
 of the contention modules of the transmitting hosts.
 
 .. video:: overlapping1.mp4
-  :width: 698
+  :width: 90%
+  :align: center
 
    <!--internal video recording, animation speed none, playback speed 0.59, zoom 1.69, display message name and message class off, run until #141-->
 
@@ -258,7 +259,7 @@ In this case, the host pairs communicate on different wifi channels, which overl
 The scalar analog model is insufficient to simulate partially overlapping channels,
 thus we use the dimensional analog model.
 The example simulation for this case uses the `CrosstalkShowcasePartiallyOverlappingFrequencyBands` network,
-which contains a `Ieee80211DimensionalRadioMedium` module.
+which contains a :ned:`Ieee80211DimensionalRadioMedium` module.
 The simulation is specified in the `PartiallyOverlappingFrequencyBands` configuration in omnetpp.ini:
 
 .. literalinclude:: ../omnetpp.ini
@@ -277,6 +278,12 @@ The following video shows the host pairs communicating:
    :width: 698
 
 .. internal video recording, animation speed none, playback speed 1, zoom 1.69
+
+Here is an excerpt from the log, showing a transmission of `host1` and `host3`, as being recived by `host2` and `host4`.
+The two transmissions have a different center frequency:
+
+.. figure:: adjacent.png
+   :width: 100%
 
 Even though they are on different channels, the transmissions interfere. At the beginning, `host1` and `host3`
 transmit simultaneously, and neither transmission can be succesfully received. Due to the collision avoidance mechanism,
