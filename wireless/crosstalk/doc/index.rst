@@ -89,7 +89,7 @@ modules are to be used with :ned:`Ieee80211ScalarRadio` and
 :ned:`Ieee80211DimensionalRadio` in hosts. (Generally, the name hints as to
 which kind of analog model is used by radio medium and radio modules.)
 
-Dimensional transmitters have some parameters which control the shape of the
+Dimensional transmitters have parameters which control the shape of the
 signal in the frequency and time domains. The :par:`dimensions` parameter
 controls the dimensions along which power is represented. The parameter's
 value is either ``"time"``, ``"frequency"``, or ``"time frequency"`` (default).
