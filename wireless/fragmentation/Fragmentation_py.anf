@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<analysis version="2">
+    <inputs>
+        <input pattern="/inet/showcases/wireless/fragmentation/results/DCFnofrag*.*"/>
+        <input pattern="/inet/showcases/wireless/fragmentation/results/DCFfrag-#*.*"/>
+        <input pattern="/inet/showcases/wireless/fragmentation/results/HCFfrag-#*.*"/>
+        <input pattern="/inet/showcases/wireless/fragmentation/results/HCFfragblockack-#*.*"/>
+    </inputs>
+    <charts>
+        <chart name="Throughput" script="# IDE version   5.4.1.181107-a953dcfb90&#10;&#10;import results&#10;import chart&#10;&#10;import operations as ops&#10;&#10;# This expression selects the results (you might be able to logically simplify it)&#10;filter_expression = &quot;&quot;&quot;&#10;ADD vectors WHERE attr:experiment(DCFfrag) AND attr:replication(#0) AND module(FragmentationShowcase.wifiHost2.app[0]) AND name(throughput:vector)&#10;ADD vectors WHERE attr:experiment(DCFnofrag) AND attr:replication(#0) AND module(FragmentationShowcase.wifiHost2.app[0]) AND name(throughput:vector)&#10;ADD vectors WHERE attr:experiment(HCFfrag) AND attr:replication(#0) AND module(FragmentationShowcase.wifiHost2.app[0]) AND name(throughput:vector)&#10;ADD vectors WHERE attr:experiment(HCFfragblockack) AND attr:replication(#0) AND module(FragmentationShowcase.wifiHost2.app[0]) AND name(throughput:vector)&#10;&quot;&quot;&quot;&#10;&#10;# The data is returned as a Pandas DataFrame&#10;df = results.getVectors(filter_expression)&#10;&#10;# Which we turn into a more usable format&#10;df = results.transform_results(df)&#10;&#10;# You can perform any transformations on the data here&#10;&#10;df.result['vecvalue'] /= 1000000&#10;&#10;print(df.index.get_level_values('experiment'))&#10;&#10;names = list(df.index.get_level_values('experiment'))&#10;&#10;print(names)&#10;&#10;df[('attr','title')] = names&#10;&#10;# Finally, the results are plotted&#10;chart.plotVectors(df)&#10;" type="LineChart">
+            <property name="Graph.Title" value="Throughput"/>
+            <property name="X.Axis.Title" value="Time [s]"/>
+            <property name="Y.Axis.Title" value="Throughput [Mbps]"/>
+        </chart>
+        <chart name="Number of packets received" script="# IDE version   5.4.1.181107-a953dcfb90&#10;&#10;import results&#10;import chart&#10;from results import pivotScalars&#10;&#10;filter_string = &quot;&quot;&quot;((module(*.wifiHost2.app[0]) AND name(&quot;packetReceived:count&quot;)))&quot;&quot;&quot;&#10;&#10;df = results.getScalars(filter_string)&#10;&#10;df = results.pivotScalars(df, columns=[&quot;module&quot;], index=[&quot;configname&quot;])&#10;&#10;print(df)&#10;&#10;print(&quot;--------------------------&quot;)&#10;&#10;df = df.reindex([&quot;DCFnofrag&quot;,&quot;DCFfrag&quot;,&quot;HCFfrag&quot;,&quot;HCFfragblockack&quot;])&#10;&#10;chart.plotScalars(df)&#10;&#10;chart.setProperty('Graph.Title', chart.getName())&#10;&#10;chart.setProperties(chart.getProperties())&#10;" type="BarChart">
+            <property name="Graph.Title" value="Number of packets received"/>
+        </chart>
+    </charts>
+</analysis>
