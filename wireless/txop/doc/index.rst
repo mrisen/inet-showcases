@@ -66,25 +66,32 @@ About TXOP
    there is nothing to configure
 
 
-During a TXOP, a station can send packets of a particular access category without contention, making sure not to exceed the TXOP limit (a time limit for the TXOP).
+.. During a TXOP, a station can send packets of a particular access category without contention, making sure not to exceed the TXOP limit (a time limit for the TXOP).
 
-- this mechanism works for QoS data frames. TODO other frames can be sent in a txop, they are just the main thing/the payload
-- actually, the different categories have their own rules for channel access, such as different values for aifs, contention window size, and TXOP limit. these values are such that higher priority packets are favored (the mac waits less, shorter contention window, they can utilize a txop)
-- the txop limit for the best effort and background is 0, meaning they can only send just one MSDU before contending for channel access again.
+   - this mechanism works for QoS data frames. TODO other frames can be sent in a txop, they are just the main thing/the payload
+   - actually, the different categories have their own rules for channel access, such as different values for aifs, contention window size, and TXOP limit. these values are such that higher priority packets are favored (the mac waits less, shorter contention window, they can utilize a txop)
+   - the txop limit for the best effort and background is 0, meaning they can only send just one MSDU before contending for channel access again.
 
 
 
-A transmit opportunity (TXOP) is a limited time period, during which a station can send multiple packets belonging to a certain access category, contention-free. The use of TXOP increases the throughput of QoS data frames (it's a HCF-only feature), although other frames, such as ACKs, can be sent during the TXOP as well. By default, only packets belonging to video and voice priority access categories can use TXOP.
-Actually, all access categories have their own rules for channel access, such as different values for aifs, contention window size, and TXOP limit. These values are set so that higher priority packets are favored (the MAC waits less before sending them, the contenion window is smaller, and they can utilize TXOP). By default, the TXOP limit for the video category is 3 ms, for the voice category 1.5ms. The background and best effort categories have a TXOP limit of 0, meaning they can send just one MSDU before having to contend for channel access again.
+A TXOP is a limited time period, during which a station can send multiple packets belonging to a certain access category, contention-free. The use of TXOP increases the throughput of QoS data frames (it's a HCF-only feature), although other frames, such as ACKs, can be sent during the TXOP as well. By default, only packets belonging to video and voice priority access categories can use TXOP.
+
+Actually, all access categories have their own rules for channel access, such as different values for AIFS, contention window size, and TXOP limit. These values are set so that higher priority packets are favored (the MAC waits less before sending them, the contenion window is smaller, and they can utilize TXOP). By default, the TXOP limit for the video category is 3 ms, for the voice category 1.5 ms. The background and best effort categories have a TXOP limit of 0, meaning they can send just one MSDU before having to contend for channel access again.
 
 When a station has a high priority packet to send, and it gains channel access, the station can keep transmitting packets without backoff periods until the end of the TXOP. The recipients can ACK the packets.
 
-In INET, the TXOP is automatically used when using HCF (``qosStation = true`` in the MAC), and there are high priority packets to be transmitted.
+In INET, the TXOP is automatically used when using HCF (``qosStation = true`` in the MAC), and there are high priority packets to be transmitted. The TXOP limit can be set by the :par:`txopLimit` parameter in :ned:`TxopProcedure`. It is located at ``hcf.edca.edcaf[*].txopProcedure`` in the module hierarchy; there are four ``edcaf`` modules for the four access categories:
+
+.. figure:: edca.png
+   :width: 80%
+   :align: center
+
+The default value for the :par:`txopLimit` parameter is ``-1``, meaning it uses the default protocol values. The contention state of the different access categories are shown in the ``edcaf`` modules' display strings.
 
 The Model
 ---------
 
-In the example simulation, one host sends video priority UDP packets to the other. The simulation demonstrates frame exchanges of different packets during a TXOP, such as normal data frames, aggregate frames, RTS, CTS, and ACKs. It uses the following network:
+In the example simulation, one host sends video priority UDP packets to the other. The simulation demonstrates frame exchanges of different packets during a TXOP, such as normal data frames, aggregate frames, RTS, CTS, acks, and block acks. It uses the following network:
 
 .. figure:: network.png
    :width: 80%
@@ -94,7 +101,7 @@ It contains two :ned:`AdhocHost` modules, an :ned:`Ipv4NetworkConfigurator`,
 an :ned:`Ieee80211ScalarRadioMedium` and an :ned:`IntegratedVisualizer` module.
 
 There is just one configuration in omnetpp.ini, the ``General`` config.
-One of the hosts, ``host1``, sends UDP packets to ``host2``. There are two UDP apps in ``host1``, sending small (1200B) and large (3500B) packets:
+One of the hosts, ``host1``, sends UDP packets to ``host2``. There are two UDP apps in ``host1``, sending small (1200B) and large (alternating 3400B or 3500B) packets:
 
 .. literalinclude:: ../omnetpp.ini
    :start-at: host1.numApps
@@ -134,8 +141,8 @@ The aggregation, RTS, and block ack thresholds are set:
 The thresholds are configured to get the following frame exchanges:
 
 - The 1200B packets are block acked
-- The 3500B packets are sent after an RTS/CTS exchange, and normal acked
-- The 1200B packets can be aggregated (up to 3000B)
+- The 3500B packets are sent after an RTS/CTS exchange, the 3400B ones are not, both are normal acked
+- Two of the 1200B packets can be aggregated
 
-The Results
------------
+Results
+-------
