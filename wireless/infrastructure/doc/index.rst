@@ -1,29 +1,29 @@
 :orphan:
 
-IEEE 802.11 Infrastructure and Adhoc Mode
-=========================================
+IEEE 802.11 Infrastructure and Ad Hoc Mode
+==========================================
 
 Goals
 -----
 
 802.11 devices can commonly operate in two basic modes. In infrastructure mode,
 nodes connect to wireless networks created by access points, which
-provide services, such as internet access. In adhoc mode, nodes create
-an adhoc wireless network, without using additional network
+provide services, such as internet access. In ad hoc mode, nodes create
+an ad hoc wireless network, without using additional network
 infrastructure.
 
 INET has support for simulating both operating modes. This showcase
 demonstrates how to configure 802.11 networks in infrastructure and
-adhoc mode, and how to check if they are configured correctly. The
+ad hoc mode, and how to check if they are configured correctly. The
 showcase contains two example simulations defined in :download:`omnetpp.ini <../omnetpp.ini>`.
 
 | INET version: ``4.0``
 | Source files location: `inet/showcases/wireless/infrastructure <https://github.com/inet-framework/inet-showcases/tree/master/wireless/infrastructure>`__
 
-The model
+The Model
 ---------
 
-A node's operating mode (infrastructure or adhoc) is determined by the
+A node's operating mode (infrastructure or ad hoc) is determined by the
 type of its management module. The management module type can be set
 from the ini or NED files, or by choosing one of INET's host types which
 have the desired management module by default.
@@ -37,7 +37,7 @@ Several types of management modules are available:
 
 - :ned:`Ieee80211MgmtSta`: management module for stations (nodes that join wireless networks) in infrastructure mode
 - :ned:`Ieee80211MgmtAp`: management module for access points in infrastructure mode
-- :ned:`Ieee80211MgmtAdhoc`: management module for nodes in adhoc mode
+- :ned:`Ieee80211MgmtAdhoc`: management module for nodes in ad hoc mode
 
 There are also simplified versions of the infrastructure mode management
 modules: :ned:`Ieee80211MgmtStaSimplified` and
@@ -59,11 +59,11 @@ the following image:
    :width: 70%
    :align: center
 
-Hosts can be configured to use infrastructure or adhoc mode by
+Hosts can be configured to use infrastructure or ad hoc mode by
 specifying the corresponding management module type. By default,
 :ned:`WirelessHost` uses :ned:`Ieee80211MgmtSta`, and :ned:`AccessPoint` uses
 :ned:`Ieee80211MgmtAp`. Additionally, :ned:`AdhocHost` is suitable for
-simulating adhoc wireless networks. It is derived from :ned:`WirelessHost`
+simulating ad hoc wireless networks. It is derived from :ned:`WirelessHost`
 by changing management module to :ned:`Ieee80211MgmtAdhoc` (and also
 turning on IPv4 forwarding.)
 
@@ -80,16 +80,16 @@ all other frame types like control and management frames. Also, it
 doesn't switch channels, just operates on the channel configured in the
 radio.
 
-The configuration
+The Configuration
 -----------------
 
 The showcase contains two example simulations, with one of them
-demonstrating infrastructure mode and the other adhoc mode (the
+demonstrating infrastructure mode and the other ad hoc mode (the
 configurations in :download:`omnetpp.ini <../omnetpp.ini>` are named ``Infrastructure`` and
 ``Adhoc``.) Two nodes communicate wirelessly in both of them, the
 difference being that in the first case they communicate through an
 access point in infrastructure mode, and in the second, directly between
-each other in adhoc mode. The two simulations use similar networks, the
+each other in ad hoc mode. The two simulations use similar networks, the
 only difference is that there is an access point in the network for the
 infrastructure mode configuration. The networks look like the following:
 
@@ -106,8 +106,8 @@ The network for the infrastructure mode configuration also contains an
 In both simulations, ``host1`` is configured to send UDP packets to
 ``host2``. :ned:`WirelessHost` has :ned:`Ieee80211MgmtSta` by default, thus no
 configuration of the management module is needed in the infrastructure
-mode simulation. In the adhoc mode simulation, the default management
-module in hosts is replaced with :ned:`Ieee80211MgmtAdhoc`. The adhoc management module
+mode simulation. In the ad hoc mode simulation, the default management
+module in hosts is replaced with :ned:`Ieee80211MgmtAdhoc`. The ad hoc management module
 doesn't require an agent module, so the agent module type is set to empty string.
 (The same effect could have been achieved by using the :ned:`AdhocHost` host type
 instead of :ned:`WirelessHost`, as the former has the ad hoc management
@@ -127,7 +127,7 @@ reach each other in one hop, and packet don't need to be forwarded
 Results
 -------
 
-Infrastructure mode
+Infrastructure Mode
 ~~~~~~~~~~~~~~~~~~~
 
 When the infrastructure mode simulation is run, the hosts get associated
@@ -144,7 +144,7 @@ To verify that the correct management type is configured, go into a
 host's wlan module. The ``mib`` module (management information base)
 displays information about the node's status in the network, e.g. MAC
 address, association state, weather or not it's using QoS, etc. It also
-displays information about the mode, i.e. infrastructure or adhoc,
+displays information about the mode, i.e. infrastructure or ad hoc,
 station or access point. The wlan module of ``host1`` and
 ``accessPoint`` is displayed on the following image:
 
@@ -160,10 +160,10 @@ station or access point. The wlan module of ``host1`` and
    and even for the AP and after association for host1
    -->
 
-Adhoc mode
-~~~~~~~~~~
+Ad Hoc Mode
+~~~~~~~~~~~
 
-When the adhoc mode simulation is run, the hosts can communicate
+When the ad hoc mode simulation is run, the hosts can communicate
 directly with each other. There is no association and authentication,
 ``host1`` starts to send UDP data at the start of the simulation.
 ``host1`` is sending UDP packets to ``host2`` in the following video:
