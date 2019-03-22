@@ -141,11 +141,11 @@ video depicts the UDP traffic:
    <!--internal video recording, animation speed none, zoom 1.3x-->
 
 To verify that the correct management type is configured, go into a
-host's wlan module. The ``mib`` module (management information base)
+host's wireless interface module. The ``mib`` module (management information base)
 displays information about the node's status in the network, e.g. MAC
-address, association state, weather or not it's using QoS, etc. It also
+address, association state, whether or not it's using QoS, etc. It also
 displays information about the mode, i.e. infrastructure or ad hoc,
-station or access point. The wlan module of ``host1`` and
+station or access point. The wireless interface module of ``host1`` and
 ``accessPoint`` is displayed on the following image:
 
 .. figure:: mib_infrastructure.png
@@ -173,8 +173,8 @@ directly with each other. There is no association and authentication,
 
    <!--internal video recording, animation speed none, zoom 1.3x-->
 
-The wlan module of ``host1`` is displayed on the following image,
-showing the mib and the host's network status:
+The wireless interface module of ``host1`` is displayed on the following image,
+showing the ``mib`` and the host's network status:
 
 .. figure:: adhocmib.png
    :width: 60%
