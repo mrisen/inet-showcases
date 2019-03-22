@@ -27,7 +27,7 @@ IEEE 802.11:
    handover/doc/index
    ratecontrol/doc/index
    multiradio/doc/index
+   infrastructure/doc/index
 .. crosstalk/doc/index
-.. infrastructure/doc/index
 .. directionalselectivity/doc/index
 
