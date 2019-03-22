@@ -101,7 +101,7 @@ It contains two :ned:`AdhocHost` modules, an :ned:`Ipv4NetworkConfigurator`,
 an :ned:`Ieee80211ScalarRadioMedium` and an :ned:`IntegratedVisualizer` module.
 
 There is just one configuration in omnetpp.ini, the ``General`` config.
-One of the hosts, ``host1``, sends UDP packets to ``host2``. There are two UDP apps in ``host1``, sending small (1200B) and large (alternating 3400B or 3500B) packets:
+One of the hosts, ``host1``, sends UDP packets to ``host2``. There are two UDP apps in ``host1``, sending small (1200B) and large (alternating 3400B and 3500B) packets:
 
 .. literalinclude:: ../omnetpp.ini
    :start-at: host1.numApps
