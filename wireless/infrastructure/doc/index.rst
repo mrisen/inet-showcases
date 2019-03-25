@@ -78,11 +78,11 @@ video depicts the UDP traffic:
 
    <!--internal video recording, animation speed none, zoom 1.3x-->
 
-The ``mib`` module (management information base)
-displays information about the node's status in the network, e.g. MAC
-address, association state, whether or not it's using QoS, etc. It also
-displays information about the mode, i.e. infrastructure or ad hoc,
-station or access point.
+The ``mib`` module (management information base) is a submodule of
+:ned:`Ieee80211Interface`, and displays information about the node's
+status in the network, e.g. MAC address, association state, whether
+or not it's using QoS, etc. It also displays information about the mode,
+i.e. infrastructure or ad hoc, station or access point.
 
 To verify that the correct management type is configured, see the ``mib`` module's
 display string by going into the host's or access point's wireless interface module;
