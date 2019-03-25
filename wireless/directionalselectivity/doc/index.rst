@@ -220,7 +220,7 @@ parameters:
 
 -  :par:`MaxGain`: the maximum gain of the antenna
 -  :par:`MinGain`: the minimum gain of the antenna
--  :par:`BeamWidth`: the 3 dB beam width
+-  :par:`BeamWidth`: the 3 dB beam width in degrees
 
 The configuration for this antenna is :ned:`ParabolicAntenna` in
 :download:`omnetpp.ini <../omnetpp.ini>`:
@@ -236,7 +236,7 @@ When the simulation is run, it looks like the following:
 
 .. <!--internal video recording, animation speed 1, playback speed 21.88, normal run, crop 25 25 150 750-->
 
-The radiation pattern is a narrow lobe. Note that in directions off from
+The radiation pattern is a narrow lobe. Note that in directions away from
 the main direction, the radiation pattern might appear to be zero, but
 actually, it is just very small. Note the small protrusion to the left
 on the following, zoomed-in image:
