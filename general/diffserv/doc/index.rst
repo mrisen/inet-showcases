@@ -98,7 +98,7 @@ The showcase contains three different configurations:
    expected.
 
 The router's PPP interface contains the key elements of Differentiated
-Services in this network: a queue (``queue``) and a traffic conditioner (``egressTC``). 
+Services in this network: a queue (``queue``) and a traffic conditioner (``egressTC``).
 If both of them are used, the layout of the interface looks like the following:
 
 .. figure:: RouterPPP.png
