@@ -167,8 +167,6 @@ The simulation runs for 360s, and the speed of ``destination`` is set so
 it does one full circle. This way, when plotting the reception power,
 the time can be directly mapped to the angle.
 
-.. note:: The destination host starts at 90 degrees off the main lobe axis, so the main lobe is more apparent on the reception power plot.
-
 The visualizer is set to display antenna lobes in ``source`` (the
 :par:`displayRadios` is the master switch in :ned:`RadioVisualizer`, so it
 needs to be set to ``true``), and active data links (indicating successfully received
@@ -254,6 +252,8 @@ Here is the reception power vs. direction:
 
 .. figure:: parabolicchart.png
    :width: 100%
+
+.. note:: The destination host starts at 90 degrees away the main lobe axis, so the main lobe is more apparent on the reception power plot.
 
 Dipole Antenna
 ~~~~~~~~~~~~~~
