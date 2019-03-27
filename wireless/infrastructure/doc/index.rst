@@ -24,7 +24,7 @@ The Model
 ---------
 
 If you're not yet familiar with management and agent modules in the 802.11 model,
-read the corresponding section in the INET User's Guide. TODO link
+read the :doc:`corresponding section </users-guide/ch-80211>` in the INET User's Guide.
 
 The showcase contains two example simulations, where two nodes communicate either through
 an access point, in infrastructure mode, or directly, in ad hoc mode.
@@ -34,7 +34,7 @@ The simulations use the following networks:
    :width: 80%
    :align: center
 
-The networks contain two ``WirelessHosts`` named ``host1`` and
+The networks contain two :ned:`WirelessHost`'s named ``host1`` and
 ``host2``. They also contain an :ned:`Ipv4NetworkConfigurator`, an
 :ned:`Ieee80211ScalarRadioMedium` and an :ned:`IntegratedVisualizer` module.
 The network for the infrastructure mode configuration also contains an
