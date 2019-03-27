@@ -270,9 +270,13 @@ following:
 The configuration sets the antenna type to :ned:`DipoleAntenna`, and the
 antenna length to 0.1m. The elevation and bank parameters are used to
 rotate the source node, so that the radiation pattern is more
-interesting (the dipole
-radiation pattern's donut shape is the same as the isotropic antenna's
-when viewed from above). It looks like this when the simulation is run:
+interesting. Without rotation, the dipole's axis would be horizontal, and its
+radiation pattern's donut shape would be a circle
+when viewed from above. The elevation angle is changed by 90 degrees, so the donut is
+on its side. The bank angle is changed by 90 degrees (donut rotated on its side),
+so destination node starts at the null direction.
+
+It looks like this when the simulation is run:
 
 .. video:: dipole5.mp4
 
