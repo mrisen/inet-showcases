@@ -13,6 +13,8 @@ kinds of wireless scenarios where antenna characteristics are important.
 This showcase aims to highlight the antenna models available in INET,
 and their directional characteristics. The showcase contains an example
 simulation which demonstrates the direcionality of five antenna models.
+Four of these models represent well known antenna models, while the last one
+is a universal antenna which can model any rotationally symetrical antenna pattern.
 
 | INET version: ``4.0``
 | Source files location: `inet/showcases/wireless/directionalselectivity <https://github.com/inet-framework/inet-showcases/tree/master/general/directionalselectivity>`__
@@ -59,7 +61,7 @@ INET contains the following antenna module types:
 
 The default antenna module in all radios is :ned:`IsotropicAntenna`.
 
-Visualizing antenna directionality
+Visualizing Antenna Directionality
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :ned:`RadioVisualizer` module can visualize antenna directional characteristics,
@@ -269,18 +271,38 @@ Here is the reception power vs. direction plot:
 Axially Symmetric Antenna
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :ned:`AxiallySymmetricAntenna` module can model complex antenna characteristics
-with a rotationally symmetrical radiation pattern in 3D. It has three parameters:
+The :ned:`AxiallySymmetricAntenna` is a universal antenna model which can describe
+any axially symmetrical radiation pattern. It can model an isotropic antenna, a parabolic
+antenna, dipole antenna, and many other antenna types.
+
+The radiation pattern is described by specifying
+the gain at various angles (e.g. at one-degree steps) on a half-plane attached to
+the axis of symmetry.
+The gain is then interpolated at the intermittent angles, and the pattern
+is rotated around the axis to get the radiation pattern in 3D.
+
+The antenna module has three parameters:
 the :par:`gains` parameter takes a sequence of gain and angle pairs
 (given in decibels and degrees), the first pair must be ``0 0``.
-The angle is in the range of (0,180). This describes the gain pattern in a plane.
-The characteristics at the intermediate angles are calculated using linear interpolation.
-The pattern is then "rotated" by the axis of symmetry to get the radiation pattern in 3D.
+The angle is in the range of (0,180).
 The axis of symmetry is given by the :par:`axisOfSymmetry` parameter, ``x`` by default.
 There is also a :par:`baseGain` parameter (0 dB by default). The default for the :par:`gains`
-parameters is ``"0 0"``, thus by default the antenna models an isotropic antenna.
+parameters is ``"0 0"``, defaulting to an isotropic antenna.
 
-The configuration for this antenna is :ned:`AxiallySymmetricAntenna` in
+We demonstrate :ned:`AxiallySymmetricAntenna` by modeling a real-world
+16-element Yagi antenna, such as this one:
+
+.. figure:: yagiantenna.jpg
+   :width: 60%
+   :align: center
+
+The antenna type in ``source``'s radio is set to
+:ned:`AxiallySymmetricAntenna`. We entered the characteristics data for the antenna
+in the :par:`gains` parameter with 1 degree resolution.
+We also set a :par:`baseGain` of 10 dB, because the gain data is given as relative
+(i.e. the maximum gain is at 0 dB).
+
+The simulation configuration is :ned:`AxiallySymmetricAntenna` in
 :download:`omnetpp.ini <../omnetpp.ini>`:
 
 .. literalinclude:: ../omnetpp.ini
@@ -288,20 +310,17 @@ The configuration for this antenna is :ned:`AxiallySymmetricAntenna` in
    :end-at: gains
    :language: ini
 
-The antenna type in ``source``'s radio is set to
-:ned:`AxiallySymmetricAntenna`. We use the characteristics data from
-a real-world 16-element Yagi antenna for the :par:`gains` parameter values.
-We also set a :par:`baseGain` of 10 dB, because the gain data is given as relative
-(i.e. the maximum gain is at 0 dB). The radiation pattern looks like the following:
+As we run the simulation, we can see the radiation pattern displayed:
 
 .. video:: axiallysymmetric2.mp4
 
-Here is the reception power vs. direction:
+Here is the reception power vs. direction plot:
 
 .. figure:: axiallysymmetricchart.png
    :width: 100%
 
-Here is the same plot with a logarithmic scale, where the details further from the main lobe are more apparent:
+Here is the same plot with a logarithmic scale, where the details
+further from the main lobe are more apparent:
 
 .. figure:: axiallysymmetricchart_log.png
    :width: 100%
