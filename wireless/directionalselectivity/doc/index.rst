@@ -64,7 +64,7 @@ Visualizing antenna directionality
 
 The :ned:`RadioVisualizer` module can visualize antenna directional characteristics,
 using its antenna lobe visualization feature. For example, the radiation patterns of
-an isotropic and a directional antenna:
+an isotropic and a directional antenna looks like the following:
 
 .. figure:: antennalobe4.png
    :width: 100%
@@ -72,28 +72,14 @@ an isotropic and a directional antenna:
 
 The visualized lobes indicate the antenna gain.
 At any given direction, the distance between the node and the boundary of the lobe shape
-depends on the gain at that direction. The gain can be visualized on a linear or a logarithmic
-scale (default).
-The visualizer indicates the 0 dB gain and the maximum gain with dashed circles
-on the radiation pattern figure.
+is a (linear or logarithmic, the default being the latter) function of the gain in that direction.
+Details of the mapping can be tuned with the visualizer's parameters.
+Dashed circles indicate the 0 dB gain and the maximum gain on the radiation pattern figure.
 
 The visualization is actually a cross-section of the 3D radiation pattern.
 By default, the cross-section plane is perpendicular to the current
 viewing angle, in the global coordinate system (however, one can specify other
 planes in the antenna's local coordinate system).
-
-The shape and size of the antenna lobe figure is determined by the characteristics
-of the antenna, but also by the parameters of the visualizer. Thus the visualization
-is an approximate representation of the antenna's radiation pattern.
-Depending on the visualizer's parameters, some fine details of the pattern might be
-visible, while others might not.
-There are several visualizer parameters for fine-tuning the visualized radiation
-pattern.
-
-The antenna lobe figure is made up of circular arcs, the radiuses of which depend
-on a base radius, and the gain evaluated at certain angles. By default, the visualizer
-evaluates the gain at every 10 degrees, but the evaluation can be made more fine-grained.
-The size of the arcs at the intermittent angles are interpolated.
 
 For a more in-dept overview of antenna lobe visualization, read the :ref:`corresponding section <ug:sec:visualization:radio-state>`
 in the INET User's Guide.
@@ -108,7 +94,7 @@ directional characteristics of five antenna modules. The simulation uses
 the ``DirectionalSelectivityShowcase`` network:
 
 .. figure:: network.png
-   :width: 80%
+   :width: 60%
    :align: center
 
 The network contains two :ned:`AdhocHost`\ s, named ``source`` and
@@ -160,10 +146,8 @@ Isotropic Antenna
 
 The :ned:`IsotropicAntenna` is the default in all radio modules. This
 module models a hypothetical antenna which radiates with the same power
-in all directions. It is useful if the emphasis of the simulation is not
-on the details of antennas. This module can be used to approximate
-real world directionless antennas. The module has no parameters. The
-configuration for this antenna is :ned:`IsotropicAntenna` in :download:`omnetpp.ini <../omnetpp.ini>`.
+in all directions. The module has no parameters. The
+simulation configuration which demonstrates this antenna is :ned:`IsotropicAntenna` in :download:`omnetpp.ini <../omnetpp.ini>`.
 The configuration just sets the antenna type in ``source``:
 
 .. literalinclude:: ../omnetpp.ini
@@ -177,12 +161,11 @@ When the simulation is run, it looks like the following:
 
 .. internal video recording, animation speed 1, playback speed 21.88, normal run, zoom 1, crop 25 25 150 50, no dpi scaling
 
-The radiation pattern is a circle, as the antenna is directionless
-(actually, the isotropic antenna's radiation pattern is a sphere, which looks like a circle from
-any viewpoint). Here is a video of the simulation running:
+The radiation pattern is shown as a circle, as expected
+(the isotropic antenna's radiation pattern is a sphere).
 
-The destination node circles the source node, all ping messages are
-successfully received. Here is the reception power vs. direction:
+As the destination node circles the source node, we record the reception power of the frames.
+Here is the reception power vs. direction plot:
 
 .. figure:: isotropicchart.png
    :width: 100%
@@ -190,13 +173,13 @@ successfully received. Here is the reception power vs. direction:
 Parabolic Antenna
 ~~~~~~~~~~~~~~~~~
 
-The :ned:`ParabolicAntenna` module simulates the main lobe radiation
-pattern of a `parabolic antenna <https://en.wikipedia.org/wiki/Parabolic_antenna>`__. The antenna module has the following
-parameters:
+The :ned:`ParabolicAntenna` module simulates the radiation
+pattern of the main lobe of a `parabolic antenna <https://en.wikipedia.org/wiki/Parabolic_antenna>`__.
+The antenna module has the following parameters:
 
--  :par:`MaxGain`: the maximum gain of the antenna
--  :par:`MinGain`: the minimum gain of the antenna
--  :par:`BeamWidth`: the 3 dB beam width in degrees
+-  :par:`maxGain`: the maximum gain of the antenna in dB
+-  :par:`minGain`: the minimum gain of the antenna in dB
+-  :par:`beamWidth`: width of the 3 dB beam in degrees
 
 The configuration for this antenna is :ned:`ParabolicAntenna` in
 :download:`omnetpp.ini <../omnetpp.ini>`:
@@ -223,21 +206,21 @@ on the following, zoomed-in image:
 
 The ping probe messages are successfully received when the destination
 node is near the main lobe of ``source``'s antenna.
-Note that the communication can be successful outside the main lobe.
-The main lobe just indicates that the antenna gain is larger in that direction,
-but the received signal strength can be strong enough elsewhere.
-Here is the reception power vs. direction:
+Here is the reception power vs. direction (note that the destination host
+starts at 90 degrees away from the main lobe axis, so that the main lobe is
+more apparent on the reception power plot):
 
 .. figure:: parabolicchart.png
    :width: 100%
 
-.. note:: The destination host starts at 90 degrees away the main lobe axis, so the main lobe is more apparent on the reception power plot.
-
 Dipole Antenna
 ~~~~~~~~~~~~~~
 
-The :ned:`DipoleAntenna` module models a dipole antenna. It has one
-parameter, :par:`length`. The configuration in :download:`omnetpp.ini <../omnetpp.ini>` is the
+The :ned:`DipoleAntenna` module models a dipole antenna. Antenna length can be specified with
+a parameter. By default, the antenna is vertical. When viewed from above, its radiation pattern
+is a circle, which would not be very interesting for demonstration. To make the simulation
+more interesting, we set the antenna to point in the direction of the y axis.
+The configuration in :download:`omnetpp.ini <../omnetpp.ini>` is the
 following:
 
 .. literalinclude:: ../omnetpp.ini
@@ -245,25 +228,16 @@ following:
    :end-before: CosineAntenna
    :language: ini
 
-The configuration sets the antenna type to :ned:`DipoleAntenna`, and the
-antenna length to 0.1m. The elevation and bank parameters are used to
-rotate the source node, so that the radiation pattern is more
-interesting. Without rotation, the dipole's axis would be horizontal, and its
-radiation pattern's donut shape would be a circle
-when viewed from above. The elevation angle is changed by 90 degrees, so the donut is
-on its side. The bank angle is changed by 90 degrees (donut rotated on its side),
-so destination node starts at the null direction.
-
 It looks like this when the simulation is run:
 
 .. video:: dipole5.mp4
 
 .. <!--internal video recording, animation speed 1, playback speed 21.88, normal run, crop 25 25 150 750-->
 
-The radiation pattern is the dipole's donut shape, when viewed from the
-side.
-There is no successful communication when the destination node is at
-the null direction. Here is the reception power vs. direction:
+The visualization shows the cross section of the donut shape of the dipole antenna's
+radiation pattern. As can be seen from the animation, there is no successful communication
+when the destination node is near the antenna's axis due to low antenna gain in that direction.
+Here is the reception power vs. direction plot:
 
 .. figure:: dipolechart.png
    :width: 100%
@@ -271,17 +245,23 @@ the null direction. Here is the reception power vs. direction:
 Cosine Antenna
 ~~~~~~~~~~~~~~
 
-The :ned:`CosineAntenna` module approximates a directional antenna with a
-cosine pattern. In this model, the shape of the radiation pattern is
-given by a cosine exponent. The module has two parameters, :par:`maxGain`
-and :par:`beamWidth`.
+The :ned:`CosineAntenna` module models a hypotetical antenna with a cosine-based
+radiation pattern. This antenna model is commonly used in the real world to approximate
+various directional antennas. The module has two parameters, :par:`maxGain`
+and :par:`beamWidth`. The configuration in :download:`omnetpp.ini <../omnetpp.ini>` is the
+following:
 
-The radiation pattern is similar to the parabolic antenna's. It looks
-like the following:
+.. literalinclude:: ../omnetpp.ini
+   :start-at: CosineAntenna
+   :end-before: AxiallySymmetricAntenna
+   :language: ini
+
+It looks like the following:
 
 .. video:: cosine4.mp4
 
-Here is the reception power vs. direction:
+As can be seen on the video, the radiation pattern is similar to that of the parabolic antenna.
+Here is the reception power vs. direction plot:
 
 .. figure:: cosinechart.png
    :width: 100%
@@ -321,12 +301,12 @@ Here is the reception power vs. direction:
 .. figure:: axiallysymmetricchart.png
    :width: 100%
 
-Here is the same chart with a logarithmic scale, where the details further from the main lobe are more apparent:
+Here is the same plot with a logarithmic scale, where the details further from the main lobe are more apparent:
 
 .. figure:: axiallysymmetricchart_log.png
    :width: 100%
 
-Here are the results for all antennas on one chart, for comparison:
+Here are the results for all antennas on one plot, for comparison:
 
 .. figure:: allantennaschart.png
       :width: 100%
