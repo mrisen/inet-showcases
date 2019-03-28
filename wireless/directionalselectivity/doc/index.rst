@@ -10,13 +10,13 @@ INET contains various directional antenna
 models. The support for different antennas is useful for simulating many
 kinds of wireless scenarios where antenna characteristics are important.
 
-This showcase aims to highlight the antenna models available in INET,
-and their directional characteristics. The showcase contains an example
+This showcase aims to highlight the antenna models available in INET.
+The showcase contains an example
 simulation which demonstrates the direcionality of five antenna models.
-Four of these models represent well known antenna models, while the last one
+Four of these represent well known antenna models, while the last one
 is a universal antenna which can model any rotationally symetrical antenna pattern.
 
-| INET version: ``4.0``
+| INET version: ``4.1``
 | Source files location: `inet/showcases/wireless/directionalselectivity <https://github.com/inet-framework/inet-showcases/tree/master/general/directionalselectivity>`__
 
 Concepts
@@ -27,37 +27,35 @@ submodules. The success of receiving a wireless transmission depends on
 the strength of the signal present at the receiver, among other things,
 such as interference from other signals. Both the transmitter and the
 receiver submodules use the antenna submodule of the radio when sending and
-receiving transmissions. Actually, the antenna can have its own mobility
-submodule, thus its own position and orientation, which also affects
-reception.
+receiving transmissions.
 
 The antenna module affects transmission and reception in multiple ways:
 
-- The relative position of the transmitting and receiving antennas is used when calculating reception signal strength (i.e. attenuation due to distance).
+- The relative position of the transmitting and receiving antennas is used when calculating reception signal strength (e.g. attenuation due to distance).
 - Antenna gain is applied to the signal power at transmission and reception. The applied gain depends on each antenna module's directional characteristics, and the relative position and the orientation of the two antennas. This can increase or decrease the received signal power.
 - By default, the antenna uses the containing network node's mobility submodule to describe its position and orientation, i.e. it has the same position and orientation as the network node. However, antenna modules have optional mobility submodules of their own.
 - All antenna modules have 3D directional characteristics.
 
 INET contains the following antenna module types:
 
-- **Isotropic**:
+- Isotropic:
 
   - :ned:`IsotropicAntenna`: hypothetical antenna that radiates with the same intensity in all directions
   - :ned:`ConstantGainAntenna`: the same as :ned:`IsotropicAntenna`, but has a constant `gain` parameter (for testing purposes)
 
-- **Omnidirectional**:
+- Omnidirectional:
 
   - :ned:`DipoleAntenna`: models a `dipole antenna <https://en.wikipedia.org/wiki/Dipole_antenna>`__
 
-- **Directional**:
+- Directional:
 
   - :ned:`ParabolicAntenna`: models a `parabolic antenna <https://en.wikipedia.org/wiki/Parabolic_antenna>`__'s main radiation lobe, ignoring sidelobes
   - :ned:`CosineAntenna`: models directional antenna characteristics with a cosine pattern
 
-- **Other**:
+- Other:
 
   - :ned:`InterpolatingAntenna`: can model many complex antenna characteristics using linear interpolation
-  - :ned:`AxiallySymmetricAntenna`: models complex antenna characteristics as a rotationally symmetric radiation pattern
+  - :ned:`AxiallySymmetricAntenna`: models complex antenna characteristics as a axially symmetric radiation pattern
 
 The default antenna module in all radios is :ned:`IsotropicAntenna`.
 
@@ -92,7 +90,7 @@ The Model and Results
 ---------------------
 
 The showcase contains five example simulations, which demonstrate the
-directional characteristics of five antenna modules. The simulation uses
+directional characteristics of five antenna models. The simulation uses
 the ``DirectionalSelectivityShowcase`` network:
 
 .. figure:: network.png
@@ -126,7 +124,7 @@ section:
    :language: ini
 
 The source host is configured to send ping requests every 0.5s. This is
-effectively the probe interval, the antenna characteristics data can be
+effectively the probe interval; the antenna characteristics data can be
 made more fine-grained by setting a more frequent ping rate. The
 destination is configured to circle the source with a radius of 150m.
 The simulation runs for 360s, and the speed of ``destination`` is set so
@@ -208,9 +206,9 @@ on the following, zoomed-in image:
 
 The ping probe messages are successfully received when the destination
 node is near the main lobe of ``source``'s antenna.
-Here is the reception power vs. direction (note that the destination host
+Here is the reception power vs. direction plot (note that the destination host
 starts at 90 degrees away from the main lobe axis, so that the main lobe is
-more apparent on the reception power plot):
+more apparent on the reception power):
 
 .. figure:: parabolicchart.png
    :width: 100%
@@ -276,7 +274,7 @@ any axially symmetrical radiation pattern. It can model an isotropic antenna, a 
 antenna, dipole antenna, and many other antenna types.
 
 The radiation pattern is described by specifying
-the gain at various angles (e.g. at one-degree steps) on a half-plane attached to
+the gain at various angles on a half-plane attached to
 the axis of symmetry.
 The gain is then interpolated at the intermittent angles, and the pattern
 is rotated around the axis to get the radiation pattern in 3D.
