@@ -8,7 +8,7 @@ Goals
 
 802.11 devices can commonly operate in two basic modes. In infrastructure mode,
 nodes connect to wireless networks created by access points, which
-provide services, such as internet access. In ad hoc mode, nodes create
+provide connectivity to other networks. In ad hoc mode, nodes form
 an ad hoc wireless network, without using additional network
 infrastructure.
 
@@ -56,11 +56,6 @@ in :download:`omnetpp.ini <../omnetpp.ini>` is the following:
    :start-at: mgmt
    :end-at: agent
    :language: ini
-
-Note that in the :ned:`AdhocHost` type, forwarding is enabled. However,
-forwarding is not required in this simulation, because the hosts can
-reach each other in one hop, and packet don't need to be forwarded
-(forwarding is required for multihop networks.)
 
 Results
 -------
