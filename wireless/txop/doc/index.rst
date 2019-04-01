@@ -76,7 +76,7 @@ About TXOP
 
 A TXOP is a limited time period, during which a station can send multiple packets belonging to a certain access category, contention-free. The use of TXOP increases the throughput of QoS data frames (it's a HCF-only feature), although other frames, such as ACKs, can be sent during the TXOP as well. By default, only packets belonging to video and voice priority access categories can use TXOP.
 
-Actually, all access categories have their own rules for channel access, such as different values for AIFS, contention window size, and TXOP limit. These values are set so that higher priority packets are favored (the MAC waits less before sending them, the contenion window is smaller, and they can utilize TXOP). By default, the TXOP limit for the video category is 3 ms, for the voice category 1.5 ms. The background and best effort categories have a TXOP limit of 0, meaning they can send just one MSDU before having to contend for channel access again.
+More precisely, all access categories have their own rules for channel access, such as different values for AIFS, contention window size, and TXOP limit. By default, these values are set so that higher priority packets are favored (the MAC waits less before sending them, the contenion window is smaller, and they can utilize TXOP). By default, the TXOP limit for the video category is 3 ms, for the voice category 1.5 ms. The background and best effort categories have a TXOP limit of 0, meaning they can send just one MSDU before having to contend for channel access again.
 
 When a station has a high priority packet to send, and it gains channel access, the station can keep transmitting packets without backoff periods until the end of the TXOP. The recipients can ACK the packets.
 
