@@ -86,7 +86,7 @@ In INET, the TXOP is automatically used when using HCF (``qosStation = true`` in
    :width: 80%
    :align: center
 
-The default value for the :par:`txopLimit` parameter is ``-1``, meaning it uses the default protocol values. The contention state of the different access categories are shown in the ``edcaf`` modules' display strings.
+The default value for the :par:`txopLimit` parameter is ``-1``, meaning the default protocol values are used. The contention state of the different access categories are shown in the ``edcaf`` modules' display strings.
 
 The Model
 ---------
