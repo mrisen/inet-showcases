@@ -169,12 +169,19 @@ Here is the reception power vs. direction plot:
 
 .. figure:: isotropicchart.png
    :width: 100%
+   :align: center
 
 Parabolic Antenna
 ~~~~~~~~~~~~~~~~~
 
 The :ned:`ParabolicAntenna` module simulates the radiation
-pattern of the main lobe of a `parabolic antenna <https://en.wikipedia.org/wiki/Parabolic_antenna>`__.
+pattern of the main lobe of a `parabolic antenna <https://en.wikipedia.org/wiki/Parabolic_antenna>`__,
+such as this one:
+
+.. figure:: parabolicantenna.jpg
+   :width: 50%
+   :align: center
+
 The antenna module has the following parameters:
 
 -  :par:`maxGain`: the maximum gain of the antenna in dB
