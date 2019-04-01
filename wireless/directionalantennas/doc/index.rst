@@ -17,7 +17,7 @@ Four of these represent well known antenna models, while the last one
 is a universal antenna which can model any rotationally symetrical antenna pattern.
 
 | INET version: ``4.1``
-| Source files location: `inet/showcases/wireless/directionalselectivity <https://github.com/inet-framework/inet-showcases/tree/master/general/directionalselectivity>`__
+| Source files location: `inet/showcases/wireless/directionalantennas <https://github.com/inet-framework/inet-showcases/tree/master/general/directionalantennas>`__
 
 Concepts
 --------
@@ -91,7 +91,7 @@ The Model and Results
 
 The showcase contains five example simulations, which demonstrate the
 directional characteristics of five antenna models. The simulation uses
-the ``DirectionalSelectivityShowcase`` network:
+the ``DirectionalAntennasShowcase`` network:
 
 .. figure:: network.png
    :width: 60%
@@ -179,7 +179,7 @@ pattern of the main lobe of a `parabolic antenna <https://en.wikipedia.org/wiki/
 such as this one:
 
 .. figure:: parabolicantenna.jpg
-   :width: 50%
+   :width: 40%
    :align: center
 
 The antenna module has the following parameters:
@@ -215,7 +215,7 @@ The ping probe messages are successfully received when the destination
 node is near the main lobe of ``source``'s antenna.
 Here is the reception power vs. direction plot (note that the destination host
 starts at 90 degrees away from the main lobe axis, so that the main lobe is
-more apparent on the reception power):
+more apparent on the reception power plot):
 
 .. figure:: parabolicchart.png
    :width: 100%
@@ -335,7 +335,7 @@ Here are the results for all antennas on one plot, for comparison:
 .. figure:: allantennaschart.png
       :width: 100%
 
-Sources: :download:`omnetpp.ini <../omnetpp.ini>`, :download:`DirectionalSelectivityShowcase.ned <../DirectionalSelectivityShowcase.ned>`
+Sources: :download:`omnetpp.ini <../omnetpp.ini>`, :download:`DirectionalAntennasShowcase.ned <../DirectionalAntennasShowcase.ned>`
 
 Discussion
 ----------
