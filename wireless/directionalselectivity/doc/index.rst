@@ -1,7 +1,7 @@
 :orphan:
 
-Directional Selectivity of Antennas
-===================================
+Modeling Directional Antennas
+=============================
 
 Goals
 -----
