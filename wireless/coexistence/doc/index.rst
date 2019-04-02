@@ -1,18 +1,16 @@
-WPAN:orphan:
-
 Wireless Coexistence
 ====================
 
 Goals
 -----
 
-This showcase explores the coexistence of different wireless technologies in the same frequency band
-Different wireless technologies sometimes operate in the same frequency range.
+This showcase explores the coexistence of different wireless technologies in the same
+frequency band. Different wireless technologies sometimes operate in the same frequency range.
 For example, both IEEE 802.11 and IEEE 802.15.4 have versions that use the 2.4 GHz ISM band.
 As the two technologies share the same frequency range, their signals can interfere.
 
 INET has support for simulating the simultaneous operation of different wireless protocols
-in the same frequency band. The simulation can be used to examine how the different protocols
+in the same frequency band. Simulation can be used to examine how the different protocols
 interact and affect each other's operation. This showcase demonstrates the coexistence
 of 802.11 and 802.15.4 models through an example simulation.
 
@@ -22,21 +20,24 @@ of 802.11 and 802.15.4 models through an example simulation.
 The model
 ---------
 
-The example simulation features a Wifi and a WPAN network close to each other. The networks contain 802.11
-and 802.15.4 hosts, respectively, which communicate in the 2.4 GHz band. The signals
+The example simulation features a Wifi (802.11) and a WPAN (802.15.4) network close to each other. All nodes communicate in the 2.4 GHz band. The signals
 for the two wireless protocols have different center frequencies and bandwidths,
-but the signal spectrums can overlap. We simulate a scenario where the spectrums overlap
+but the signal spectrums can overlap. In this showcase, we will configure the two networks to actually use overlapping channels.
+
+We simulate a scenario where the spectrums overlap
 to demonstrate the spectral coexistence of the two technologies.
 
-As the signal center frequencies and bandwidths of the two technologies are not identical, the dimensional
-analog model needs to be used. The two technologies have to share a radio medium module.
+As the signal center frequencies and bandwidths of the two technologies are not identical,
+the dimensional analog model needs to be used. The dimensional analog model is able to represent
+signal strength in the function of frequency (as opposed to the
+scalar analog model, which only stores one center frequency and a bandwidth), so it is
+better suited for our study.
+
+The two networks have to share a radio medium module. (If they used two separate medium modules,
+they would never interfere with each other.)
 Both 802.11 and 802.15.4 have their own dimensional radio medium module types,
-with slightly different parameterization by default. For simplicity, we use neither.
-Instead, we use the more generic :ned:`RadioMedium` module, which is the base module
-that all radio medium modules extend (including :ned:`Ieee80211DimensionalRadioMedium`
-and :ned:`Ieee802154NarrowbandDimensionalRadioMedium`) by specifying its parameters.
-We configure this module so that the :ned:`Ieee80211DimensionalRadio` and
-:ned:`Ieee802154NarrowbandDimensionalRadio` modules can both use it.
+but they are actually both :ned:`RadioMedium`, just with different parameterizations.
+For our simulation, we use neither, but create a new specialization of :ned:`RadioMedium` so that it suits both technologies.
 
 The simulation uses the ``CoexistenceShowcase`` network, defined in :download:`CoexistenceShowcase.ned <../CoexistenceShowcase.ned>`:
 
@@ -282,8 +283,6 @@ transmission and ACK, for Wifi and WPAN, respectively. The scale is linear.
 
 .. figure:: seqchart.png
    :width: 100%
-
-   This is the caption
 
 Sources: :download:`omnetpp.ini <../omnetpp.ini>`, :download:`CoexistenceShowcase.ned <../CoexistenceShowcase.ned>`
 
