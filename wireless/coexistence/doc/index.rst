@@ -1,5 +1,5 @@
-Wireless Coexistence
-====================
+Coexistence of IEEE 802.11 and 802.15.4
+=======================================
 
 Goals
 -----
@@ -23,6 +23,14 @@ The model
 The example simulation features a Wifi (802.11) and a WPAN (802.15.4) network close to each other. All nodes communicate in the 2.4 GHz band. The signals
 for the two wireless protocols have different center frequencies and bandwidths,
 but the signal spectrums can overlap. In this showcase, we will configure the two networks to actually use overlapping channels.
+
+.. figure:: channels/channels.png
+   :width: 100%
+   :align: center
+
+.. figure:: channels/channels2.png
+   :width: 100%
+   :align: center
 
 We simulate a scenario where the spectrums overlap
 to demonstrate the spectral coexistence of the two technologies.
@@ -206,8 +214,8 @@ the averaging of the repetitions.
 In the next section, we examine if the performance of both technologies
 could be improved by changing some parameters of the 802.15.4 MAC.
 
-Performance improvements
-~~~~~~~~~~~~~~~~~~~~~~~~
+Performance improvements DELETE
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 802.11 and 802.15.4 differ in many ways. Typically, 802.11 has an emphasis on high data rate,
 while 802.15.4 prioritizes energy efficiency. By default, the Wifi hosts operate
@@ -285,12 +293,6 @@ transmission and ACK, for Wifi and WPAN, respectively. The scale is linear.
    :width: 100%
 
 Sources: :download:`omnetpp.ini <../omnetpp.ini>`, :download:`CoexistenceShowcase.ned <../CoexistenceShowcase.ned>`
-
-Conclusion
-----------
-
-The scenario could be more complex, with more nodes. This simulation demonstrates that
-the two technologies can work alongside each other in this simple scenario.
 
 Discussion
 ----------
