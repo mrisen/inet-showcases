@@ -14,7 +14,7 @@ in the same frequency band. Simulation can be used to examine how the different 
 interact and affect each other's operation. This showcase demonstrates the coexistence
 of 802.11 and 802.15.4 models through an example simulation.
 
-| INET version: ``4.0``
+| INET version: ``4.1``
 | Source files location: `inet/showcases/wireless/coexistence <https://github.com/inet-framework/inet-showcases/tree/master/wireless/coexistence>`__
 
 The model
