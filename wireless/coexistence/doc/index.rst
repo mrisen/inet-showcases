@@ -4,15 +4,14 @@ Coexistence of IEEE 802.11 and 802.15.4
 Goals
 -----
 
-This showcase explores the coexistence of different wireless technologies in the same
-frequency band. Different wireless technologies sometimes operate in the same frequency range.
+Different wireless technologies sometimes operate in the same frequency range.
 For example, both IEEE 802.11 and IEEE 802.15.4 have versions that use the 2.4 GHz ISM band.
-As the two technologies share the same frequency range, their signals can interfere.
+As such, the signals of the two protocols can interfere.
 
-INET has support for simulating the simultaneous operation of different wireless protocols
-in the same frequency band. Simulation can be used to examine how the different protocols
+INET has support for simulating the interference of different wireless protocols.
+Simulation can be used to examine how the different protocols
 interact and affect each other's operation. This showcase demonstrates the coexistence
-of 802.11 and 802.15.4 models through an example simulation.
+of INET's 802.11 and 802.15.4 models.
 
 | INET version: ``4.1``
 | Source files location: `inet/showcases/wireless/coexistence <https://github.com/inet-framework/inet-showcases/tree/master/wireless/coexistence>`__
@@ -22,7 +21,7 @@ The model
 
 The example simulation features a Wifi (802.11) and a WPAN (802.15.4) network close to each other. All nodes communicate in the 2.4 GHz band. The signals
 for the two wireless protocols have different center frequencies and bandwidths,
-but the signal spectrums can overlap. In this showcase, we will configure the two networks to actually use overlapping channels.
+but the signal spectrums can overlap. In this showcase, we will configure the two networks to actually use overlapping channels. The channel spectrums for both technologies are shown on the following image:
 
 .. figure:: channels/channels.png
    :width: 100%
@@ -32,20 +31,22 @@ but the signal spectrums can overlap. In this showcase, we will configure the tw
    :width: 100%
    :align: center
 
-We simulate a scenario where the spectrums overlap
-to demonstrate the spectral coexistence of the two technologies.
+For the WPAN, we'll use INET's 802.15.4 narrow band version, in which transmissions have 2450 MHz carrier frequency and 2.8 MHz bandwidth by default. For the Wifi, we'll use 802.11g, in which transmissions have a 20 MHz bandwidth. We'll leave the frequency and bandwidth of 802.15.4 on default, and we'll use Wifi Channel 9 (center frequency of 2452 MHz), so that the Wifi and WPAN transmission spectrums overlap:
 
-As the signal center frequencies and bandwidths of the two technologies are not identical,
+TODO image
+
+As the signal center frequencies and bandwidths of the 802.11 and 802.15.4 models are not identical,
 the dimensional analog model needs to be used. The dimensional analog model is able to represent
 signal strength in the function of frequency (as opposed to the
 scalar analog model, which only stores one center frequency and a bandwidth), so it is
-better suited for our study.
+better suited for our study. TODO due to the limitation of the scalar analog model
 
-The two networks have to share a radio medium module. (If they used two separate medium modules,
-they would never interfere with each other.)
+In order for the signals for Wifi and WPAN to interfere,
+the two networks have to share a radio medium module instance.
 Both 802.11 and 802.15.4 have their own dimensional radio medium module types,
 but they are actually both :ned:`RadioMedium`, just with different parameterizations.
-For our simulation, we use neither, but create a new specialization of :ned:`RadioMedium` so that it suits both technologies.
+TODO more on this...typical parameterization
+For our simulation, we'll use :ned:`RadioMedium`, and configure it so that it suits both the Wifi and the WPAN.
 
 The simulation uses the ``CoexistenceShowcase`` network, defined in :download:`CoexistenceShowcase.ned <../CoexistenceShowcase.ned>`:
 
