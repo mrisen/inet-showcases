@@ -52,14 +52,14 @@ For the WPAN, we'll use INET's 802.15.4 narrow band version, in which transmissi
 .. #how can that be simulated?
 
 As the signal center frequencies and bandwidths of the 802.11 and 802.15.4 models are not identical,
-the dimensional analog model needs to be used instead of the scalar analog model. The scalar analog model represents signals with a scalar signal power, a center frequency and a bandwidth. The scalar model cannot handle when the spectrums of two signals overlap (but not identical). When using the dimensional analog model, signal power can change in both time and frequency. This model is also able to calculate the interference of signals whose spectrums partially overlap.
+the dimensional analog model needs to be used, instead of the scalar analog model. The scalar analog model represents signals with a scalar signal power, and a constant center frequency and bandwidth. The scalar model cannot handle when the spectrums of two signals overlap (but not identical). When using the dimensional analog model, signal power can change in both time and frequency. This model is also able to calculate the interference of signals whose spectrums partially overlap.
 
 .. #whats a radio medium module?
 
 In order for the signals for Wifi and WPAN to interfere,
 the two networks have to share a radio medium module instance.
-The radio medium module keeps track of transmitters, receivers, transmissions and noise on the network, and computes signal and noise power at reception. It has several submodules, such as signal propagation model, path loss model, background noise model, and analog signal representation.
-For more information, read the :doc:`corresponding section </users-guide/ch-transmission-medium>` in the INET User's Guide.
+The radio medium module keeps track of transmitters, receivers, transmissions and noise on the network, and computes signal and noise power at receivers. The radio medium module has several submodules, such as signal propagation model, path loss model, background noise model, and analog signal representation.
+(For more information, read the :doc:`corresponding section </users-guide/ch-transmission-medium>` in the INET User's Guide.)
 
 .. #doesn't 802.11 and 802.15.4 has their own radio medium modules?
 
