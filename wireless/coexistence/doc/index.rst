@@ -33,7 +33,9 @@ but the signal spectrums can overlap. In this showcase, we will configure the tw
 
 For the WPAN, we'll use INET's 802.15.4 narrow band version, in which transmissions have 2450 MHz carrier frequency and 2.8 MHz bandwidth by default. For the Wifi, we'll use 802.11g, in which transmissions have a 20 MHz bandwidth. We'll leave the frequency and bandwidth of 802.15.4 on default, and we'll use Wifi Channel 9 (center frequency of 2452 MHz), so that the Wifi and WPAN transmission spectrums overlap:
 
-TODO image
+.. figure:: channels/channels8.png
+   :width: 30%
+   :align: center
 
 As the signal center frequencies and bandwidths of the 802.11 and 802.15.4 models are not identical,
 the dimensional analog model needs to be used. The dimensional analog model is able to represent
@@ -41,12 +43,25 @@ signal strength in the function of frequency (as opposed to the
 scalar analog model, which only stores one center frequency and a bandwidth), so it is
 better suited for our study. TODO due to the limitation of the scalar analog model
 
+As the signal center frequencies and bandwidths of the 802.11 and 802.15.4 models are not identical,
+the dimensional analog model needs to be used instead of the scalar analog model, due to a limitation of the latter. With the scalar analog model, signal strength can change in time, but it has a constant center frequency and bandwidth. With the dimensional analog model, the signal strength can change in time and frequency.
+The dimensional analog model has more computational cost, but it can model the interference of signals with partially overlapping spectrums.
+
+As the signal center frequencies and bandwidths of the 802.11 and 802.15.4 models are not identical,
+the dimensional analog model needs to be used instead of the scalar analog model. The scalar analog model represents signals with a scalar signal power, a center frequency and a bandwidth. The scalar model cannot handle when the spectrums of two signals overlap (but not identical). When using the dimensional analog model, signal power can change in both time and frequency. This model is also able to calculate the interference of signals whose spectrums partially overlap.
+
 In order for the signals for Wifi and WPAN to interfere,
 the two networks have to share a radio medium module instance.
 Both 802.11 and 802.15.4 have their own dimensional radio medium module types,
 but they are actually both :ned:`RadioMedium`, just with different parameterizations.
 TODO more on this...typical parameterization
 For our simulation, we'll use :ned:`RadioMedium`, and configure it so that it suits both the Wifi and the WPAN.
+
+The radio medium module keeps track of transmitters, receivers, transmissions and noise on the network, and computes signal and noise power at reception. It has several submodules, such as signal propagation model, path loss model, background noise model, and analog signal representation.
+
+The radio medium modules for 802.11 and 802.15.4 are radio medium with parameterization for their typical use cases. For example, they both set a carrier frequency for MediumLimitCache. This module helps speed up simulations by filtering some signals that are definatelly unreceivable, so the reception doesn't have to be computed.
+
+This module optimizes simulations by limiting the reception computation to signals with certain properties, e.g. a certain minimum reception power. Signals outside these limits are considered unreceivable.
 
 The simulation uses the ``CoexistenceShowcase`` network, defined in :download:`CoexistenceShowcase.ned <../CoexistenceShowcase.ned>`:
 
