@@ -58,17 +58,25 @@ the dimensional analog model needs to be used, instead of the scalar analog mode
 
 In order for the signals for Wifi and WPAN to interfere,
 the two networks have to share a radio medium module instance.
-The radio medium module keeps track of transmitters, receivers, transmissions and noise on the network, and computes signal and noise power at receivers. The radio medium module has several submodules, such as signal propagation model, path loss model, background noise model, and analog signal representation.
+The radio medium module keeps track of transmitters, receivers, transmissions and noise on the network, and computes signal and noise power at receivers. The radio medium module has several submodules, such as signal propagation, path loss, background noise, and analog signal representation modules.
 (For more information, read the :doc:`corresponding section </users-guide/ch-transmission-medium>` in the INET User's Guide.)
+
+The standard radio medium module in INET is :ned:`RadioMedium`. Wireless protocols in INET (such as 802.11 or 802.15.4) often have their own radio module types (e.g. Ieee80211DimensionalRadioMedium), but these modules are actually :ned:`RadioMedium`, just with different parameterizations (each parameterized for its typical use case).
+For example, they might define different path loss types, or MediumLimitCache parameters.
+(MediumLimitCache optimizes simulations by limiting the reception computation to signals with certain properties, e.g. a certain minimum reception power. Signals outside these limits are considered unreceivable.) However, setting these radio medium parameters are not required for the simulation to work. Most of the time, one could just use RadioMedium with its default parameters.
+
+For our simulation, we'll use :ned:`RadioMedium`. Since we'll have two different protocols, the analog model and the background noise of the radio medium and the protocol specific radios needs to match (they need to be dimensional).
+
+.. TODO: specifically if you want to simulate cti -> so by default, the radio medium works out of the box -> for cti, it needs to have the same analog model and background noise as the radios of the protocols
 
 .. #doesn't 802.11 and 802.15.4 has their own radio medium modules?
 
-Both 802.11 and 802.15.4 have their own dimensional radio medium module types,
-but they are actually both :ned:`RadioMedium`, just with different parameterizations (each parameterized for its typical use case). For example, they both set a carrier frequency for MediumLimitCache. MediumLimitCache optimizes simulations by limiting the reception computation to signals with certain properties, e.g. a certain minimum reception power. Signals outside these limits are considered unreceivable.
+.. Both 802.11 and 802.15.4 have their own dimensional radio medium module types,
+   but they are actually both :ned:`RadioMedium`, just with different parameterizations (each parameterized for its typical use case). For example, they both set a carrier frequency for MediumLimitCache. MediumLimitCache optimizes simulations by limiting the reception computation to signals with certain properties, e.g. a certain minimum reception power. Signals outside these limits are considered unreceivable.
 
 .. TODO more on this...typical parameterization
 
-For our simulation, we'll use :ned:`RadioMedium`, and configure it so that it suits both the Wifi and the WPAN.
+.. For our simulation, we'll use :ned:`RadioMedium`, and configure it so that it suits both the Wifi and the WPAN.
 
 .. The radio medium modules for 802.11 and 802.15.4 are actually both :ned:`RadioMedium`, just with different parameterizations
 
