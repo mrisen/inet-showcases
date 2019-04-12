@@ -27,9 +27,9 @@ but the signal spectrums can overlap. In this showcase, we will configure the tw
    :width: 100%
    :align: center
 
-.. figure:: channels/channels2.png
-   :width: 100%
-   :align: center
+.. .. figure:: channels/channels2.png
+      :width: 100%
+      :align: center
 
 .. #how do the signals overlap?
 
@@ -59,6 +59,7 @@ the dimensional analog model needs to be used instead of the scalar analog model
 In order for the signals for Wifi and WPAN to interfere,
 the two networks have to share a radio medium module instance.
 The radio medium module keeps track of transmitters, receivers, transmissions and noise on the network, and computes signal and noise power at reception. It has several submodules, such as signal propagation model, path loss model, background noise model, and analog signal representation.
+For more information, read the :doc:`corresponding section </users-guide/ch-transmission-medium>` in the INET User's Guide.
 
 .. #doesn't 802.11 and 802.15.4 has their own radio medium modules?
 
