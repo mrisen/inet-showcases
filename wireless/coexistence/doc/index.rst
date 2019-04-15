@@ -207,8 +207,6 @@ received this time.
     There are many variables, e.g. there might be more nodes,
     different transmission power values, different distances, etc.
 
-**TODO: the configurations (by default, run coexistence)**
-
 Performance
 -----------
 
@@ -222,7 +220,6 @@ and see how their performances change when they share the same frequency range.
 .. Then we examine if the coexisting performance can be improved by changing some
    of the MAC parameters from their defaults.
 
-**TODO rephrase**
 The coexistence performance data comes from the ``Coexistence`` configuration,
 the independent performance data can be obtained by running the ``WifiOnly``
 and the ``WpanOnly`` configurations in :download:`omnetpp.ini <../omnetpp.ini>`.
