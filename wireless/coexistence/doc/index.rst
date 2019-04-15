@@ -62,10 +62,11 @@ The radio medium module keeps track of transmitters, receivers, transmissions an
 (For more information, read the :doc:`corresponding section </users-guide/ch-transmission-medium>` in the INET User's Guide.) **TODO: this seems unfinished**
 
 The standard radio medium module in INET is :ned:`RadioMedium`. Wireless protocols in INET (such as 802.11 or 802.15.4) often have their own radio module types (e.g. Ieee80211DimensionalRadioMedium), but these modules are actually :ned:`RadioMedium`, just with different parameterizations (each parameterized for its typical use case).
-For example, they might define different path loss types, or MediumLimitCache parameters.
+For example, they might define different path loss types, analog signal representation types, or MediumLimitCache parameters.
 (MediumLimitCache optimizes simulations by limiting the reception computation to signals with certain properties, e.g. a certain minimum reception power. Signals outside these limits are considered unreceivable.) However, setting these radio medium parameters are not required for the simulation to work. Most of the time, one could just use RadioMedium with its default parameters.
 
 For our simulation, we'll use :ned:`RadioMedium`. Since we'll have two different protocols, the analog model and the background noise of the radio medium and the protocol specific radios needs to match (they need to be dimensional). **TODO: seems unfinished -> we dont set any more parameters**
+We'll set just these two parameters, and leave the other on default.
 
 .. TODO: specifically if you want to simulate cti -> so by default, the radio medium works out of the box -> for cti, it needs to have the same analog model and background noise as the radios of the protocols
 
@@ -91,11 +92,10 @@ and an :ned:`IntegratedVisualizer` module. Two of the hosts, ``wifiHost1`` and `
 communicate via 802.11, in adhoc mode. The other two hosts, ``wpanHost1`` and ``wpanHost2``,
 communicate via 802.15.4. The four hosts are arranged in a rectangle, and all of them
 are in communication range with each other.
+One host in each host pair sends frames to the other
+(``wifiHost1`` to ``wifiHost2``, and ``wpanHost1`` to ``wpanHost2``).
 
-One host in each host pair is configured to send UDP packets to the other
-(``wifiHost1`` to ``wifiHost2``, and ``wpanHost1`` to ``wpanHost2``). **TODO: not here**
-
-The radio medium module is configured to use the :ned:`DimensionalAnalogModel`.
+The radio medium module in the network is a :ned:`RadioMedium`. It is configured to use the :ned:`DimensionalAnalogModel`.
 The background noise type is set to :ned:`IsotropicDimensionalBackgroundNoise`,
 with a power of -110 dBm. Here is the radio medium configuration in :download:`omnetpp.ini <../omnetpp.ini>`:
 
@@ -108,9 +108,7 @@ with a power of -110 dBm. Here is the radio medium configuration in :download:`o
 
 The Wifi hosts are configured to have :ned:`Ieee80211DimensionalRadio`. The default signal shape
 is not changed in the transmitter, so the radio uses a flat signal in time and frequency.
-The default transmission bandwidth in the Wifi is 20 MHz. The Wifi channel is set to channel 9
-(center frequency of 2452MHz), to ensure that the Wifi transmissions overlap with the 802.15.4
-transmissions in frequency. Here is the configuration for the Wifi host radios in
+The Wifi channel is set to channel 9 (center frequency of 2452MHz), to ensure that the Wifi transmissions overlap with the 802.15.4 transmissions in frequency. Here is the configuration for the Wifi host radios in
 :download:`omnetpp.ini <../omnetpp.ini>`:
 
 .. literalinclude:: ../omnetpp.ini
@@ -120,8 +118,7 @@ transmissions in frequency. Here is the configuration for the Wifi host radios i
 
 The WPAN hosts are configured to have an :ned:`Ieee802154NarrowbandInterface`,
 with a :ned:`Ieee802154NarrowbandDimensionalRadio`. As in the case of the Wifi hosts,
-the default flat signal shape is used. By default, the center frequency is 2450 MHz,
-the bandwidth is 2.8 MHz, so the Wifi and WPAN signal spectrums do overlap.
+the default flat signal shape is used. The default carrier frequency (2450 MHz) and bandwidth (2.8 MHz) is not changed.
 Here is the configuration for the WPAN host radios in :download:`omnetpp.ini <../omnetpp.ini>`:
 
 .. literalinclude:: ../omnetpp.ini
@@ -131,9 +128,8 @@ Here is the configuration for the WPAN host radios in :download:`omnetpp.ini <..
 
 The transmission power parameters for both technologies are left on default (20 mW for the Wifi and 2.24 mW for the WPAN).
 
-The Wifi hosts operate in the default 802.11g mode (without QoS features, like shorter SIFS and TXOP).
-``wifiHost1`` is configured to send a 1000-byte UDP packet to ``wifiHost2`` every 0.1 milliseconds,
-corresponding to about 80 Mbps traffic. Thus the Wifi channel is completely saturated.
+``wifiHost1`` is configured to send a 1000-byte UDP packet to ``wifiHost2`` every 0.4 milliseconds,
+corresponding to about 20 Mbps traffic, saturating the Wifi channel.
 Here is the Wifi traffic configuration in :download:`omnetpp.ini <../omnetpp.ini>`:
 
 .. literalinclude:: ../omnetpp.ini
@@ -142,15 +138,18 @@ Here is the Wifi traffic configuration in :download:`omnetpp.ini <../omnetpp.ini
    :language: ini
 
 ``wpanHost1`` is configured to send an 88-byte UDP packet to ``wpanHost2`` every 0.1 seconds, which
-is about 7 Kbps of traffic.
+is about 7 Kbps of traffic
 (the packet size is set to 88 bytes in order not to exceed the default maximum transfer unit in 802.15.4).
-The WPAN traffic is significantly smaller than the Wifi traffic in this scenario.
 Here is the WPAN traffic configuration in :download:`omnetpp.ini <../omnetpp.ini>`:
 
 .. literalinclude:: ../omnetpp.ini
    :start-at: wpanHost1.numApps = 1
    :end-at: wpanHost2.app[0].localPort = 5000
    :language: ini
+
+The Wifi hosts operate in the default 802.11g mode (without QoS features, like shorter SIFS and TXOP). **TODO**
+
+The WPAN traffic is significantly smaller than the Wifi traffic in this scenario. **TODO**
 
 It is expected that there will be collisions between the different technologies,
 due to the different timing parameters. Regarding channel access, the Wifi might be more dominant,
@@ -161,6 +160,14 @@ The Wifi might overpower the WPAN, so the Wifi transmissions are received correc
 is interference from the WPAN.
 
 **TODO: expectations here (?)**
+
+- different tx power (and consequences)
+- contention (and requirements for such)
+- transmissions are not protected cross technology
+- different timing parameters (and what timing parameters)
+- different transmission duration
+- hidden node protection doesnt work
+- different traffic
 
 Results
 -------
@@ -200,29 +207,33 @@ received this time.
     There are many variables, e.g. there might be more nodes,
     different transmission power values, different distances, etc.
 
+**TODO: the configurations (by default, run coexistence)**
+
 Performance
 -----------
 
 We examine the performance of the two technologies by looking at the number of received UDP packets
 at ``wifiHost2`` and ``wpanHost2``. Since the two wireless technologies coexist on the same
 frequency band and affect each others' operation, they both take a performance hit when they operate with
-high channel utilization. In this section, we look at the independent performance
+high channel utilization **really?**. In this section, we look at the independent performance
 of the Wifi and WPAN hosts (i.e. when there is just one of the technologies communicating),
 and see how their performances change when they share the same frequency range.
-Then we examine if the coexisting performance can be improved by changing some
-of the MAC parameters from their defaults.
 
-The concurrent performance data comes from the ``CoexistencePerformance`` configuration,
-the independent performance data can be obtained by running the ``WifiHostsOnly``
-and the ``WpanHostsOnly`` configurations in :download:`omnetpp.ini <../omnetpp.ini>`.
-All of these extend the ``Coexistence`` configuration. The latter two disable either the Wifi or the WPAN
-host communication by setting the number of applications to 0. The simulations are
-run for five seconds, and repeated eight times:
+.. Then we examine if the coexisting performance can be improved by changing some
+   of the MAC parameters from their defaults.
+
+**TODO rephrase**
+The coexistence performance data comes from the ``Coexistence`` configuration,
+the independent performance data can be obtained by running the ``WifiOnly``
+and the ``WpanOnly`` configurations in :download:`omnetpp.ini <../omnetpp.ini>`.
+The latter two configurations extend the ``Coexistence`` configuration, and disable either the Wifi or the WPAN host communication by setting the number of applications to 0:
 
 .. literalinclude:: ../omnetpp.ini
-   :start-at: CoexistencePerformance
+   :start-at: WifiOnly
    :end-at: wifiHost1.numApps
    :language: ini
+
+In all configurations, the simulations are run for five seconds, and repeated eight times.
 
 Here are the results of the simulations:
 
