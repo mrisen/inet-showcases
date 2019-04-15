@@ -52,20 +52,20 @@ For the WPAN, we'll use INET's 802.15.4 narrow band version, in which transmissi
 .. #how can that be simulated?
 
 As the signal center frequencies and bandwidths of the 802.11 and 802.15.4 models are not identical,
-the dimensional analog model needs to be used, instead of the scalar analog model. The scalar analog model represents signals with a scalar signal power, and a constant center frequency and bandwidth. The scalar model cannot handle when the spectrums of two signals overlap (but not identical). When using the dimensional analog model, signal power can change in both time and frequency. This model is also able to calculate the interference of signals whose spectrums partially overlap.
+the dimensional analog model needs to be used, instead of the scalar analog model. The scalar analog model represents signals with a scalar signal power, and a constant center frequency and bandwidth. The scalar model cannot handle the situation when the spectrums of two signals overlap (but not identical). When using the dimensional analog model, signal power can change in both time and frequency. This model is also able to calculate the interference of signals whose spectrums partially overlap.
 
 .. #whats a radio medium module?
 
-In order for the signals for Wifi and WPAN to interfere,
+In order for the signals of Wifi and WPAN to interfere,
 the two networks have to share a radio medium module instance.
-The radio medium module keeps track of transmitters, receivers, transmissions and noise on the network, and computes signal and noise power at receivers. The radio medium module has several submodules, such as signal propagation, path loss, background noise, and analog signal representation modules.
-(For more information, read the :doc:`corresponding section </users-guide/ch-transmission-medium>` in the INET User's Guide.)
+The radio medium module keeps track of transmitters, receivers, transmissions and noise on the network, and computes signal and noise power at reception. The radio medium module has several submodules, such as signal propagation, path loss, background noise, and analog signal representation modules.
+(For more information, read the :doc:`corresponding section </users-guide/ch-transmission-medium>` in the INET User's Guide.) **TODO: this seems unfinished**
 
 The standard radio medium module in INET is :ned:`RadioMedium`. Wireless protocols in INET (such as 802.11 or 802.15.4) often have their own radio module types (e.g. Ieee80211DimensionalRadioMedium), but these modules are actually :ned:`RadioMedium`, just with different parameterizations (each parameterized for its typical use case).
 For example, they might define different path loss types, or MediumLimitCache parameters.
 (MediumLimitCache optimizes simulations by limiting the reception computation to signals with certain properties, e.g. a certain minimum reception power. Signals outside these limits are considered unreceivable.) However, setting these radio medium parameters are not required for the simulation to work. Most of the time, one could just use RadioMedium with its default parameters.
 
-For our simulation, we'll use :ned:`RadioMedium`. Since we'll have two different protocols, the analog model and the background noise of the radio medium and the protocol specific radios needs to match (they need to be dimensional).
+For our simulation, we'll use :ned:`RadioMedium`. Since we'll have two different protocols, the analog model and the background noise of the radio medium and the protocol specific radios needs to match (they need to be dimensional). **TODO: seems unfinished -> we dont set any more parameters**
 
 .. TODO: specifically if you want to simulate cti -> so by default, the radio medium works out of the box -> for cti, it needs to have the same analog model and background noise as the radios of the protocols
 
@@ -93,7 +93,7 @@ communicate via 802.15.4. The four hosts are arranged in a rectangle, and all of
 are in communication range with each other.
 
 One host in each host pair is configured to send UDP packets to the other
-(``wifiHost1`` to ``wifiHost2``, and ``wpanHost1`` to ``wpanHost2``).
+(``wifiHost1`` to ``wifiHost2``, and ``wpanHost1`` to ``wpanHost2``). **TODO: not here**
 
 The radio medium module is configured to use the :ned:`DimensionalAnalogModel`.
 The background noise type is set to :ned:`IsotropicDimensionalBackgroundNoise`,
@@ -104,9 +104,11 @@ with a power of -110 dBm. Here is the radio medium configuration in :download:`o
    :end-at: radioMedium.backgroundNoise.power
    :language: ini
 
+**TODO: wifi channel number offset**
+
 The Wifi hosts are configured to have :ned:`Ieee80211DimensionalRadio`. The default signal shape
 is not changed in the transmitter, so the radio uses a flat signal in time and frequency.
-The default transmission bandwidth in the Wifi is 20 MHz. The Wifi channel is set to channel 8
+The default transmission bandwidth in the Wifi is 20 MHz. The Wifi channel is set to channel 9
 (center frequency of 2452MHz), to ensure that the Wifi transmissions overlap with the 802.15.4
 transmissions in frequency. Here is the configuration for the Wifi host radios in
 :download:`omnetpp.ini <../omnetpp.ini>`:
@@ -157,6 +159,8 @@ As such, with the default parameters, the Wifi might starve the WPAN.
 The WPAN might be wasting energy for unsuccessful transmissions.
 The Wifi might overpower the WPAN, so the Wifi transmissions are received correctly even when there
 is interference from the WPAN.
+
+**TODO: expectations here (?)**
 
 Results
 -------
