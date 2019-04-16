@@ -61,12 +61,12 @@ the two networks have to share a radio medium module instance.
 The radio medium module keeps track of transmitters, receivers, transmissions and noise on the network, and computes signal and noise power at reception. The radio medium module has several submodules, such as signal propagation, path loss, background noise, and analog signal representation modules.
 (For more information, read the :doc:`corresponding section </users-guide/ch-transmission-medium>` in the INET User's Guide.) **TODO: this seems unfinished**
 
-The standard radio medium module in INET is :ned:`RadioMedium`. Wireless protocols in INET (such as 802.11 or 802.15.4) often have their own radio module types (e.g. Ieee80211DimensionalRadioMedium), but these modules are actually :ned:`RadioMedium`, just with different parameterizations (each parameterized for its typical use case).
-For example, they might define different path loss types, analog signal representation types, or MediumLimitCache parameters.
+The standard radio medium module in INET is :ned:`RadioMedium`. Wireless protocols in INET (such as 802.11 or 802.15.4) often have their own radio module types (e.g. Ieee80211DimensionalRadioMedium), but these modules are actually :ned:`RadioMedium`, just with different default parameterizations (each parameterized for its typical use case).
+For example, they might have different defaults for path loss type, analog signal representation type, or MediumLimitCache parameters.
 (MediumLimitCache optimizes simulations by limiting the reception computation to signals with certain properties, e.g. a certain minimum reception power. Signals outside these limits are considered unreceivable.) However, setting these radio medium parameters are not required for the simulation to work. Most of the time, one could just use RadioMedium with its default parameters.
 
-For our simulation, we'll use :ned:`RadioMedium`. Since we'll have two different protocols, the analog model and the background noise of the radio medium and the protocol specific radios needs to match (they need to be dimensional). **TODO: seems unfinished -> we dont set any more parameters**
-We'll set just these two parameters, and leave the other on default.
+For our simulation, we'll use :ned:`RadioMedium`. Since we'll have two different protocols, the analog model and the background noise of the radio medium and the protocol specific radios needs to match (they need to be dimensional).
+We'll set just these two parameters, and leave the others on default.
 
 .. TODO: specifically if you want to simulate cti -> so by default, the radio medium works out of the box -> for cti, it needs to have the same analog model and background noise as the radios of the protocols
 
@@ -115,6 +115,8 @@ The Wifi channel is set to channel 9 (center frequency of 2452MHz), to ensure th
    :start-at: Ieee80211DimensionalRadio
    :end-at: channelNumber
    :language: ini
+
+.. note:: The channel number is set 8, because in INET's 802.11 model, the channels are numbered from 0, so that this setting corresponds to Wifi channel 9.
 
 The WPAN hosts are configured to have an :ned:`Ieee802154NarrowbandInterface`,
 with a :ned:`Ieee802154NarrowbandDimensionalRadio`. As in the case of the Wifi hosts,
