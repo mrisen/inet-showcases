@@ -116,7 +116,7 @@ The Wifi channel is set to channel 9 (center frequency of 2452MHz), to ensure th
    :end-at: channelNumber
    :language: ini
 
-.. note:: The channel number is set 8, because in INET's 802.11 model, the channels are numbered from 0, so that this setting corresponds to Wifi channel 9.
+.. note:: The channel number is set to 8, because in INET's 802.11 model, the channels are numbered from 0, so that this setting corresponds to Wifi channel 9.
 
 The WPAN hosts are configured to have an :ned:`Ieee802154NarrowbandInterface`,
 with a :ned:`Ieee802154NarrowbandDimensionalRadio`. As in the case of the Wifi hosts,
@@ -128,7 +128,7 @@ Here is the configuration for the WPAN host radios in :download:`omnetpp.ini <..
    :end-at: Ieee802154NarrowbandDimensionalRadio
    :language: ini
 
-The transmission power parameters for both technologies are left on default (20 mW for the Wifi and 2.24 mW for the WPAN).
+The transmission power parameters for both technologies are left on default (20 mW for the Wifi and 2.24 mW for the WPAN). The Wifi hosts operate in the default 802.11g mode, and use the default data bitrate of 24 Mbps. The WPAN hosts use the default bitrate of 250 kbps (specified in :ned:`Ieee802154Mac`).
 
 ``wifiHost1`` is configured to send a 1000-byte UDP packet to ``wifiHost2`` every 0.4 milliseconds,
 corresponding to about 20 Mbps traffic, saturating the Wifi channel.
@@ -149,7 +149,7 @@ Here is the WPAN traffic configuration in :download:`omnetpp.ini <../omnetpp.ini
    :end-at: wpanHost2.app[0].localPort = 5000
    :language: ini
 
-The Wifi hosts operate in the default 802.11g mode (without QoS features, like shorter SIFS and TXOP). **TODO**
+(without QoS features, like shorter SIFS and TXOP). **TODO**
 
 The WPAN traffic is significantly smaller than the Wifi traffic in this scenario. **TODO**
 
