@@ -236,11 +236,11 @@ In all configurations, the simulations are run for five seconds, and repeated ei
 
 Here are the results of the simulations:
 
-.. figure:: wifiperformance3.png
+.. figure:: wifiperformance.png
    :width: 70%
    :align: center
 
-.. figure:: wpanperformance3.png
+.. figure:: wpanperformance.png
    :width: 70%
    :align: center
 
