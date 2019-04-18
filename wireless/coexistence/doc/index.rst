@@ -68,6 +68,11 @@ For example, they might have different defaults for path loss type, analog signa
 For our simulation, we'll use :ned:`RadioMedium`. Since we'll have two different protocols, the analog model and the background noise of the radio medium and the protocol specific radios needs to match (they need to be dimensional).
 We'll set just these two parameters, and leave the others on default.
 
+**TODO the transmission of one of the technologies is treated as noise when received by the other -> they can detect the transmission, but cant receive it -> it might be enough to cause them to back off / defer from transmitting**
+
+**keywords/pointers:
+milyen problémákat vizsgálunk? működik-e ha cti van? ha van backoff és cca akkor tudnak együttműködni (miért?). timing paraméterek, a contention-t a wifi nyeri. TUDNAK-E EGYÜTTMŰKÖDNI, BALANCED-E AZ EGYÜTTMŰKÖDÉS? issue-k a coexistence-el (aminek utána lehet nézni). ack előtt nincs cca egyik technológiánál sem. nem ismerik egymás timing paramétereit -> kiüthetik egymás ack-jait.**
+
 .. TODO: specifically if you want to simulate cti -> so by default, the radio medium works out of the box -> for cti, it needs to have the same analog model and background noise as the radios of the protocols
 
 .. #doesn't 802.11 and 802.15.4 has their own radio medium modules?
