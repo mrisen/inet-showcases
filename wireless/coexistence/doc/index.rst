@@ -73,6 +73,37 @@ We'll set just these two parameters, and leave the others on default.
 **keywords/pointers:
 milyen problémákat vizsgálunk? működik-e ha cti van? ha van backoff és cca akkor tudnak együttműködni (miért?). timing paraméterek, a contention-t a wifi nyeri. TUDNAK-E EGYÜTTMŰKÖDNI, BALANCED-E AZ EGYÜTTMŰKÖDÉS? issue-k a coexistence-el (aminek utána lehet nézni). ack előtt nincs cca egyik technológiánál sem. nem ismerik egymás timing paramétereit -> kiüthetik egymás ack-jait.**
 
+V1 In INET, 802.11 and 802.15.4 radios can detect each other's transmissions, but can only receive their own. Transmissions belonging to the other technology appear as noise. Both technologies employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting when the channel is busy (backoff). The use of CCA and backoff enables the two technologies to coexist cooperatively.
+
+V2 In INET, 802.11 and 802.15.4 radios can detect each other's transmissions, but can only receive their own. Transmissions belonging to the other technology appear as noise. However, this noise can be enough to make a node defer from transmitting.
+
+Both technologies employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting for the duration of a backoff period when the channel is busy. The use of CCA and backoff enables the two technologies to coexist cooperatively, as opposed to destructively.
+
+**timing parameters**
+**the acks are not protected**
+
+Here are some of the timing parameters in this scenario, for both 802.11 and 802.15.4:
+
++--------------+----------+-----------+
+|              | 802.11   | 802.15.4  |
++==============+==========+===========+
+| Data         | 382 us   | 4192 us   |
++--------------+----------+-----------+
+| SIFS         | 10 us    | 192 us    |
++--------------+----------+-----------+
+| ACK          | 34 us    | 352 us    |
++--------------+----------+-----------+
+| Backoff (avg)| 600 us   | 1200 us   |
++--------------+----------+-----------+
+
+A 802.15.4 transmission takes about ten times more than a 802.11 one, even though the payload is about ten times smaller (88B vs 1000B). The relative duration of transmissions of
+the Wifi and the WPAN is illustrated with the sequence chart below. The chart shows a packet
+transmission and ACK, for Wifi and WPAN, respectively. The scale is linear.
+
+.. figure:: seqchart.png
+   :width: 100%
+   :align: center
+
 .. TODO: specifically if you want to simulate cti -> so by default, the radio medium works out of the box -> for cti, it needs to have the same analog model and background noise as the radios of the protocols
 
 .. #doesn't 802.11 and 802.15.4 has their own radio medium modules?
@@ -263,86 +294,86 @@ the averaging of the repetitions.
 
    You can find all charts for this showcase in the ``Coexistence.anf`` file.
 
-In the next section, we examine if the performance of both technologies
-could be improved by changing some parameters of the 802.15.4 MAC.
+.. In the next section, we examine if the performance of both technologies
+   could be improved by changing some parameters of the 802.15.4 MAC.
 
-Performance improvements DELETE
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. Performance improvements DELETE
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-802.11 and 802.15.4 differ in many ways. Typically, 802.11 has an emphasis on high data rate,
-while 802.15.4 prioritizes energy efficiency. By default, the Wifi hosts operate
-with a 24 Mbps data rate, while the WPAN hosts with 250 Kbps. Also, by default, the WPAN hosts
-use longer backoff periods and longer interframe space (SIFS), making them disadvantaged when
-trying to gain access to the channel. However, typically the WPAN traffic is lower than the Wifi traffic
-(as is the case in our example simulation).
+   802.11 and 802.15.4 differ in many ways. Typically, 802.11 has an emphasis on high data rate,
+   while 802.15.4 prioritizes energy efficiency. By default, the Wifi hosts operate
+   with a 24 Mbps data rate, while the WPAN hosts with 250 Kbps. Also, by default, the WPAN hosts
+   use longer backoff periods and longer interframe space (SIFS), making them disadvantaged when
+   trying to gain access to the channel. However, typically the WPAN traffic is lower than the Wifi traffic
+   (as is the case in our example simulation).
 
-We change some parameters of 802.15.4 MAC to make the WPAN hosts less disadvantaged.
-Also, we run a parameter study to optimize one of the selected parameters, and examine
-how these changes improve the performance of either technology.
+   We change some parameters of 802.15.4 MAC to make the WPAN hosts less disadvantaged.
+   Also, we run a parameter study to optimize one of the selected parameters, and examine
+   how these changes improve the performance of either technology.
 
-The parameter study is defined in the ``ParameterStudy`` configuration in
-:download:`omnetpp.ini <../omnetpp.ini>`:
+   The parameter study is defined in the ``ParameterStudy`` configuration in
+   :download:`omnetpp.ini <../omnetpp.ini>`:
 
-.. literalinclude:: ../omnetpp.ini
-   :start-at: ParameterStudy
-   :end-at: aUnitBackoffPeriod
-   :language: ini
+   .. literalinclude:: ../omnetpp.ini
+      :start-at: ParameterStudy
+      :end-at: aUnitBackoffPeriod
+      :language: ini
 
-The configuration extends the ``Coexistence`` configuration, and it is repeated eight times.
-The ACK wait duration and the SIFS is lowered to values which are comparable to the 802.11 defaults.
-The CCA duration is also lowered. The default backoff method in :ned:`Ieee802154NarrowbandMac`
-is exponential, here we change it to linear.
+   The configuration extends the ``Coexistence`` configuration, and it is repeated eight times.
+   The ACK wait duration and the SIFS is lowered to values which are comparable to the 802.11 defaults.
+   The CCA duration is also lowered. The default backoff method in :ned:`Ieee802154NarrowbandMac`
+   is exponential, here we change it to linear.
 
-.. note:: These parameter changes are for the purposes of experimentation, they're not totally realistic, e.g. CCA time and ACK wait time might be determined by the hardware.
+   .. note:: These parameter changes are for the purposes of experimentation, they're not totally realistic, e.g. CCA time and ACK wait time might be determined by the hardware.
 
-The iterated parameter in the study is the MAC's :par:`aUnitBackoffPeriod` parameter,
-which configures a base unit for the backoff duration calculations. By default,
-it is 320 us. The study iterates the parameter's value from 10 to 500 us in 10 us steps.
+   The iterated parameter in the study is the MAC's :par:`aUnitBackoffPeriod` parameter,
+   which configures a base unit for the backoff duration calculations. By default,
+   it is 320 us. The study iterates the parameter's value from 10 to 500 us in 10 us steps.
 
-.. note:: The simulations are repeated eight times to get smoother results, but the runtime is high,
+   .. note:: The simulations are repeated eight times to get smoother results, but the runtime is high,
           around 20 minutes, depending on hardware. To make the study run quicker, lower the repetition count or the sim time limit.
 
-Here are the results for the WPAN, the optimal performance ``aUnitBackoffPeriod``
-value is indicated with an arrow:
+   Here are the results for the WPAN, the optimal performance ``aUnitBackoffPeriod``
+   value is indicated with an arrow:
 
-.. figure:: wpan_study.png
-   :width: 100%
+   .. figure:: wpan_study.png
+      :width: 100%
 
-The results for the Wifi is shown on the following bar chart.
-The minimum and maximum number of packets are indicated with arrows:
+   The results for the Wifi is shown on the following bar chart.
+   The minimum and maximum number of packets are indicated with arrows:
 
-.. figure:: wifi_study.png
-   :width: 100%
+   .. figure:: wifi_study.png
+      :width: 100%
 
-.. Both technologies perform about 10 percent slower when they share the channel.
+   .. Both technologies perform about 10 percent slower when they share the channel.
 
-After tweaking the WPAN parameters, the Wifi performance decreases even more, to about 5000 packets.
-However, the results show that in this scenario, the Wifi is mostly unaffected by the iteration parameter's
-value, the performance is more or less the same, around 5000 packets. However, the WPAN is
-more affected by the parameter, and in the best case, it has about the same performance (48.6 packets)
-as in the case where it operated without interference from the Wifi (49 packets).
+   After tweaking the WPAN parameters, the Wifi performance decreases even more, to about 5000 packets.
+   However, the results show that in this scenario, the Wifi is mostly unaffected by the iteration parameter's
+   value, the performance is more or less the same, around 5000 packets. However, the WPAN is
+   more affected by the parameter, and in the best case, it has about the same performance (48.6 packets)
+   as in the case where it operated without interference from the Wifi (49 packets).
 
-The following bar charts show the number of received packets, updated with the results for the
-tweaked parameters:
+   The following bar charts show the number of received packets, updated with the results for the
+   tweaked parameters:
 
-.. figure:: wifiperformance_updated.png
-   :width: 80%
-   :align: center
+   .. figure:: wifiperformance_updated.png
+      :width: 80%
+      :align: center
 
-.. figure:: wpanperformance_updated.png
-   :width: 80%
-   :align: center
+   .. figure:: wpanperformance_updated.png
+      :width: 80%
+      :align: center
 
-In general, the WPAN takes a performance hit from the Wifi because the Wifi is more likely
-to win channel access, due to shorter SIFS and backoff periods. On the other hand,
-when the WPAN gains channel access, it keeps the channel busy for longer than the Wifi would.
-It takes about ten times as much time for the WPAN to transmit its 88-byte packet as it
-takes for the Wifi to transmit its 1000-byte packet. The relative duration of transmissions of
-the two technologies is illustrated with the sequence chart below. The chart shows a packet
-transmission and ACK, for Wifi and WPAN, respectively. The scale is linear.
+   In general, the WPAN takes a performance hit from the Wifi because the Wifi is more likely
+   to win channel access, due to shorter SIFS and backoff periods. On the other hand,
+   when the WPAN gains channel access, it keeps the channel busy for longer than the Wifi would.
+   It takes about ten times as much time for the WPAN to transmit its 88-byte packet as it
+   takes for the Wifi to transmit its 1000-byte packet. The relative duration of transmissions of
+   the two technologies is illustrated with the sequence chart below. The chart shows a packet
+   transmission and ACK, for Wifi and WPAN, respectively. The scale is linear.
 
-.. figure:: seqchart.png
-   :width: 100%
+   .. figure:: seqchart.png
+      :width: 100%
 
 Sources: :download:`omnetpp.ini <../omnetpp.ini>`, :download:`CoexistenceShowcase.ned <../CoexistenceShowcase.ned>`
 
