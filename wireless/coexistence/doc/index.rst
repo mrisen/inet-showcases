@@ -62,8 +62,8 @@ The radio medium module keeps track of transmitters, receivers, transmissions an
 (For more information, read the :doc:`corresponding section </users-guide/ch-transmission-medium>` in the INET User's Guide.) **TODO: this seems unfinished**
 
 The standard radio medium module in INET is :ned:`RadioMedium`. Wireless protocols in INET (such as 802.11 or 802.15.4) often have their own radio module types (e.g. Ieee80211DimensionalRadioMedium), but these modules are actually :ned:`RadioMedium`, just with different default parameterizations (each parameterized for its typical use case).
-For example, they might have different defaults for path loss type, analog signal representation type, or MediumLimitCache parameters.
-(MediumLimitCache optimizes simulations by limiting the reception computation to signals with certain properties, e.g. a certain minimum reception power. Signals outside these limits are considered unreceivable.) However, setting these radio medium parameters are not required for the simulation to work. Most of the time, one could just use RadioMedium with its default parameters.
+For example, they might have different defaults for path loss type, background noise power, or analog signal representation type.
+However, setting these radio medium parameters are not required for the simulation to work. Most of the time, one could just use RadioMedium with its default parameters.
 
 For our simulation, we'll use :ned:`RadioMedium`. Since we'll have two different protocols, the analog model and the background noise of the radio medium and the protocol specific radios needs to match (they need to be dimensional).
 We'll set just these two parameters, and leave the others on default.
@@ -148,7 +148,7 @@ with a power of -110 dBm. Here is the radio medium configuration in :download:`o
    :end-at: radioMedium.backgroundNoise.power
    :language: ini
 
-**TODO: wifi channel number offset**
+.. **TODO: wifi channel number offset**
 
 The Wifi hosts are configured to have :ned:`Ieee80211DimensionalRadio`. The default signal shape
 is not changed in the transmitter, so the radio uses a flat signal in time and frequency.
