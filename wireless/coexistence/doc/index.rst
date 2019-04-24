@@ -6,9 +6,9 @@ Goals
 
 Different wireless technologies sometimes operate in the same frequency range.
 For example, both IEEE 802.11 and IEEE 802.15.4 have versions that use the 2.4 GHz ISM band.
-As such, the signals of the two protocols can interfere.
+As such, the signals of the two protocols can interfere (called cross-technology interference, or CTI).
 
-INET has support for simulating the cross-technology interference (cti) of different wireless protocols.
+INET has support for simulating cross-technology interference (CTI). TODO: between what protocols? only 802.11 and 15.4? or any protocol...and it depends on what?
 Simulation can be used to examine how the different protocols
 interact and affect each other's operation. This showcase demonstrates the coexistence
 of INET's 802.11 and 802.15.4 models.
@@ -16,7 +16,7 @@ of INET's 802.11 and 802.15.4 models.
 | INET version: ``4.1``
 | Source files location: `inet/showcases/wireless/coexistence <https://github.com/inet-framework/inet-showcases/tree/master/wireless/coexistence>`__
 
-The model
+The Model
 ---------
 
 The example simulation features a Wifi (802.11) and a WPAN (802.15.4) network close to each other. All nodes communicate in the 2.4 GHz band. The signals
@@ -59,13 +59,15 @@ the dimensional analog model needs to be used, instead of the scalar analog mode
 In order for the signals of Wifi and WPAN to interfere,
 the two networks have to share a radio medium module instance.
 The radio medium module keeps track of transmitters, receivers, transmissions and noise on the network, and computes signal and noise power at reception. The radio medium module has several submodules, such as signal propagation, path loss, background noise, and analog signal representation modules.
-(For more information, read the :doc:`corresponding section </users-guide/ch-transmission-medium>` in the INET User's Guide.) **TODO: this seems unfinished**
+(For more information, read the :doc:`corresponding section </users-guide/ch-transmission-medium>` in the INET User's Guide.)
+
+.. **TODO: this seems unfinished**
 
 The standard radio medium module in INET is :ned:`RadioMedium`. Wireless protocols in INET (such as 802.11 or 802.15.4) often have their own radio module types (e.g. Ieee80211DimensionalRadioMedium), but these modules are actually :ned:`RadioMedium`, just with different default parameterizations (each parameterized for its typical use case).
 For example, they might have different defaults for path loss type, background noise power, or analog signal representation type.
 However, setting these radio medium parameters are not required for the simulation to work. Most of the time, one could just use RadioMedium with its default parameters.
 
-For our simulation, we'll use :ned:`RadioMedium`. Since we'll have two different protocols, the analog model and the background noise of the radio medium and the protocol specific radios needs to match (they need to be dimensional).
+For our simulation, we'll use :ned:`RadioMedium`. Since we'll have two different protocols, the analog model and the background noise of the radio medium and the protocol specific radios need to match (they need to be dimensional).
 We'll set just these two parameters, and leave the others on default.
 
 .. **TODO the transmission of one of the technologies is treated as noise when received by the other -> they can detect the transmission, but cant receive it -> it might be enough to cause them to back off / defer from transmitting**
@@ -81,16 +83,19 @@ We'll set just these two parameters, and leave the others on default.
 | ack előtt nincs cca egyik technológiánál sem.
 | nem ismerik egymás timing paramétereit -> kiüthetik egymás ack-jait.
 
-V1 In INET, 802.11 and 802.15.4 radios can detect each other's transmissions, but can only receive their own. Transmissions belonging to the other technology appear as noise. Both technologies employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting when the channel is busy (backoff). The use of CCA and backoff enables the two technologies to coexist cooperatively.
+.. V1 In INET, 802.11 and 802.15.4 radios can detect each other's transmissions, but can only receive their own **rephrase**. Transmissions belonging to the other technology appear as noise. Both technologies employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting when the channel is busy (backoff). The use of CCA and backoff enables the two technologies to coexist cooperatively.
 
-V2 In INET, 802.11 and 802.15.4 radios can detect each other's transmissions, but can only receive their own. Transmissions belonging to the other technology appear as noise. However, this noise can be enough to make a node defer from transmitting.
+.. V2
+
+.. #how do they coexist? whats needed for coexistence?
+
+In INET, 802.11 and 802.15.4 radios can detect each other's transmissions, but can only receive transmission of their own type. Transmissions belonging to the other technology appear to receivers as noise. However, this noise can be enough to make a node defer from transmitting.
 
 Both technologies employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting for the duration of a backoff period when the channel is busy. The use of CCA and backoff enables the two technologies to coexist cooperatively, as opposed to destructively.
 
-| **timing parameters**
 | **the acks are not protected**
 
-Here are some of the timing parameters in this scenario, for both 802.11 and 802.15.4:
+Here are some of the timing parameters in the example simulation, for both 802.11 and 802.15.4 (sending 1000B and 88B application packets with 24 Mbps and 250 kbps, respectively):
 
 +--------------+----------+-----------+
 |              | 802.11   | 802.15.4  |
@@ -104,7 +109,7 @@ Here are some of the timing parameters in this scenario, for both 802.11 and 802
 | Backoff (avg)| 600 us   | 1200 us   |
 +--------------+----------+-----------+
 
-A 802.15.4 transmission takes about ten times more than a 802.11 one, even though the payload is about ten times smaller (88B vs 1000B). The relative duration of transmissions of
+A 802.15.4 transmission takes about ten times more than a 802.11 one, even though the payload is about ten times smaller. The relative duration of transmissions of
 the Wifi and the WPAN is illustrated with the sequence chart below. The chart shows a packet
 transmission and ACK, for Wifi and WPAN, respectively. The scale is linear.
 
@@ -124,6 +129,12 @@ transmission and ACK, for Wifi and WPAN, respectively. The scale is linear.
 .. For our simulation, we'll use :ned:`RadioMedium`, and configure it so that it suits both the Wifi and the WPAN.
 
 .. The radio medium modules for 802.11 and 802.15.4 are actually both :ned:`RadioMedium`, just with different parameterizations
+
+**TODO** However, ACKs are not protected.
+
+Within a particular wireless technology, ACKs are protected, i.e. nodes receiving a data frame can infer how long the tranmission of the data frame and the subsequent ACK will be, from the data frame's MAC header. They assume the channel is not clear for the duration of the DATA + SIFS + ACK (thus they don't start transmitting during the SIFS). However, this protection mechanism doesn't work with the transmissions of other technologies, since they cannot receive and make sense of the MAC header. They just detect some signal power in the channel, that makes them defer for the duration of a backoff period (but this duration is independent of the actual duration of the ongoing transmission). Thus they are susceptible for transmitting into each others' ACKs, which can lead to more retransmissions.
+
+**TODO** Hidden node protection doesn't work
 
 The simulation uses the ``CoexistenceShowcase`` network, defined in :download:`CoexistenceShowcase.ned <../CoexistenceShowcase.ned>`:
 
