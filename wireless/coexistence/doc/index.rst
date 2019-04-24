@@ -95,8 +95,6 @@ In INET, 802.11 and 802.15.4 radios can detect each other's transmissions, but c
 
 Both technologies employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting for the duration of a backoff period when the channel is busy. The use of CCA and backoff enables the two technologies to coexist cooperatively (as opposed to destructively), as the nodes of the different technologies sense when the other kind is transmitting, and tend to not interrupt each other.
 
-| **the acks are not protected**
-
 Here are some of the timing parameters in the example simulation, for both 802.11 and 802.15.4 (sending 1000B and 88B application packets with 24 Mbps and 250 kbps, respectively):
 
 +--------------+----------+-----------+
