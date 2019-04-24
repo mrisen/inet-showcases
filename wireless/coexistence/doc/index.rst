@@ -19,6 +19,8 @@ of INET's 802.11 and 802.15.4 models.
 The Model
 ---------
 
+**Milyen problémákat vizsgálunk? balanced-e az együttműködés?**
+
 The example simulation features a Wifi (802.11) and a WPAN (802.15.4) network close to each other. All nodes communicate in the 2.4 GHz band. The signals
 for the two wireless protocols have different center frequencies and bandwidths,
 but the signal spectrums can overlap. In this showcase, we will configure the two networks to actually use overlapping channels. The channel spectrums for both technologies are shown on the following image:
@@ -91,7 +93,7 @@ We'll set just these two parameters, and leave the others on default.
 
 In INET, 802.11 and 802.15.4 radios can detect each other's transmissions, but can only receive transmission of their own type. Transmissions belonging to the other technology appear to receivers as noise. However, this noise can be enough to make a node defer from transmitting.
 
-Both technologies employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting for the duration of a backoff period when the channel is busy. The use of CCA and backoff enables the two technologies to coexist cooperatively, as opposed to destructively.
+Both technologies employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting for the duration of a backoff period when the channel is busy. The use of CCA and backoff enables the two technologies to coexist cooperatively (as opposed to destructively), as the nodes of the different technologies sense when the other kind is transmitting, and tend to not interrupt each other.
 
 | **the acks are not protected**
 
@@ -130,11 +132,13 @@ transmission and ACK, for Wifi and WPAN, respectively. The scale is linear.
 
 .. The radio medium modules for 802.11 and 802.15.4 are actually both :ned:`RadioMedium`, just with different parameterizations
 
-**TODO** However, ACKs are not protected.
+.. **TODO** However, ACKs are not protected.
 
 Within a particular wireless technology, ACKs are protected, i.e. nodes receiving a data frame can infer how long the tranmission of the data frame and the subsequent ACK will be, from the data frame's MAC header. They assume the channel is not clear for the duration of the DATA + SIFS + ACK (thus they don't start transmitting during the SIFS). However, this protection mechanism doesn't work with the transmissions of other technologies, since they cannot receive and make sense of the MAC header. They just detect some signal power in the channel, that makes them defer for the duration of a backoff period (but this duration is independent of the actual duration of the ongoing transmission). Thus they are susceptible for transmitting into each others' ACKs, which can lead to more retransmissions.
 
-**TODO** Hidden node protection doesn't work
+.. **TODO** Hidden node protection doesn't work
+
+Also, the hidden node protection mechanism in 802.11 relies on the successful reception of RTS and CTS frames, so hidden node protection might not work in a multi-technology wireless environment.
 
 The simulation uses the ``CoexistenceShowcase`` network, defined in :download:`CoexistenceShowcase.ned <../CoexistenceShowcase.ned>`:
 
@@ -204,6 +208,11 @@ Here is the WPAN traffic configuration in :download:`omnetpp.ini <../omnetpp.ini
    :end-at: wpanHost2.app[0].localPort = 5000
    :language: ini
 
+Results
+-------
+
+**EXPECTATIONS SECTION**
+
 (without QoS features, like shorter SIFS and TXOP). **TODO**
 
 The WPAN traffic is significantly smaller than the Wifi traffic in this scenario. **TODO**
@@ -225,9 +234,6 @@ is interference from the WPAN.
 - different transmission duration
 - hidden node protection doesnt work
 - different traffic
-
-Results
--------
 
 The simulation can be run by choosing the ``Coexistence`` configuration from omnepp.ini.
 It looks like the following when the simulation is run:
