@@ -8,7 +8,7 @@ Different wireless technologies sometimes operate in the same frequency range.
 For example, both IEEE 802.11 and IEEE 802.15.4 have versions that use the 2.4 GHz ISM band.
 As such, the signals of the two protocols can interfere.
 
-INET has support for simulating the interference of different wireless protocols.
+INET has support for simulating the cross-technology interference (cti) of different wireless protocols.
 Simulation can be used to examine how the different protocols
 interact and affect each other's operation. This showcase demonstrates the coexistence
 of INET's 802.11 and 802.15.4 models.
@@ -68,10 +68,18 @@ For example, they might have different defaults for path loss type, analog signa
 For our simulation, we'll use :ned:`RadioMedium`. Since we'll have two different protocols, the analog model and the background noise of the radio medium and the protocol specific radios needs to match (they need to be dimensional).
 We'll set just these two parameters, and leave the others on default.
 
-**TODO the transmission of one of the technologies is treated as noise when received by the other -> they can detect the transmission, but cant receive it -> it might be enough to cause them to back off / defer from transmitting**
+.. **TODO the transmission of one of the technologies is treated as noise when received by the other -> they can detect the transmission, but cant receive it -> it might be enough to cause them to back off / defer from transmitting**
 
-**keywords/pointers:
-milyen problémákat vizsgálunk? működik-e ha cti van? ha van backoff és cca akkor tudnak együttműködni (miért?). timing paraméterek, a contention-t a wifi nyeri. TUDNAK-E EGYÜTTMŰKÖDNI, BALANCED-E AZ EGYÜTTMŰKÖDÉS? issue-k a coexistence-el (aminek utána lehet nézni). ack előtt nincs cca egyik technológiánál sem. nem ismerik egymás timing paramétereit -> kiüthetik egymás ack-jait.**
+**keywords/pointers:**
+
+| milyen problémákat vizsgálunk?
+| működik-e ha cti van?
+| ha van backoff és cca akkor tudnak együttműködni (miért?).
+| timing paraméterek, a contention-t a wifi nyeri.
+| TUDNAK-E EGYÜTTMŰKÖDNI, BALANCED-E AZ EGYÜTTMŰKÖDÉS?
+| issue-k a coexistence-el (aminek utána lehet nézni).
+| ack előtt nincs cca egyik technológiánál sem.
+| nem ismerik egymás timing paramétereit -> kiüthetik egymás ack-jait.
 
 V1 In INET, 802.11 and 802.15.4 radios can detect each other's transmissions, but can only receive their own. Transmissions belonging to the other technology appear as noise. Both technologies employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting when the channel is busy (backoff). The use of CCA and backoff enables the two technologies to coexist cooperatively.
 
@@ -79,8 +87,8 @@ V2 In INET, 802.11 and 802.15.4 radios can detect each other's transmissions, bu
 
 Both technologies employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting for the duration of a backoff period when the channel is busy. The use of CCA and backoff enables the two technologies to coexist cooperatively, as opposed to destructively.
 
-**timing parameters**
-**the acks are not protected**
+| **timing parameters**
+| **the acks are not protected**
 
 Here are some of the timing parameters in this scenario, for both 802.11 and 802.15.4:
 
@@ -245,8 +253,7 @@ received this time.
     There are many variables, e.g. there might be more nodes,
     different transmission power values, different distances, etc.
 
-Performance
------------
+.. Performance section
 
 We examine the performance of the two technologies by looking at the number of received UDP packets
 at ``wifiHost2`` and ``wpanHost2``. Since the two wireless technologies coexist on the same
