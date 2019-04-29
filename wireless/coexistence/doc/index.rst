@@ -102,7 +102,7 @@ In INET, different radio models (e.g. 802.11 and 802.15.4) can detect each other
 
 In reality and in INET, both 802.11 and 802.15.4 employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting for the duration of a backoff period when the channel is busy. The use of CCA and backoff enables the two technologies to coexist cooperatively (as opposed to destructively), as the nodes of the different technologies sense when the other kind is transmitting, and tend not to interrupt each other.
 
-Here are some of the timing parameters in the example simulation, for both 802.11 and 802.15.4 (when sending 1000B application packets with 24 Mbps, and 88B application packets with 250 kbps, respectively):
+Here are some of the timing parameters in the example simulation, for both 802.11 and 802.15.4 (sending 1000B application packets with 24 Mbps, and 88B application packets with 250 kbps, respectively):
 
 +--------------+----------+-----------+
 |              | 802.11   | 802.15.4  |
@@ -139,7 +139,7 @@ transmission and ACK, first for the Wifi and then for the WPAN. The scale is lin
 
 .. **TODO** However, ACKs are not protected.
 
-Within a particular wireless technology, ACKs are protected, i.e. nodes receiving a data frame can infer how long the tranmission of the data frame and the subsequent ACK will be, from the data frame's MAC header. They assume the channel is not clear for the duration of the DATA + SIFS + ACK (thus they don't start transmitting during the SIFS). However, this protection mechanism doesn't work with the transmissions of other technologies, since they cannot receive and make sense of the MAC header. They just detect some signal power in the channel, that makes them defer for the duration of a backoff period (but this duration is independent of the actual duration of the ongoing transmission). Thus they are susceptible for transmitting into each others' ACKs, which can lead to more retransmissions.
+Within a particular wireless technology, transmissions are protected, i.e. nodes receiving a data frame can infer how long the tranmission of the data frame and the subsequent ACK will be, from the data frame's MAC header. They assume the channel is not clear for the duration of the DATA + SIFS + ACK (thus they don't start transmitting during the SIFS). However, this protection mechanism doesn't work with the transmissions of other technologies, since nodes cannot receive and make sense of the MAC header. They just detect some signal power in the channel that makes them defer for the duration of a backoff period (but this duration is independent of the actual duration of the ongoing transmission). Thus they are susceptible for transmitting into each others' ACKs, which can lead to more retransmissions.
 
 .. **TODO** Hidden node protection doesn't work
 
@@ -246,6 +246,14 @@ Results
 We expect that the Wifi and WPAN nodes can coexist cooperatively, as they both feature CCA and backoff. There is contention...
 
 It is expected that the Wifi and WPAN nodes can coexist cooperatively. Both feature CCA and backoff, so there is contention between the nodes of the two technologies. However, protection mechanisms in each don't work in the other; the transmissions are not not protected cross-technology, so as the acks. It is likely happen that they start transmitting during each others' acks. Also, there is no CCA before sending the ack in both.
+
+  to say:
+
+  - cooperative coexistence because there is contention -> cca and backoff
+  - but there is no protection, just the backoff, which is independent. they dont have timing info -> the acks are not protected
+  - the wifi might have more chance of accessing the channel because it waits less during contention
+  - the wpan has low traffic, compared to the wifi...ACTUALLY do we know wpan max throughput? -> its 112 kbps -> its actually 1/16th
+  - different tx power -> the wifi might be able to receive transmissions successfully during a wpan transmission -> but not the other way around -> actually, it works the other way around as well
 
 Different traffic, different timing, different duration. They might be able to receive the transmissions correctly (?)(is it working correctly?)
 
