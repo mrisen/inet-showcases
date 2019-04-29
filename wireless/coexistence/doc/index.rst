@@ -8,7 +8,7 @@ Different wireless technologies sometimes operate in the same frequency range.
 For example, both IEEE 802.11 and IEEE 802.15.4 have versions that use the 2.4 GHz ISM band.
 As such, the signals of the two protocols can interfere (called cross-technology interference, or CTI).
 
-INET has support for simulating cross-technology interference (CTI). TODO: between what protocols? only 802.11 and 15.4? or any protocol...and it depends on what?
+INET has support for simulating CTI between any of its wireless protocol models.
 Simulation can be used to examine how the different protocols
 interact and affect each other's operation. This showcase demonstrates the coexistence
 of INET's 802.11 and 802.15.4 models.
@@ -19,7 +19,16 @@ of INET's 802.11 and 802.15.4 models.
 The Model
 ---------
 
-**Milyen problémákat vizsgálunk? balanced-e az együttműködés?**
+  **Milyen problémákat vizsgálunk? balanced-e az együttműködés?**
+
+  problémák:
+
+  - tudunk cti-t szimulálni?
+  - hogy tudunk?
+  - képesek együttműködni cooperatívan?
+  - mi kell hozzá?
+  - balanced-e az együttműködés?
+  - milyen feature-ök működnek és milyenek nem?
 
 The example simulation features a Wifi (802.11) and a WPAN (802.15.4) network close to each other. All nodes communicate in the 2.4 GHz band. The signals
 for the two wireless protocols have different center frequencies and bandwidths,
@@ -54,7 +63,7 @@ For the WPAN, we'll use INET's 802.15.4 narrow band version, in which transmissi
 .. #how can that be simulated?
 
 As the signal center frequencies and bandwidths of the 802.11 and 802.15.4 models are not identical,
-the dimensional analog model needs to be used, instead of the scalar analog model. The scalar analog model represents signals with a scalar signal power, and a constant center frequency and bandwidth. The scalar model cannot handle the situation when the spectrums of two signals overlap (but not identical). When using the dimensional analog model, signal power can change in both time and frequency. This model is also able to calculate the interference of signals whose spectrums partially overlap.
+the dimensional analog model needs to be used, instead of the scalar analog model. The scalar analog model represents signals with a scalar signal power, and a constant center frequency and bandwidth. The scalar model can only handle situations when the spectrums of two signals are identical or don't overlap at all. When using the dimensional analog model, signal power can change in both time and frequency. This model is also able to calculate the interference of signals whose spectrums partially overlap.
 
 .. #whats a radio medium module?
 
@@ -67,23 +76,21 @@ The radio medium module keeps track of transmitters, receivers, transmissions an
 
 The standard radio medium module in INET is :ned:`RadioMedium`. Wireless protocols in INET (such as 802.11 or 802.15.4) often have their own radio module types (e.g. Ieee80211DimensionalRadioMedium), but these modules are actually :ned:`RadioMedium`, just with different default parameterizations (each parameterized for its typical use case).
 For example, they might have different defaults for path loss type, background noise power, or analog signal representation type.
-However, setting these radio medium parameters are not required for the simulation to work. Most of the time, one could just use RadioMedium with its default parameters.
+However, setting these radio medium parameters are not required for the simulation to work. Most of the time, one could just use RadioMedium with its default parameters (with the exception of setting the analog signal representation type to dimensional when simulating CTI).
 
 For our simulation, we'll use :ned:`RadioMedium`. Since we'll have two different protocols, the analog model and the background noise of the radio medium and the protocol specific radios need to match (they need to be dimensional).
 We'll set just these two parameters, and leave the others on default.
 
-.. **TODO the transmission of one of the technologies is treated as noise when received by the other -> they can detect the transmission, but cant receive it -> it might be enough to cause them to back off / defer from transmitting**
+  **keywords/pointers:**
 
-**keywords/pointers:**
-
-| milyen problémákat vizsgálunk?
-| működik-e ha cti van?
-| ha van backoff és cca akkor tudnak együttműködni (miért?).
-| timing paraméterek, a contention-t a wifi nyeri.
-| TUDNAK-E EGYÜTTMŰKÖDNI, BALANCED-E AZ EGYÜTTMŰKÖDÉS?
-| issue-k a coexistence-el (aminek utána lehet nézni).
-| ack előtt nincs cca egyik technológiánál sem.
-| nem ismerik egymás timing paramétereit -> kiüthetik egymás ack-jait.
+  | milyen problémákat vizsgálunk?
+  | működik-e ha cti van?
+  | ha van backoff és cca akkor tudnak együttműködni (miért?).
+  | timing paraméterek, a contention-t a wifi nyeri.
+  | TUDNAK-E EGYÜTTMŰKÖDNI, BALANCED-E AZ EGYÜTTMŰKÖDÉS?
+  | issue-k a coexistence-el (aminek utána lehet nézni).
+  | ack előtt nincs cca egyik technológiánál sem.
+  | nem ismerik egymás timing paramétereit -> kiüthetik egymás ack-jait.
 
 .. V1 In INET, 802.11 and 802.15.4 radios can detect each other's transmissions, but can only receive their own **rephrase**. Transmissions belonging to the other technology appear as noise. Both technologies employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting when the channel is busy (backoff). The use of CCA and backoff enables the two technologies to coexist cooperatively.
 
@@ -91,11 +98,11 @@ We'll set just these two parameters, and leave the others on default.
 
 .. #how do they coexist? whats needed for coexistence?
 
-In INET, 802.11 and 802.15.4 radios can detect each other's transmissions, but can only receive transmission of their own type. Transmissions belonging to the other technology appear to receivers as noise. However, this noise can be enough to make a node defer from transmitting.
+In INET, different radio models (e.g. 802.11 and 802.15.4) can detect each other's transmissions, but can only receive transmission of their own type. Transmissions belonging to the other technology appear to receivers as noise. However, this noise can be strong enough to make a node defer from transmitting.
 
-Both technologies employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting for the duration of a backoff period when the channel is busy. The use of CCA and backoff enables the two technologies to coexist cooperatively (as opposed to destructively), as the nodes of the different technologies sense when the other kind is transmitting, and tend to not interrupt each other.
+In reality and in INET, both 802.11 and 802.15.4 employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting for the duration of a backoff period when the channel is busy. The use of CCA and backoff enables the two technologies to coexist cooperatively (as opposed to destructively), as the nodes of the different technologies sense when the other kind is transmitting, and tend not to interrupt each other.
 
-Here are some of the timing parameters in the example simulation, for both 802.11 and 802.15.4 (sending 1000B and 88B application packets with 24 Mbps and 250 kbps, respectively):
+Here are some of the timing parameters in the example simulation, for both 802.11 and 802.15.4 (when sending 1000B application packets with 24 Mbps, and 88B application packets with 250 kbps, respectively):
 
 +--------------+----------+-----------+
 |              | 802.11   | 802.15.4  |
@@ -111,7 +118,7 @@ Here are some of the timing parameters in the example simulation, for both 802.1
 
 A 802.15.4 transmission takes about ten times more than a 802.11 one, even though the payload is about ten times smaller. The relative duration of transmissions of
 the Wifi and the WPAN is illustrated with the sequence chart below. The chart shows a packet
-transmission and ACK, for Wifi and WPAN, respectively. The scale is linear.
+transmission and ACK, first for the Wifi and then for the WPAN. The scale is linear.
 
 .. figure:: seqchart.png
    :width: 100%
@@ -137,6 +144,9 @@ Within a particular wireless technology, ACKs are protected, i.e. nodes receivin
 .. **TODO** Hidden node protection doesn't work
 
 Also, the hidden node protection mechanism in 802.11 relies on the successful reception of RTS and CTS frames, so hidden node protection might not work in a multi-technology wireless environment.
+
+Configuration
+~~~~~~~~~~~~~
 
 The simulation uses the ``CoexistenceShowcase`` network, defined in :download:`CoexistenceShowcase.ned <../CoexistenceShowcase.ned>`:
 
@@ -165,7 +175,7 @@ with a power of -110 dBm. Here is the radio medium configuration in :download:`o
 
 The Wifi hosts are configured to have :ned:`Ieee80211DimensionalRadio`. The default signal shape
 is not changed in the transmitter, so the radio uses a flat signal in time and frequency.
-The Wifi channel is set to channel 9 (center frequency of 2452MHz), to ensure that the Wifi transmissions overlap with the 802.15.4 transmissions in frequency. Here is the configuration for the Wifi host radios in
+The Wifi channel is set to Channel 9 (center frequency of 2452MHz), to ensure that the Wifi transmissions overlap with the 802.15.4 transmissions in frequency. Here is the configuration for the Wifi host radios in
 :download:`omnetpp.ini <../omnetpp.ini>`:
 
 .. literalinclude:: ../omnetpp.ini
@@ -173,7 +183,7 @@ The Wifi channel is set to channel 9 (center frequency of 2452MHz), to ensure th
    :end-at: channelNumber
    :language: ini
 
-.. note:: The channel number is set to 8, because in INET's 802.11 model, the channels are numbered from 0, so that this setting corresponds to Wifi channel 9.
+.. note:: The channel number is set to 8, because in INET's 802.11 model, the channels are numbered from 0, so that this setting corresponds to Wifi Channel 9.
 
 The WPAN hosts are configured to have an :ned:`Ieee802154NarrowbandInterface`,
 with a :ned:`Ieee802154NarrowbandDimensionalRadio`. As in the case of the Wifi hosts,
@@ -209,29 +219,35 @@ Here is the WPAN traffic configuration in :download:`omnetpp.ini <../omnetpp.ini
 Results
 -------
 
-**EXPECTATIONS SECTION**
+  **EXPECTATIONS SECTION**
 
-(without QoS features, like shorter SIFS and TXOP). **TODO**
+  (without QoS features, like shorter SIFS and TXOP). **TODO**
 
-The WPAN traffic is significantly smaller than the Wifi traffic in this scenario. **TODO**
+  The WPAN traffic is significantly smaller than the Wifi traffic in this scenario. **TODO**
 
-It is expected that there will be collisions between the different technologies,
-due to the different timing parameters. Regarding channel access, the Wifi might be more dominant,
-not giving the chance for WPAN to gain the channel.
-As such, with the default parameters, the Wifi might starve the WPAN.
-The WPAN might be wasting energy for unsuccessful transmissions.
-The Wifi might overpower the WPAN, so the Wifi transmissions are received correctly even when there
-is interference from the WPAN.
+  It is expected that there will be collisions between the different technologies,
+  due to the different timing parameters. Regarding channel access, the Wifi might be more dominant,
+  not giving the chance for WPAN to gain the channel.
+  As such, with the default parameters, the Wifi might starve the WPAN.
+  The WPAN might be wasting energy for unsuccessful transmissions.
+  The Wifi might overpower the WPAN, so the Wifi transmissions are received correctly even when there
+  is interference from the WPAN.
 
-**TODO: expectations here (?)**
+  **TODO: expectations here (?)**
 
-- different tx power (and consequences)
-- contention (and requirements for such)
-- transmissions are not protected cross technology
-- different timing parameters (and what timing parameters)
-- different transmission duration
-- hidden node protection doesnt work
-- different traffic
+  - different tx power (and consequences)
+  - contention (and requirements for such)
+  - transmissions are not protected cross technology
+  - different timing parameters (and what timing parameters)
+  - different transmission duration
+  - hidden node protection doesnt work -> there are no hidden nodes here
+  - different traffic
+
+We expect that the Wifi and WPAN nodes can coexist cooperatively, as they both feature CCA and backoff. There is contention...
+
+It is expected that the Wifi and WPAN nodes can coexist cooperatively. Both feature CCA and backoff, so there is contention between the nodes of the two technologies. However, protection mechanisms in each don't work in the other; the transmissions are not not protected cross-technology, so as the acks. It is likely happen that they start transmitting during each others' acks. Also, there is no CCA before sending the ack in both.
+
+Different traffic, different timing, different duration. They might be able to receive the transmissions correctly (?)(is it working correctly?)
 
 The simulation can be run by choosing the ``Coexistence`` configuration from omnepp.ini.
 It looks like the following when the simulation is run:
