@@ -58,5 +58,6 @@
             <property name="Symbols.Type/QosShowcase.server.app[3]" value="Diamond"/>
             <property name="Line.Color/QosShowcase.server.app[3]" value="orange"/>
         </chart>
+        <chart name="End-to-end delay, qos" script="import results&#10;import matplotlib.pyplot as plt&#10;import matplotlib as mpl&#10;&#10;df = results.getVectors(&quot;&quot;&quot;&#10;ADD vectors WHERE run(RealisticBitrateQos*) AND module(QosShowcase.server.app[*]) AND name(endToEndDelay:vector)&#10;&#10;&quot;&quot;&quot;)&#10;df = df[df.type == 'vector']&#10;plt.xlabel('Simulation time (s)')&#10;plt.ylabel('Vector value')&#10;&#10;mpl.rcParams['axes.prop_cycle'] = mpl.cycler(color=[&quot;orange&quot;, &quot;green&quot;, &quot;red&quot;, &quot;darkblue&quot;])&#10;&#10;markers = ['.', 's', '^', 'd']&#10;markersizes = [4, 2, 2, 2]&#10;&#10;i = 0&#10;for t in df[['vectime', 'vecvalue', 'module', 'name']].itertuples(index=False):&#10;    plt.plot(t[0], t[1], label=(t[2] + ':' + t[3])[:-7], drawstyle='default', linewidth=0, marker=markers[i], markersize=markersizes[i])&#10;    i += 1&#10;plt.legend()&#10;plt.title(&quot;&quot;&quot;endToEndDelay:vector QosShowcase.server.app[0]&quot;&quot;&quot;)&#10;plt.tight_layout()&#10;" type="MatplotlibChart"/>
     </charts>
 </analysis>
