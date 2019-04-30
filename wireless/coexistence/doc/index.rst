@@ -107,9 +107,9 @@ We'll set just these two parameters, and leave the others on default.
 
 In INET, different radio modules (e.g. 802.11 and 802.15.4) can detect each other's transmissions, but can only receive transmissions of their own type. Transmissions belonging to the other technology appear to receivers as noise. However, this noise can be strong enough to make a node defer from transmitting.
 
-In reality and in INET, both 802.11 and 802.15.4 employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting for the duration of a backoff period when the channel is busy. The use of CCA and backoff enables the two technologies to coexist cooperatively (as opposed to destructively), as the nodes of the different technologies sense when the other kind is transmitting, and tend not to interrupt each other.
+In reality and in INET, both 802.11 and 802.15.4 employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting for the duration of a backoff period when the channel is busy. The use of CCA and backoff enables the two technologies to coexist cooperatively (both of them can communicate successfully), as opposed to destructively (they ruin each other's communication). The nodes of the different technologies sense when the other kind is transmitting, and tend not to interrupt each other.
 
-**TODO: what is cooperative and destructive?**
+.. **TODO: what is cooperative and destructive?**
 
 Here are some duration values in the example simulation, for both 802.11 and 802.15.4 (sending 1000B application packets with 24 Mbps, and 88B application packets with 250 kbps, respectively):
 
@@ -173,6 +173,9 @@ One host in each host pair sends frames to the other
 
 .. **TODO they are about 10 meters appart**
 
+.. **TODO most of the settings are in the Coexistence configuration**
+
+The simulation is defined in the ``Coexistence`` configuration in :download:`omnetpp.ini <../omnetpp.ini>`.
 The radio medium module in the network is a :ned:`RadioMedium`. It is configured to use the :ned:`DimensionalAnalogModel`.
 The background noise type is set to :ned:`IsotropicDimensionalBackgroundNoise`,
 with a power of -110 dBm. Here is the radio medium configuration in :download:`omnetpp.ini <../omnetpp.ini>`:
@@ -227,7 +230,18 @@ Here is the WPAN traffic configuration in :download:`omnetpp.ini <../omnetpp.ini
    :end-at: wpanHost2.app[0].localPort = 5000
    :language: ini
 
-TODO Wifi only and Wpan only
+.. TODO Wifi only and Wpan only
+
+The independent performance data can be obtained by running the ``WifiOnly``
+and the ``WpanOnly`` configurations in :download:`omnetpp.ini <../omnetpp.ini>`.
+The latter two configurations extend the ``Coexistence`` configuration, and disable either the Wifi or the WPAN host communication by setting the number of applications to 0:
+
+.. literalinclude:: ../omnetpp.ini
+   :start-at: WifiOnly
+   :end-at: wifiHost1.numApps
+   :language: ini
+
+In all configurations, the simulations are run for five seconds, and repeated eight times.
 
 Results
 -------
@@ -286,6 +300,8 @@ It is expected that the Wifi and the WPAN will be able to coexist cooperatively,
 The simulation can be run by choosing the ``Coexistence`` configuration from omnepp.ini.
 It looks like the following when the simulation is run:
 
+.. TODO when running the coexistence configuration it looks like the following...
+
 .. video:: coexistence1.mp4
    :width: 90%
    :align: center
@@ -332,21 +348,7 @@ and see how their performances change when they share the same frequency range/b
 .. Then we examine if the coexisting performance can be improved by changing some
    of the MAC parameters from their defaults.
 
-**TODO this shouldn't be here?**
-
-  Both technologies communicate in the ``Coexistence`` configuration.
-  The independent performance data can be obtained by running the ``WifiOnly``
-  and the ``WpanOnly`` configurations in :download:`omnetpp.ini <../omnetpp.ini>`.
-  The latter two configurations extend the ``Coexistence`` configuration, and disable either the Wifi or the WPAN host communication by setting the number of applications to 0:
-
-  .. literalinclude:: ../omnetpp.ini
-     :start-at: WifiOnly
-     :end-at: wifiHost1.numApps
-     :language: ini
-
-  In all configurations, the simulations are run for five seconds, and repeated eight times.
-
-Here are the results of the simulations: TODO performance
+Here are the performance results:
 
 .. figure:: wifiperformance.png
    :width: 70%
@@ -357,11 +359,9 @@ Here are the results of the simulations: TODO performance
    :align: center
 
 In this particular scenario, the performance of both technologies is decreased,
-by about 10 percent for WPAN and 15 percent for Wifi, when they operate concurrently in the shared frequency range.
-Note that the fractional number of packets in the case of WPAN is due to
+by about 5 percent, compared to the base performance.
+Note that the fractional number of packets is due to
 the averaging of the repetitions.
-
-TODO: 5%, fractional number of packets in general, no "when they operate concurrently..."
 
 .. .. note::
 
