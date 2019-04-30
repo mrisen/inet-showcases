@@ -164,6 +164,10 @@ Here are the results for the equal bitrate traffic scenario, both with and witho
 .. figure:: delay_e_q.png
    :width: 100%
 
+.. figure:: delay_qos.png
+   :width: 100%
+   :align: center
+
 In the non-QoS case, the end-to-end delay vector data points for the four access categories run together.
 There is no difference between the access categories, all of them are treated the same by the MAC.
 The curve is straight and steep at the beginning, due to the queue being filled up. When it is
