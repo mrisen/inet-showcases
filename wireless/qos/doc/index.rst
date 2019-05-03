@@ -254,6 +254,10 @@ Here are the results for both the non-QoS and QoS cases:
 .. figure:: delay_r_nq.png
    :width: 100%
 
+.. figure:: delay_nonqos.png
+   :width: 100%
+   :align: center
+
 .. figure:: delay_r_q.png
    :width: 100%
 
@@ -276,6 +280,9 @@ fluctuate more. The same happens to the background queue at around 2.5 seconds.
 Now lets take a look at jitter:
 
 .. figure:: jitter_r_nq.png
+   :width: 100%
+
+.. figure:: jitter_nonqos.png
    :width: 100%
 
 .. figure:: jitter_r_q.png
@@ -303,6 +310,9 @@ for the low priority packets at the end of the simulation, than there was for th
 Let's see the throughput:
 
 .. figure:: throughput_r_nq.png
+   :width: 100%
+
+.. figure:: throughput_nonqos.png
    :width: 100%
 
 .. figure:: throughput_r_q.png
