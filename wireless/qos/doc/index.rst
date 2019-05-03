@@ -300,6 +300,9 @@ for the low priority packets at the end of the simulation, than there was for th
    .. figure:: jitterrealisticqos_zoomed.png
       :width: 100%
 
+   .. figure:: jitter_qos_zoomed.png
+      :width: 100%
+
    The jitter for the higher priority (voice, video) packets, and some of the best effort ones are
    similar to the jitter in the non-QoS case, around 10ms. There are horizontal lines of data points
    on the zoomed in chart, on a different level for best effort and video. This regularity in the
