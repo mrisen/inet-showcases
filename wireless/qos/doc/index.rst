@@ -257,6 +257,10 @@ Here are the results for both the non-QoS and QoS cases:
 .. figure:: delay_r_q.png
    :width: 100%
 
+.. figure:: delay_qos.png
+   :width: 100%
+   :align: center
+
 The chart for the non-QoS case is very similar to the one for the equal bitrate traffic non-QoS case.
 The traffic for the different traffic categories are not differentiated.
 
@@ -275,6 +279,9 @@ Now lets take a look at jitter:
    :width: 100%
 
 .. figure:: jitter_r_q.png
+   :width: 100%
+
+.. figure:: jitter_qos.png
    :width: 100%
 
 As with delay, the jitter is similar to the equal bitrate non-QoS case. In the QoS case,
@@ -299,6 +306,9 @@ Let's see the throughput:
    :width: 100%
 
 .. figure:: throughput_r_q.png
+   :width: 100%
+
+.. figure:: throughput_qos.png
    :width: 100%
 
 In the non-QoS case, the throughput for the four applications is more or less proportional
