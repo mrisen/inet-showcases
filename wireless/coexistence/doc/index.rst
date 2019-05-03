@@ -32,7 +32,7 @@ The Model
 
     - amúgy lesz egy base-line is amikor egyedül vannak és ahhoz tudjuk majd hasonlítani
 
-We'll examine how CTI can be simulated, see if two interfereng wireless wireless technology models can cooperate and if their cooperation is balanced. We'll run the simulation with both technology models present. Also, to get a base-line of their performance, we'll run the simulation with just one of the wireless models present. Then, we can compare the base-line performance of both models to their concurrent performance.
+We'll examine how CTI can be simulated, see if two interfereng wireless wireless technology models can cooperate and if their cooperation is balanced. We'll run the simulation with both 802.11 and 802.15.4 models present. Also, to get a base-line of their performance, we'll run the simulation with just one of the models present. Then, we can compare the base-line performance of both models to their concurrent performance.
 
 The example simulation features a Wifi (802.11) and a WPAN (802.15.4) network close to each other. All nodes communicate in the 2.4 GHz band. The signals
 for the two wireless protocols have different center frequencies and bandwidths,
@@ -81,9 +81,11 @@ The radio medium module keeps track of transmitters, receivers, transmissions an
 
 .. **TODO: this seems unfinished**
 
-The standard radio medium module in INET is :ned:`RadioMedium`. Wireless protocols in INET (such as 802.11 or 802.15.4) often have their own radio module types (e.g. Ieee80211DimensionalRadioMedium), but these modules are actually :ned:`RadioMedium`, just with different default parameterizations (each parameterized for its typical use case).
+The standard radio medium module in INET is :ned:`RadioMedium`. Wireless protocols in INET (such as 802.11 or 802.15.4) often have their own radio module types (e.g. :ned:`Ieee80211DimensionalRadioMedium`), but these modules are actually :ned:`RadioMedium`, just with different default parameterizations (each parameterized for its typical use case).
 For example, they might have different defaults for path loss type, background noise power, or analog signal representation type.
 However, setting these radio medium parameters are not required for the simulation to work. Most of the time, one could just use RadioMedium with its default parameters (with the exception of setting the analog signal representation type to dimensional when simulating CTI).
+
+**TODO what about radio modules? and corresponding radio modules?**
 
 For our simulation, we'll use :ned:`RadioMedium`. Since we'll have two different protocols, the analog model and the background noise of the radio medium and the protocol specific radios need to match (they need to be dimensional).
 We'll set just these two parameters, and leave the others on default.
@@ -105,9 +107,9 @@ We'll set just these two parameters, and leave the others on default.
 
 .. #how do they coexist? whats needed for coexistence?
 
-In INET, different radio modules (e.g. 802.11 and 802.15.4) can detect each other's transmissions, but can only receive transmissions of their own type. Transmissions belonging to the other technology appear to receivers as noise. However, this noise can be strong enough to make a node defer from transmitting.
+In INET, different types of radio modules (e.g. 802.11 and 802.15.4) can detect each other's transmissions, but can only receive transmissions of their own type. Transmissions belonging to the other technology appear to receivers as noise. However, this noise can be strong enough to make a node defer from transmitting. **TODO? this is the basis of coexistence...they just detect each other's transmissions as noise**
 
-In reality and in INET, both 802.11 and 802.15.4 employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting for the duration of a backoff period when the channel is busy. The use of CCA and backoff enables the two technologies to coexist cooperatively (both of them can communicate successfully), as opposed to destructively (they ruin each other's communication). The nodes of the different technologies sense when the other kind is transmitting, and tend not to interrupt each other.
+In reality and in INET, both 802.11 and 802.15.4 employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting for the duration of a backoff period when the channel is busy. The use of CCA and backoff enables the two technologies to coexist cooperatively (both of them can communicate successfully), as opposed to destructively (they ruin each other's communication). In our case, the nodes of the different technologies sense when the other kind is transmitting, and tend not to interrupt each other.
 
 .. **TODO: what is cooperative and destructive?**
 
@@ -125,7 +127,8 @@ Here are some duration values in the example simulation, for both 802.11 and 802
 | Backoff (avg)| 600 us   | 1200 us   |
 +--------------+----------+-----------+
 
-A 802.15.4 data transmission takes about ten times more than a 802.11 one, even though the payload is about ten times smaller. The relative duration of transmissions of
+A 802.15.4 data frame transmission takes about ten times more than a 802.11 one, even though the payload is about ten times smaller.
+The SIFS and ack is also about ten times longer in 802.15.4. The relative duration of transmissions of
 the Wifi and the WPAN is illustrated with the sequence chart below. The chart shows a packet
 transmission and ACK, first for the Wifi and then for the WPAN. The scale is linear.
 
@@ -163,8 +166,7 @@ The simulation uses the ``CoexistenceShowcase`` network, defined in :download:`C
    :width: 100%
    :align: center
 
-The network contains four :ned:`AdhocHost`'s, a :ned:`RadioMedium`, a :ned:`Ipv4NetworkConfigurator`
-and an :ned:`IntegratedVisualizer` module. Two of the hosts, ``wifiHost1`` and ``wifiHost2``,
+The network contains four :ned:`AdhocHost`'s. Two of the hosts, ``wifiHost1`` and ``wifiHost2``,
 communicate via 802.11, in ad hoc mode. The other two hosts, ``wpanHost1`` and ``wpanHost2``,
 communicate via 802.15.4. The four hosts are arranged in a rectangle, and all of them
 are in communication range with each other (corresponding hosts are 20 meters apart).
@@ -243,6 +245,10 @@ The latter two configurations extend the ``Coexistence`` configuration, and disa
 
 In all configurations, the simulations are run for five seconds, and repeated eight times.
 
+TODO: the traffic configuration is...the wifi saturates the channel, the wpan occasianally has frames to transmit
+we'll see if it can do that while the wifi is constantly transmitting, and if the wifi can keep transmitting...
+we suspect that they both will be able to do their thing because of the cooperative coexistence
+
 Results
 -------
 
@@ -278,7 +284,7 @@ Results
    - because there is contention
    - because they use cca and backoff
 
-It is expected that the Wifi and the WPAN will be able to coexist cooperatively, because there will be contention between them. However, the coexistence will degrade the performance of both, because their protection mechanisms don't work cross-technology, and it is likely that they'll start transmitting during each others' tranmissions. Also, the duration of WPAN transmissions is long compared to a Wifi one, and the WPAN might steal some air time from the Wifi. Because the Wifi waits less before accessing the channel, it is expected that the Wifi will gain channel access most of the time. However, the WPAN has little traffic to send, so its performance might be mostly unaffected. The Wifi's transmission power is greater than the WPAN's, so concurrent WPAN transmissions might not corrupt the Wifi frames (but the other way around). TODO rewrite
+It is expected that the Wifi and the WPAN will be able to coexist cooperatively, because there will be contention between them. However, the coexistence will degrade the performance of both, because their protection mechanisms don't work cross-technology, and it is likely that they'll start transmitting during each others' tranmissions. Also, the duration of WPAN transmissions is long compared to a Wifi one, and the WPAN might steal some air time from the Wifi. Because the Wifi waits less before accessing the channel, it is expected that the Wifi will gain channel access most of the time. However, the WPAN has little traffic to send, so its performance might be mostly unaffected. **TODO? the wpan has frames to send only occasionally** The Wifi's transmission power is greater than the WPAN's, so concurrent WPAN transmissions might not corrupt the Wifi frames (but the other way around). TODO rewrite
 
 .. Why will performance be degraded?
 
@@ -339,7 +345,7 @@ received this time.
 We examine the performance of the two technologies by looking at the number of received UDP packets
 at ``wifiHost2`` and ``wpanHost2``. We look at the independent performance
 of the Wifi and WPAN hosts (i.e. when there is just one of the host pairs communicating),
-and see how their performances change when they share the same frequency range/both of them communicate concurrently. TODO
+and see how their performances change when both of them communicate concurrently.
 
 .. Since the two wireless technologies coexist on the same
    frequency band and affect each others' operation, they both take a performance hit when they operate with
