@@ -85,7 +85,7 @@ The standard radio medium module in INET is :ned:`RadioMedium`. Wireless protoco
 For example, they might have different defaults for path loss type, background noise power, or analog signal representation type.
 However, setting these radio medium parameters are not required for the simulation to work. Most of the time, one could just use RadioMedium with its default parameters (with the exception of setting the analog signal representation type to dimensional when simulating CTI).
 
-**TODO what about radio modules? and corresponding radio modules?**
+**TODO what about radio modules? and corresponding radio modules? what functionality do they have ?**
 
 For our simulation, we'll use :ned:`RadioMedium`. Since we'll have two different protocols, the analog model and the background noise of the radio medium and the protocol specific radios need to match (they need to be dimensional).
 We'll set just these two parameters, and leave the others on default.
