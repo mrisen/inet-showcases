@@ -107,7 +107,9 @@ We'll set just these two parameters, and leave the others on default.
 
 .. #how do they coexist? whats needed for coexistence?
 
-In INET, different types of radio modules (e.g. 802.11 and 802.15.4) can detect each other's transmissions, but can only receive transmissions of their own type. Transmissions belonging to the other technology appear to receivers as noise. However, this noise can be strong enough to make a node defer from transmitting. **TODO? this is the basis of coexistence...they just detect each other's transmissions as noise**
+In INET, different types of radio modules (e.g. 802.11 and 802.15.4) can detect each other's transmissions, but can only receive transmissions of their own type. Transmissions belonging to the other technology appear to receivers as noise. However, this noise can be strong enough to make a node defer from transmitting. As such, the fact the a radio treats transmissions it cannot receive as noise is the mechanism which allows any wireless protocol models to interfere with each other.
+
+**TODO? this is the basis of coexistence...they just detect each other's transmissions as noise -> not sure its needed**
 
 In reality and in INET, both 802.11 and 802.15.4 employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting for the duration of a backoff period when the channel is busy. The use of CCA and backoff enables the two technologies to coexist cooperatively (both of them can communicate successfully), as opposed to destructively (they ruin each other's communication). In our case, the nodes of the different technologies sense when the other kind is transmitting, and tend not to interrupt each other.
 
@@ -284,7 +286,7 @@ Results
    - because there is contention
    - because they use cca and backoff
 
-It is expected that the Wifi and the WPAN will be able to coexist cooperatively, because there will be contention between them. However, the coexistence will degrade the performance of both, because their protection mechanisms don't work cross-technology, and it is likely that they'll start transmitting during each others' tranmissions. Also, the duration of WPAN transmissions is long compared to a Wifi one, and the WPAN might steal some air time from the Wifi. Because the Wifi waits less before accessing the channel, it is expected that the Wifi will gain channel access most of the time. However, the WPAN has little traffic to send, so its performance might be mostly unaffected. **TODO? the wpan has frames to send only occasionally** The Wifi's transmission power is greater than the WPAN's, so concurrent WPAN transmissions might not corrupt the Wifi frames (but the other way around). TODO rewrite
+It is expected that the Wifi and the WPAN will be able to coexist cooperatively, because there will be contention between them. However, the coexistence will degrade the performance of both, because their protection mechanisms don't work cross-technology, and it is likely that they'll start transmitting during each others' tranmissions. Also, the duration of WPAN transmissions is long compared to a Wifi one, and the WPAN might steal some air time from the Wifi. Because the Wifi waits less before accessing the channel, it is expected that the Wifi will gain channel access most of the time. However, the WPAN sends frames much less frequently, so its performance might be mostly unaffected. The Wifi's transmission power is greater than the WPAN's, so concurrent WPAN transmissions might not corrupt the Wifi frames (but the other way around). TODO rewrite
 
 .. Why will performance be degraded?
 
@@ -334,6 +336,10 @@ and ``wpanHost2`` receives the transmission correctly. There is no
 data link activity arrow, because ``wpanHost2`` already received that packet,
 it just didn't ACK it successfully yet. Thus, it sends an ACK, which is successfully
 received this time.
+
+**TODO is this still correct?**
+
+**at the first wpan frame, the wifi starts to transmit, then the WPAN, and they transmit together. the first wifi frame is incorrectly received, but the subsequent ones are correctly received, while the wpan is transmitting. then, the wpan stops transmitting during a wifi ack, and the wifi ack is incorrectly received. the wpan frame is correctly received. it also happens with the second wpan frame -> is this ok?**
 
 ..  The topic of spectral coexistence is complex,
     the results in this showcase are for just this particular scenario.
