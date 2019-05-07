@@ -11,9 +11,9 @@
       <items xsi:type="scave:Add" filterPattern="module(*.wifiHost2.app[0]) AND name(throughput:vector) AND file(*OnlyPacketSize*) " type="VECTOR"/>
       <items xsi:type="scave:Add" filterPattern="packetSize AND file(*OnlyPacketSize*) "/>
       <items xsi:type="scave:ComputeScalar" scalarName="avgthroughput" valueExpr="mean('throughput:vector')/1048576" moduleExpr="FragmentationShowcase.wifiHost2.app[0]" groupByExpr=""/>
-      <items xsi:type="scave:ScatterChart" name="Throughput vs packet size (fix 250B frag threshold)" xDataPattern="module(_runattrs_) AND name(packetSize)">
+      <items xsi:type="scave:ScatterChart" name="Throughput vs packet size (fixed 250B frag threshold)" xDataPattern="module(_runattrs_) AND name(packetSize)">
         <filters xsi:type="scave:Select"/>
-        <properties name="Graph.Title" value="Throughput vs packet size (fix 250B frag threshold)"/>
+        <properties name="Graph.Title" value="Throughput vs packet size (fixed 250B frag threshold)"/>
         <properties name="X.Axis.Title" value="Packet size [byte]"/>
         <properties name="Y.Axis.Title" value="Throughput [Mbps]"/>
         <properties name="Legend.Display" value="true"/>

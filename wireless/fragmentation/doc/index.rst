@@ -37,7 +37,7 @@ transmission might be followed by a contention period and ACK (depending on bloc
 
 In INET, 802.11 fragmentation is controlled by fragmentation policies in :ned:`Ieee80211Mac`. By default, the :ned:`Dcf` and :ned:`Hcf` submodules of :ned:`Ieee80211Mac` contain a fragmentation policy submodule (at ``mac.dcf.originatorMacDataService.fragmentationPolicy`` and ``mac.hcf.originatorMacDataService.fragmentationPolicy``). The default fragmentation policy type is :ned:`BasicFragmentationPolicy`.
 
-:ned:`BasicFragmentationPolicy` has just one parameter, :par:`fragmentationThreshold`. Packets larger than this value are fragmented. The value includes the MAC header and MAC trailer.
+:ned:`BasicFragmentationPolicy` has just one parameter, :par:`fragmentationThreshold`. Frames larger than this value are fragmented. The value includes the MAC header and MAC trailer.
 The MAC overhead (header + trailer) is 28 bytes with DCF and 30 bytes with HCF.
 The default for this parameter is 1500 Bytes.
 
