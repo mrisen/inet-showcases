@@ -32,7 +32,7 @@ The Model
 
     - amúgy lesz egy base-line is amikor egyedül vannak és ahhoz tudjuk majd hasonlítani
 
-We'll examine how CTI can be simulated, see if two interfereng wireless wireless technology models can cooperate and if their cooperation is balanced. We'll run the simulation with both 802.11 and 802.15.4 models present. Also, to get a base-line of their performance, we'll run the simulation with just one of the models present. Then, we can compare the base-line performance of both models to their concurrent performance.
+We'll examine how CTI can be simulated, see if two interfereng wireless technology models can cooperate and if their cooperation is balanced. We'll run the example simulation with both 802.11 and 802.15.4 models present. Also, to get a base-line of their performance, we'll run the simulation with both models, with just one of them present at a time. Then, we can compare the base-line performance of both models to their concurrent performance.
 
 The example simulation features a Wifi (802.11) and a WPAN (802.15.4) network close to each other. All nodes communicate in the 2.4 GHz band. The signals
 for the two wireless protocols have different center frequencies and bandwidths,
@@ -137,6 +137,8 @@ transmission and ACK, first for the Wifi and then for the WPAN. The scale is lin
 .. figure:: seqchart.png
    :width: 100%
    :align: center
+
+**TODO: collision**
 
 .. TODO: specifically if you want to simulate cti -> so by default, the radio medium works out of the box -> for cti, it needs to have the same analog model and background noise as the radios of the protocols
 
