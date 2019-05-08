@@ -27,13 +27,13 @@ The example simulation for this showcase demonstrates 802.11 MAC-level fragmenta
 About 802.11 Fragmentation
 --------------------------
 
-Fragmentation in 802.11 reduces packet errors in certain situations, e.g. in a noisy environment. A larger packet has a higher chance of getting corrupted than a smaller one. To an extent, the error correcting mechanisms can correct some erroneous bits in a received frame, but above a certain bit error rate the error correcting mechanism becomes ineffective (below that threshold it corrects all bit errors).
+Fragmentation in 802.11 reduces packet errors in certain situations, e.g. in a noisy environment. A larger packet has a higher chance of getting corrupted than a smaller one. To an extent, the error correcting mechanisms can correct some erroneous bits in a received frame, but the error correcting mechanism becomes ineffective above a certain bit error rate (below that threshold it corrects all bit errors).
 
 .. TODO: actually, it has the same chance for corrupted bits. it is just less corrupted bits and it can be corrected.
 
 However, fragmentation increases overhead, and thus decreases throughput and channel utilization.
 The smaller packets resulting from fragmentation each have PHY and MAC headers, and each packet
-transmission might be followed by a contention period and ACK (depending on block ack policy and TXOP)
+transmission might be followed by a contention period and ACK (depending on block ack policy and whether TXOP is used).
 
 In INET, 802.11 fragmentation is controlled by fragmentation policies in :ned:`Ieee80211Mac`. By default, the :ned:`Dcf` and :ned:`Hcf` submodules of :ned:`Ieee80211Mac` contain a fragmentation policy submodule (at ``mac.dcf.originatorMacDataService.fragmentationPolicy`` and ``mac.hcf.originatorMacDataService.fragmentationPolicy``). The default fragmentation policy type is :ned:`BasicFragmentationPolicy`.
 
@@ -51,12 +51,12 @@ The maximum number of fragments for packet is 16.
 
 .. note:: :ned:`Ieee80211Mac` has a maximum transfer unit parameter (:par:`mtu`), which controls IP level
    fragmentation on the interface the MAC is part of, i.e. it tells the ``Ip`` module how to fragment packets going out on that interface. In contrast, the
-   fragmentation policy controls MAC level fragmentation. If the mtu is set lower than the fragmentation threshold, MAC level fragmentation doesn't take effect, as packets are already fragmented by the IP module to smaller pieces than the MAC fragmentation threshold when they arrive at the MAC.
+   fragmentation policy controls MAC level fragmentation. If the MTU is set lower than the fragmentation threshold, MAC level fragmentation doesn't take effect, as packets are already fragmented by the IP module to smaller pieces than the MAC fragmentation threshold when they arrive at the MAC.
 
 The Model
 ---------
 
-The example simulation contains two wireless nodes. One of them sends large UDP packets to the other via Wifi in a noisy environment. The simulation will be run with fragmentation turned off and with it turned on. We'll examine the effect of fragmentation on the Wifi performance. We'll also see how TXOP and block acknowledgements affect the performance.
+The example simulation contains two wireless nodes. One of them sends large UDP packets to the other via Wifi in a noisy environment. The simulation will be run with fragmentation turned off and with it turned on. We'll examine the effect of fragmentation on the Wifi performance. We'll also see how TXOP and block acknowledgments affect the performance.
 
 .. -keywords: progression, how to increase throughput, baseline without fragmentation, hcf enhancements like txop, and block ack
 .. turn on frag, switch to hcf, turn on block ack
@@ -69,7 +69,7 @@ The example simulation uses the following network:
 
 The network contains two :ned:`AdhocHost`'s named ``wifiHost1`` and ``wifiHost2``. It also contains an :ned:`Ipv4NetworkConfigurator`, an :ned:`IntegratedVisualizer`, and an :ned:`Ieee80211ScalarRadioMedium` module.
 
-Configuration keys for the UDP traffic, the radio and the radio medium are defined in the ``General`` configuration in :download:`omnetpp.ini <../omnetpp.ini>`.
+Configuration keys for the UDP traffic, the radio, and the radio medium are defined in the ``General`` configuration in :download:`omnetpp.ini <../omnetpp.ini>`.
 
 ``wifiHost1`` sends 2000-byte UDP packets to ``wifiHost1`` every 0.5 seconds, corresponding to about 32 Mbps of application-level traffic. The hosts operate in 802.11g mode with 54 Mbps data rate, so the channel is saturated.
 Here is the traffic configuration in :download:`omnetpp.ini <../omnetpp.ini>`:
@@ -88,7 +88,7 @@ We make the environment noisy by lowering the transmission power, so the relativ
 
 We want to demonstrate that fragmenting packets is advantageous in a noisy environment, so we set
 the transmission power accordingly. If there is too much noise, the fragmentation doesn't make
-any difference, as communication becomes impossible. If there is too little noise, the benefit of fragmentation might not be evident, it might even be disadvantageous.
+any difference, as communication becomes impossible. If there is too little noise, the benefit of fragmentation might not be evident; it might even be disadvantageous.
 
 .. ``V1.1`` The simulation will be run with four scenarios, each aiming to improve performance in the noisy channel. They are defined in the following configurations:
 
@@ -100,7 +100,7 @@ The simulation will be run with four scenarios. Each scenario aims to improve th
 
 - ``DCFnofrag``: The MAC uses DCF, and there is no fragmentation. It is expected that only a few of the large packets will be received successfully, throughput will be low.
 - ``DCFfrag``: The MAC uses DCF, and packets are fragmented. Due to the smaller fragments, packet error rate should decrease, and throughput should increase compared to the previous scenario.
-- ``HCFfrag``: The MAC uses HCF, packets are fragmented and trasmitted during a TXOP. Throughput should increase even more, as the sender node doesn't have to contend for channel access before transmitting each packet.
+- ``HCFfrag``: The MAC uses HCF, packets are fragmented and transmitted during a TXOP. Throughput should increase even more, as the sender node doesn't have to contend for channel access before transmitting each packet.
 - ``HCFfragblockack``: This is the same as the previous scenario, but block acknowledgments are enabled. Throughput should increase yet again, as the receiver node doesn't have to ACK each packet individually.
 
 The simulations will be run for 10 seconds, and we'll examine the number of packets received by the UDP application of ``wifiHost2``, and the application level throughput (the many small packets resulting from fragmentation doesn't affect the number of packets received by the UDP application, because they are defragmented by the MAC before they arrive at the UDP app).
@@ -177,7 +177,7 @@ Further Analysis
 
 We ran some parameter studies to examine the domain of effectiveness for fragmentation.
 We based the parameter studies on the above simulations. We examined the average application level throughput.
-(The noise level, transmission power, and other settings are the same as in the above configurations, unless otherwise noted.)
+(The noise level, transmission power, and other settings are the same as in the above configurations unless otherwise noted.)
 
 .. TODO: the noise and other settings stay the same
 
@@ -206,7 +206,7 @@ Next, the packet size was iterated, but on a wider range (from 100B to 6000B). T
    :width: 100%
    :align: center
 
-``DCFnofrag`` has an advantage when packets are small, since fragmenting small packets to 16 fragments entails a lot of overhead. Otherwise, the three curves where fragmentation is enabled are similar, and the difference in magnitude is attributed to the use of TXOP and TXOP + block ack.
+``DCFnofrag`` has an advantage when packets are small since fragmenting small packets to 16 fragments entails a lot of overhead. Otherwise, the three curves where fragmentation is enabled are similar, and the difference in magnitude is attributed to the use of TXOP and TXOP + block ack.
 
 Then, the transmission power was iterated to examine performance at different noise levels:
 
@@ -214,7 +214,7 @@ Then, the transmission power was iterated to examine performance at different no
    :width: 100%
    :align: center
 
-It is apparent that in this scenario, the domain in which fragmentation is actually useful is a very small range. Above a certain SNIR threshold (where relative noise becomes low enough), the fragmentation decreases performance, and below another threshold it doesn't make any difference. The range of SNIR difference when fragmentation is advantageous is about 50%. TODO: does that make sense?
+It is apparent that in this scenario, the domain in which fragmentation is useful is a very small range. Above a certain SNIR threshold (where relative noise becomes low enough), the fragmentation decreases performance, and below another threshold, it doesn't make any difference. The range of SNIR difference when fragmentation is advantageous is about 50%. TODO: does that make sense?
 
 .. note:: The parameter study configurations are defined in :download:`parameterstudy.ini <../parameterstudy.ini>`. The charts are available in ``ParameterStudy.anf``.
 
