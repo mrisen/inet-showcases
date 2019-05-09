@@ -373,7 +373,7 @@ Here are the performance results:
    :align: center
 
 In this particular scenario, the performance of both technologies is decreased,
-by about 5 percent, compared to the base performance.
+by about 10 percent, compared to the base performance.
 Note that the fractional number of packets is due to
 the averaging of the repetitions.
 
