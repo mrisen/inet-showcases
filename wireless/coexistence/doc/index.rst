@@ -85,8 +85,6 @@ The standard radio medium module in INET is :ned:`RadioMedium`. Wireless protoco
 For example, they might have different defaults for path loss type, background noise power, or analog signal representation type.
 However, setting these radio medium parameters are not required for the simulation to work. Most of the time, one could just use RadioMedium with its default parameters (with the exception of setting the analog signal representation type to dimensional when simulating CTI).
 
-**TODO what about radio modules? and corresponding radio modules? what functionality do they have ?**
-
 For our simulation, we'll use :ned:`RadioMedium`. Since we'll have two different protocols, the analog model and the background noise of the radio medium and the protocol specific radios need to match (they need to be dimensional).
 We'll set just these two parameters, and leave the others on default.
 
@@ -289,6 +287,18 @@ Results
    - because they use cca and backoff
 
 It is expected that the Wifi and the WPAN will be able to coexist cooperatively, because there will be contention between them. However, the coexistence will degrade the performance of both, because their protection mechanisms don't work cross-technology, and it is likely that they'll start transmitting during each others' tranmissions. Also, the duration of WPAN transmissions is long compared to a Wifi one, and the WPAN might steal some air time from the Wifi. Because the Wifi waits less before accessing the channel, it is expected that the Wifi will gain channel access most of the time. However, the WPAN sends frames much less frequently, so its performance might be mostly unaffected. The Wifi's transmission power is greater than the WPAN's, so concurrent WPAN transmissions might not corrupt the Wifi frames (but the other way around). TODO rewrite
+
+- there is contention
+- protection mechanisms dont work cross technology
+- longer wpan tx
+- the wifi waits less
+- the wpan sends frames less frequently
+- the wifi has greater tx power
+
+V1 Since both 802.11 and 802.15.4 use CCA and backoff, there will be contention between the Wifi and WPAN hosts, though the protection mechanisms of neither technology will be effective. The Wifi hosts wait less than the WPAN hosts before accessing the channel, and the Wifi transmissions are significantly shorter than the WPAN transmissions. The WPAN host sends frames less frequently than the Wifi host.
+Also, the Wifi has significantly greater tranmission power.
+
+V2 There is contention between the Wifi and WPAN hosts, so that it is expected that they will be able to coexist cooperatively. However, protection mechanisms don't work between the different technologies, so it is likely that they'll transmit into each other's transmissions, and the performance of both will be degraded. The Wifi host waits less than the WPAN host before accessing the channel, so it is expected that the Wifi host will gain channel access most of the time. WPAN transmissions are significantly longer than Wifi transmissions, thus, when the WPAN host does gain channel access, it'll take lots of air time from the Wifi host during the transmission of a single 802.15.4 frame. However, the WPAN host sends frames much less frequently than the Wifi host, so it can afford to wait for channel access, so that its performance might be mostly unaffected. Also, the Wifi host's transmission power is significantly greater than the WPAN host's, so that when the two transmit concurrently, the Wifi transmission might be correctly receivable, but the WPAN transmission might be corrupted.
 
 .. Why will performance be degraded?
 
