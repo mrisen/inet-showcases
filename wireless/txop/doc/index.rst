@@ -146,3 +146,7 @@ The thresholds are configured to get the following frame exchanges:
 
 Results
 -------
+
+.. figure:: elog1.png
+   :align: center
+   :width: 100%
