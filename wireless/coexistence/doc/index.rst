@@ -32,7 +32,7 @@ The Model
 
     - amúgy lesz egy base-line is amikor egyedül vannak és ahhoz tudjuk majd hasonlítani
 
-We'll examine how CTI can be simulated, see if two interfereng wireless technology models can cooperate and if their cooperation is balanced. We'll run the example simulation with both 802.11 and 802.15.4 models present. Also, to get a base-line of their performance, we'll run the simulation with both models, with just one of them present at a time. Then, we can compare the base-line performance of both models to their concurrent performance.
+We'll examine how CTI can be simulated, see if two interfereng wireless technology models can cooperate and if their cooperation is balanced. We'll run the example simulation with both 802.11 and 802.15.4 models present, and measure their performance. Also, to get a base-line of their performance, we'll run the simulation with both models, with just one of them present at a time. Then, we can compare the base-line performance of both models to their concurrent performance.
 
 The example simulation features a Wifi (802.11) and a WPAN (802.15.4) network close to each other. All nodes communicate in the 2.4 GHz band. The signals
 for the two wireless protocols have different center frequencies and bandwidths,
@@ -105,7 +105,7 @@ We'll set just these two parameters, and leave the others on default.
 
 .. #how do they coexist? whats needed for coexistence?
 
-In INET, different types of radio modules (e.g. 802.11 and 802.15.4) can detect each other's transmissions, but can only receive transmissions of their own type. Transmissions belonging to the other technology appear to receivers as noise. However, this noise can be strong enough to make a node defer from transmitting. As such, the fact the a radio treats transmissions it cannot receive as noise is the mechanism which allows any wireless protocol models to interfere with each other.
+In INET, different types of radio modules (e.g. 802.11 and 802.15.4) can detect each other's transmissions, but can only receive transmissions of their own type. Transmissions belonging to the other technology appear to receivers as noise. However, this noise can be strong enough to make a node defer from transmitting. As such, the fact that the a radio treats transmissions it cannot receive as noise is the mechanism which allows any wireless protocol models to interfere with each other.
 
 **TODO? this is the basis of coexistence...they just detect each other's transmissions as noise -> not sure its needed**
 
@@ -152,6 +152,8 @@ transmission and ACK, first for the Wifi and then for the WPAN. The scale is lin
 .. The radio medium modules for 802.11 and 802.15.4 are actually both :ned:`RadioMedium`, just with different parameterizations
 
 .. **TODO** However, ACKs are not protected.
+
+**TODO rewrite the beginning**
 
 Within a particular wireless technology, transmissions are protected, i.e. nodes receiving a data frame can infer how long the tranmission of the data frame and the subsequent ACK will be, from the data frame's MAC header. They assume the channel is busy for the duration of the DATA + SIFS + ACK (thus they don't start transmitting during the SIFS). However, this protection mechanism doesn't work with the transmissions of other technologies, since nodes cannot receive and make sense of the MAC header. They just detect some signal power in the channel that makes them defer for the duration of a backoff period (but this duration is independent of the actual duration of the ongoing transmission). Also, neither technology performs CCA before sending an ack. Thus they are susceptible for transmitting into each others' ACKs, which can lead to more retransmissions.
 
@@ -298,7 +300,7 @@ Results
 .. V1 Since both 802.11 and 802.15.4 use CCA and backoff, there will be contention between the Wifi and WPAN hosts, though the protection mechanisms of neither technology will be effective. The Wifi hosts wait less than the WPAN hosts before accessing the channel, and the Wifi transmissions are significantly shorter than the WPAN transmissions. The WPAN host sends frames less frequently than the Wifi host.
    Also, the Wifi has significantly greater tranmission power.
 
-There is contention between the Wifi and WPAN hosts, so that it is expected that they will be able to coexist cooperatively. However, protection mechanisms don't work between the different technologies, so it is likely that they'll transmit into each other's transmissions, and the performance of both will be degraded. The Wifi host waits less than the WPAN host before accessing the channel, so it is expected that the Wifi host will gain channel access most of the time. WPAN transmissions are significantly longer than Wifi transmissions, thus, when the WPAN host does gain channel access, it'll take lots of air time from the Wifi host during the transmission of a single 802.15.4 frame. However, the WPAN host sends frames much less frequently than the Wifi host, so it can afford to wait for channel access, so that its performance might be mostly unaffected. Also, the Wifi host's transmission power is significantly greater than the WPAN host's, so that when the two transmit concurrently, the Wifi transmission might be correctly receivable, but the WPAN transmission might be corrupted.
+There is contention between the Wifi and WPAN hosts, so that it is expected that they will be able to coexist cooperatively. However, protection mechanisms don't work between the two technologies, so it is likely that they'll transmit into each other's transmissions, and the performance of both will be degraded. The Wifi host waits less than the WPAN host before accessing the channel, so it is expected that the Wifi host will gain channel access most of the time. WPAN transmissions are significantly longer than Wifi transmissions, thus, when the WPAN host does gain channel access, it'll take lots of air time from the Wifi host during the transmission of a single 802.15.4 frame. However, the WPAN host sends frames much less frequently than the Wifi host, so it can afford to wait for channel access, so that its performance might be mostly unaffected. Also, the Wifi host's transmission power is significantly greater than the WPAN host's, so that when the two transmit concurrently, the Wifi transmission might be correctly receivable, but the WPAN transmission might be corrupted.
 
 .. Why will performance be degraded?
 
