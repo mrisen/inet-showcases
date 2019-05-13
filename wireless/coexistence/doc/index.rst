@@ -105,9 +105,9 @@ We'll set just these two parameters, and leave the others on default.
 
 .. #how do they coexist? whats needed for coexistence?
 
-In INET, different types of radio modules (e.g. 802.11 and 802.15.4) can detect each other's transmissions, but can only receive transmissions of their own type. Transmissions belonging to the other technology appear to receivers as noise. However, this noise can be strong enough to make a node defer from transmitting. As such, the fact that the a radio treats transmissions it cannot receive as noise is the mechanism which allows any wireless protocol models to interfere with each other.
+In INET, different types of radio modules (e.g. 802.11 and 802.15.4) can detect each other's transmissions, but can only receive transmissions of their own type. Transmissions belonging to the other technology appear to receivers as noise. However, this noise can be strong enough to make a node defer from transmitting. As such, the fact that a radio treats transmissions it cannot receive as noise is the mechanism which allows any wireless protocol models to interfere with each other.
 
-**TODO? this is the basis of coexistence...they just detect each other's transmissions as noise -> not sure its needed**
+.. **TODO? this is the basis of coexistence...they just detect each other's transmissions as noise -> not sure its needed**
 
 In reality and in INET, both 802.11 and 802.15.4 employ the Clear Channel Assessment (CCA) technique (they listen to the channel to make sure there are no ongoing transmissions before starting to transmit), and defer from transmitting for the duration of a backoff period when the channel is busy. The use of CCA and backoff enables the two technologies to coexist cooperatively (both of them can communicate successfully), as opposed to destructively (they ruin each other's communication). In our case, the nodes of the different technologies sense when the other kind is transmitting, and tend not to interrupt each other.
 
@@ -136,7 +136,7 @@ transmission and ACK, first for the Wifi and then for the WPAN. The scale is lin
    :width: 100%
    :align: center
 
-**TODO: collision**
+.. **TODO: collision**
 
 .. TODO: specifically if you want to simulate cti -> so by default, the radio medium works out of the box -> for cti, it needs to have the same analog model and background noise as the radios of the protocols
 
@@ -153,9 +153,9 @@ transmission and ACK, first for the Wifi and then for the WPAN. The scale is lin
 
 .. **TODO** However, ACKs are not protected.
 
-**TODO rewrite the beginning**
+.. **TODO rewrite the beginning**
 
-Within a particular wireless technology, transmissions are protected, i.e. nodes receiving a data frame can infer how long the tranmission of the data frame and the subsequent ACK will be, from the data frame's MAC header. They assume the channel is busy for the duration of the DATA + SIFS + ACK (thus they don't start transmitting during the SIFS). However, this protection mechanism doesn't work with the transmissions of other technologies, since nodes cannot receive and make sense of the MAC header. They just detect some signal power in the channel that makes them defer for the duration of a backoff period (but this duration is independent of the actual duration of the ongoing transmission). Also, neither technology performs CCA before sending an ack. Thus they are susceptible for transmitting into each others' ACKs, which can lead to more retransmissions.
+Transmissions are protected within a particular wireless technology, i.e. nodes receiving a data frame can infer how long the tranmission of the data frame and the subsequent ACK will be, from the data frame's MAC header. They assume the channel is busy for the duration of the DATA + SIFS + ACK (thus they don't start transmitting during the SIFS). However, this protection mechanism doesn't work with the transmissions of other technologies, since nodes cannot receive and make sense of the MAC header. They just detect some signal power in the channel that makes them defer for the duration of a backoff period (but this duration is independent of the actual duration of the ongoing transmission). Also, neither technology performs CCA before sending an ack. Thus they are susceptible for transmitting into each others' ACKs, which can lead to more retransmissions.
 
 .. **TODO** Hidden node protection doesn't work
 
@@ -249,14 +249,16 @@ The latter two configurations extend the ``Coexistence`` configuration, and disa
 
 In all configurations, the simulations are run for five seconds, and repeated eight times.
 
-TODO: the traffic configuration is...the wifi saturates the channel, the wpan occasianally has frames to transmit
-we'll see if it can do that while the wifi is constantly transmitting, and if the wifi can keep transmitting...
-we suspect that they both will be able to do their thing because of the cooperative coexistence
+.. TODO: the traffic configuration is...the wifi saturates the channel, the wpan occasianally has frames to transmit
+   we'll see if it can do that while the wifi is constantly transmitting, and if the wifi can keep transmitting...
+   we suspect that they both will be able to do their thing because of the cooperative coexistence
+
+**TODO the Wifi saturates the channel -> is that needed?**
 
 Results
 -------
 
-  **EXPECTATIONS SECTION**
+.. **EXPECTATIONS SECTION**
 
   (without QoS features, like shorter SIFS and TXOP). **TODO**
 
@@ -269,6 +271,12 @@ Results
   The WPAN might be wasting energy for unsuccessful transmissions.
   The Wifi might overpower the WPAN, so the Wifi transmissions are received correctly even when there
   is interference from the WPAN.
+
+  - DONE It is expected that there will be collisions between the different technologies, due to the different timing parameters.
+  - DONE Regarding channel access, the Wifi might be more dominant, not giving the chance for WPAN to gain the channel.
+  - DONE As such, with the default parameters, the Wifi might starve the WPAN.
+  - The WPAN might be wasting energy for unsuccessful transmissions.
+  - DONE The Wifi might overpower the WPAN, so the Wifi transmissions are received correctly even when there is interference from the WPAN.
 
   **TODO: expectations here (?)**
 
@@ -300,7 +308,9 @@ Results
 .. V1 Since both 802.11 and 802.15.4 use CCA and backoff, there will be contention between the Wifi and WPAN hosts, though the protection mechanisms of neither technology will be effective. The Wifi hosts wait less than the WPAN hosts before accessing the channel, and the Wifi transmissions are significantly shorter than the WPAN transmissions. The WPAN host sends frames less frequently than the Wifi host.
    Also, the Wifi has significantly greater tranmission power.
 
-There is contention between the Wifi and WPAN hosts, so that it is expected that they will be able to coexist cooperatively. However, protection mechanisms don't work between the two technologies, so it is likely that they'll transmit into each other's transmissions, and the performance of both will be degraded. The Wifi host waits less than the WPAN host before accessing the channel, so it is expected that the Wifi host will gain channel access most of the time. WPAN transmissions are significantly longer than Wifi transmissions, thus, when the WPAN host does gain channel access, it'll take lots of air time from the Wifi host during the transmission of a single 802.15.4 frame. However, the WPAN host sends frames much less frequently than the Wifi host, so it can afford to wait for channel access, so that its performance might be mostly unaffected. Also, the Wifi host's transmission power is significantly greater than the WPAN host's, so that when the two transmit concurrently, the Wifi transmission might be correctly receivable, but the WPAN transmission might be corrupted.
+There is contention between the Wifi and WPAN hosts, so that it is expected that they will be able to coexist cooperatively. However, protection mechanisms don't work between the two technologies, so it is likely that they'll transmit into each other's transmissions, and the performance of both will be degraded. The Wifi host waits less than the WPAN host before accessing the channel, so it is expected that the Wifi host will gain channel access most of the time. The Wifi might even starve the WPAN.
+
+WPAN transmissions are significantly longer than Wifi transmissions, thus, when the WPAN host does gain channel access, it'll take lots of air time from the Wifi host during the transmission of a single 802.15.4 frame. However, the WPAN host sends frames much less frequently than the Wifi host, so it can afford to wait for channel access, so that its performance might be mostly unaffected. Also, the Wifi host's transmission power is significantly greater than the WPAN host's, so that when the two transmit concurrently, the Wifi transmission might be correctly receivable, but the WPAN transmission might be corrupted.
 
 .. Why will performance be degraded?
 
@@ -351,9 +361,9 @@ data link activity arrow, because ``wpanHost2`` already received that packet,
 it just didn't ACK it successfully yet. Thus, it sends an ACK, which is successfully
 received this time.
 
-**TODO is this still correct?**
+.. **TODO is this still correct?**
 
-**at the first wpan frame, the wifi starts to transmit, then the WPAN, and they transmit together. the first wifi frame is incorrectly received, but the subsequent ones are correctly received, while the wpan is transmitting. then, the wpan stops transmitting during a wifi ack, and the wifi ack is incorrectly received. the wpan frame is correctly received. it also happens with the second wpan frame -> is this ok?**
+   **at the first wpan frame, the wifi starts to transmit, then the WPAN, and they transmit together. the first wifi frame is incorrectly received, but the subsequent ones are correctly received, while the wpan is transmitting. then, the wpan stops transmitting during a wifi ack, and the wifi ack is incorrectly received. the wpan frame is correctly received. it also happens with the second wpan frame -> is this ok?**
 
 ..  The topic of spectral coexistence is complex,
     the results in this showcase are for just this particular scenario.
