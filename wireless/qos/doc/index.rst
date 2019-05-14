@@ -11,6 +11,8 @@ to different priority categories, with higher priority packets being more
 likely to be sent before lower priority packets. This feature is useful for
 applications which require a certain service quality, e.g. low delay, such as
 VoIP or live video streaming does.
+This feature is useful for application requiring low delay, such as VoIP or
+live video streaming.
 
 This showcase demonstrates the QoS features of the 802.11 MAC model in INET,
 with example simulations.
@@ -21,10 +23,10 @@ with example simulations.
 About 802.11 QoS
 ----------------
 
-The MAC uses the Enhanced distributed channel access (EDCA) technique -
+In 802.11, the MAC uses the Enhanced distributed channel access (EDCA) technique -
 which is part of the Hybrid coordination function (HCF) - to implement
 the QoS features, instead of the Distributed coordination function (DCF).
-Packets are classified into four access categories, each with a different
+In EDCA, packets are classified into four access categories, each category having a different
 priority. The categories from lowest to highest priority are the following:
 
 - Background
@@ -66,10 +68,12 @@ The Model
 
 The showcase contains an example simulation featuring a wireless network,
 with two hosts communicating through an access point. One of the hosts
-sends data to the other via UDP, using four UDP applications, each
-corresponding to an access category. The simulation will be run with
+sends data to the other via UDP, using four UDP streams, each
+corresponding to an access category. We'll run the simulation with
 QoS disabled, then with QoS enabled. Traffic is configured with realistic bitrates,
 e.g. the voice data rate is less than the video data rate. **TODO rewrite**
+Traffic is configured with realistic bitrates, i.e. high background and best effort,
+lower video, and even lower voice traffic.
 
 After running the simulations, we analyze the results. We take a look at the following metrics:
 
@@ -80,8 +84,8 @@ After running the simulations, we analyze the results. We take a look at the fol
 These metrics for each priority category can be analyzed and compared, examining how QoS affects
 and improves them.
 
-It is expected that there will be no difference between the access categories in the non-QoS cases,
-because the MAC doesn't differentiate between them. Also, there should be less delay and higher
+It is expected that there will be no difference between the access categories in the non-QoS case,
+because the MAC doesn't differentiate between the categories. Also, there should be less delay and higher
 throughput for the higher priority packets in the QoS cases.
 
 The configuration
@@ -94,9 +98,15 @@ The example simulation uses the following network:
    :align: center
 
 It contains two :ned:`WirelessHost`'s, named ``client`` and ``server``,
-and an :ned:`AccessPoint`. It also contains an :ned:`Ieee80211ScalarRadioMedium`,
-an :ned:`Ipv4NetworkConfigurator` and an :ned:`IntegratedVisualizer` module.
+and an :ned:`AccessPoint`.
 
+.. It also contains an :ned:`Ieee80211ScalarRadioMedium`,
+   an :ned:`Ipv4NetworkConfigurator` and an :ned:`IntegratedVisualizer` module.
+
+The simulations for the two cases are defined in the following configurations: ``NonQos`` and ``Qos``.
+
+The physical layer and traffic settings are defined in the ``NonQos`` configuration.
+The hosts are configured to use a PHY data rate of 54 Mbps.
 The client host is configured to send UDP packets to the server host.
 Each UDP application sends packets to a different UDP port, corresponding to the access categories.
 Here is the port configuration in :download:`omnetpp.ini <../omnetpp.ini>`:
@@ -123,131 +133,134 @@ on the different ports:
       :end-at: sendInterval
       :language: ini
 
-Traffic is set up realistically, e.g. the voice application sends
-less data than the video application. The traffic
-configuration is the following:
+.. Traffic is set up realistically, e.g. the voice application sends
+   less data than the video application.
+
+The traffic configuration is the following:
 
 .. literalinclude:: ../omnetpp.ini
    :start-at: background -
    :end-at: client.app[3].sendInterval =
    :language: ini
 
-**TODO**
+The ``Qos`` configuration extends the ``NonQos`` configuration. It enables QoS, and sets the classifier type:
 
-   The simulations for the four cases are in the following configurations:
-
-   - ``EqualBitrateNonQos``
-   - ``EqualBitrateQos``
-   - ``RealisticBitrateNonQos``
-   - ``RealisticBitrateQos``
+.. literalinclude:: ../omnetpp.ini
+   :start-at: Config Qos
+   :end-at: QosClassifier
+   :language: ini
 
 Results
 -------
 
-  In the non-QoS case, the end-to-end delay vector data points for the four access categories run together.
-  There is no difference between the access categories, all of them are treated the same by the MAC.
-  The curve is straight and steep at the beginning, due to the queue being filled up. When it is
-  already filled up, the curve starts to fluctuate. The delay is around 150 ms. There is more traffic
-  generated by the UDP applications than the channel can carry, thus the queue stays filled up,
-  and packets are dropped. Note that dropped packets are not indicated on the charts,
-  as we're plotting UDP packets received by ``server``.
+In the non-QoS case, the end-to-end delay vector data points for the four access categories run together.
+There is no difference between the access categories, all of them are treated the same by the MAC.
+The curve is straight and steep at the beginning, due to the queue being filled up. When it is
+already filled up, the curve starts to fluctuate. The delay is around 150 ms. There is more traffic
+generated by the UDP applications than the channel can carry, thus the queue stays filled up,
+and packets are dropped. Note that dropped packets are not indicated on the charts,
+as we're plotting UDP packets received by ``server``.
 
-  In the QoS case, as expected, the higher priority access categories (video, voice) have lower
-  delay, because they are often sent before the lower priority ones. (they are more likely to be
-  sent first.)
+In the QoS case, as expected, the higher priority access categories (video, voice) have lower
+delay, because they are often sent before the lower priority ones. (they are more likely to be
+sent first.)
 
-    The delay of the voice stream is about the same as the delay in the non-QoS case,
-    around 150 ms. Here is the same chart zoomed in on the video and voice data points:
+  The delay of the voice stream is about the same as the delay in the non-QoS case,
+  around 150 ms. Here is the same chart zoomed in on the video and voice data points:
 
     .. figure:: equalnonqos_zoomed.png
        :width: 100%
 
-   The best effort and background packets barely get sent at the beginning. When some of them do get sent,
-   they have been waiting for seconds in the queue. The traffic generation stops at
-   around 6 seconds. After the video and voice priority packets remaining in the queues
-   are transmitted, the background and best effort packets are sent as well.
+The best effort and background packets barely get sent at the beginning. When some of them do get sent,
+they have been waiting for seconds in the queue. The traffic generation stops at
+around 6 seconds. After the video and voice priority packets remaining in the queues
+are transmitted, the background and best effort packets are sent as well.
 
-   The data points for the background and best effort categories follow a linear trend,
-   as the first 100 packets are queued in the beginning and stay in the queue, not getting
-   the chance to be sent. So basically, the creation time of all the packets in the queue
-   is about the same. Rarely it happens that a
-   packet from the lower priority queue gets sent, so another one - created at a later time -
-   can take its place in the queue. The last of the earliest packets get sent at
-   around 7 seconds (after waiting in the queue for 6). From now on, there is a drop in the delay,
-   because these packets got to the queue later.
+The data points for the background and best effort categories follow a linear trend,
+as the first 100 packets are queued in the beginning and stay in the queue, not getting
+the chance to be sent. So basically, the creation time of all the packets in the queue
+is about the same. Rarely it happens that a
+packet from the lower priority queue gets sent, so another one - created at a later time -
+can take its place in the queue. The last of the earliest packets get sent at
+around 7 seconds (after waiting in the queue for 6). From now on, there is a drop in the delay,
+because these packets got to the queue later.
 
-   Next, we look at the instantaneous packet delay variation (jitter):
+Next, we look at the instantaneous packet delay variation (jitter):
 
-   .. figure:: jitter_e_nq.png
-      :width: 100%
+.. figure:: jitter_e_nq.png
+   :width: 100%
 
-   .. figure:: jitter_e_q.png
-      :width: 100%
+.. figure:: jitter_e_q.png
+   :width: 100%
 
-   The jitter data points are scattered with the same pattern for all four traffic
-   categories in the non-QoS case. In the QoS case, the jitter is low for the video
-   and voice categories (lowest for voice), and high for background and best effort. Actually, at the
-   beginning of the simulation, there are very few background and best effort packets
-   sent, thus there are very few data points. After the video and voice traffic stops,
-   the background and best effort categories have the same low jitter as the high
-   priority categories had.
+The jitter data points are scattered with the same pattern for all four traffic
+categories in the non-QoS case. In the QoS case, the jitter is low for the video
+and voice categories (lowest for voice), and high for background and best effort. Actually, at the
+beginning of the simulation, there are very few background and best effort packets
+sent, thus there are very few data points. After the video and voice traffic stops,
+the background and best effort categories have the same low jitter as the high
+priority categories had.
 
-   The jitter for all access categories in the non-QoS case, and for the video and voice in the QoS
-   case are about the same, around 1 ms.
-   In the QoS case, the decreasing jitter of best effort at the end is because of the decreasing delay,
-   as shown on the delay chart.
+The jitter for all access categories in the non-QoS case, and for the video and voice in the QoS
+case are about the same, around 1 ms.
+In the QoS case, the decreasing jitter of best effort at the end is because of the decreasing delay,
+as shown on the delay chart.
 
-   Next, let's take a look at the application level throughput:
+Next, let's take a look at the application level throughput:
 
-   .. figure:: throughput_e_nq.png
-      :width: 100%
+.. figure:: throughput_e_nq.png
+   :width: 100%
 
-   .. figure:: throughput_e_q.png
-      :width: 100%
+.. figure:: throughput_e_q.png
+   :width: 100%
 
-   As expected, the throughput in the non-QoS case is the same for all four access categories,
-   as they are treated the same by the MAC. In the QoS case, the video and voice categories own the channel
-   most of the time and thus have high throughput, compared to the low throughput of background
-   and best effort.
+As expected, the throughput in the non-QoS case is the same for all four access categories,
+as they are treated the same by the MAC. In the QoS case, the video and voice categories own the channel
+most of the time and thus have high throughput, compared to the low throughput of background
+and best effort.
 
-    The MAC prioritizes the video and voice categories above the others. For example, by default,
-    the background and best effort categories don't have TXOP, they can send just one frame before
-    having to contend for the channel. The video and voice categories have a max TXOP duration of
-    3 and 1.5 ms, respectively.
+The MAC prioritizes the video and voice categories above the others. For example, by default,
+the background and best effort categories don't have TXOP, they can send just one frame before
+having to contend for the channel. The video and voice categories have a max TXOP duration of
+3 and 1.5 ms, respectively.
 
-   After the traffic stops and the remaining high priority packets are sent,
-   the packets left in the lower priority queues can be transmitted.
+After the traffic stops and the remaining high priority packets are sent,
+the packets left in the lower priority queues can be transmitted.
 
-   .. note:: The traffic passes through an access point, so the throughput is lower than it would be if the hosts
-          were communicating directly.
+.. note:: The traffic passes through an access point, so the throughput is lower than it would be if the hosts were communicating directly.
 
 Realistic bitrate traffic
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now, let's see the same charts as in the previous section for the realistic traffic scenario.
-Here are the results for both the non-QoS and QoS cases:
-
-.. figure:: delay_r_nq.png
-   :width: 100%
+.. Now, let's see the same charts as in the previous section for the realistic traffic scenario.
+   Here are the results for both the non-QoS and QoS cases:
 
 .. figure:: delay_nonqos.png
    :width: 100%
    :align: center
 
-.. figure:: delay_r_q.png
-   :width: 100%
+In the non-QoS case, the end-to-end delay vector data points for the four access categories run together.
+There is no difference between the access categories, all of them are treated the same by the MAC. The MAC uses one queue for all packets.
+The curve is straight and steep at the beginning, due to the queue being filled up. When it is
+already filled up, the curve starts to fluctuate. The delay is around 150 ms. The UDP applications generate more traffic than the channel can carry, thus the queue stays filled up,
+and packets are dropped. Note that dropped packets are not indicated on the charts,
+as we're plotting UDP packets received by ``server``.
 
 .. figure:: delay_qos.png
    :width: 100%
    :align: center
 
-The chart for the non-QoS case is very similar to the one for the equal bitrate traffic non-QoS case.
-The traffic for the different traffic categories are not differentiated.
+In the QoS case, as expected, the higher priority access categories (video, voice) have lower
+delay, because they are often sent before the lower priority ones. (they are more likely to be
+sent first.)
+
+.. The chart for the non-QoS case is very similar to the one for the equal bitrate traffic non-QoS case.
+   The traffic for the different traffic categories are not differentiated.
 
 In the QoS case, the delay for the high priority access categories (voice, video) is low,
 but there are more lower priority packets sent than in the equal bitrate case.
 The reason is that the high priority traffic has lower bitrate than in the equal bitrate case,
-and doesn't saturate the channel. There is more bandwidth available for the lower priority packets.
+and doesn't saturate the channel. There is more bandwidth available for the lower priority packets. **TODO rewrite**
 
 The best effort category is prioritized over the background priority, the best effort has lower delay.
 At around 1.3 seconds, the best effort queue runs out of the earliest packets, and the delay starts to
