@@ -280,6 +280,19 @@ Now lets take a look at jitter:
 .. figure:: jitter_qos.png
    :width: 100%
 
+The jitter data points are scattered with the same pattern for all four traffic
+categories in the non-QoS case. In the QoS case, the jitter is low for the video
+and voice categories (lowest for voice), and high for background and best effort. Actually, at the
+beginning of the simulation, there are very few background and best effort packets
+sent, thus there are very few data points. After the video and voice traffic stops,
+the background and best effort categories have the same low jitter as the high
+priority categories had.
+
+The jitter for all access categories in the non-QoS case, and for the video and voice in the QoS
+case are about the same, around 1 ms.
+In the QoS case, the decreasing jitter of best effort at the end is because of the decreasing delay,
+as shown on the delay chart.
+
 As with delay, the jitter is similar to the equal bitrate non-QoS case. In the QoS case,
 there are more data points for the low priority packets. Still the there is more jitter
 for the low priority packets at the end of the simulation, than there was for the high priority ones.
@@ -306,6 +319,11 @@ Let's see the throughput:
 
 .. figure:: throughput_nonqos.png
    :width: 100%
+
+.. figure:: throughput_nonqos_.png
+   :width: 100%
+
+**TODO which throughput?**
 
 .. figure:: throughput_r_q.png
    :width: 100%
