@@ -265,6 +265,7 @@ and doesn't saturate the channel. There is more bandwidth available for the lowe
 The best effort category is prioritized over the background priority, the best effort has lower delay.
 At around 1.3 seconds, the best effort queue runs out of the earliest packets, and the delay starts to
 fluctuate more. The same happens to the background queue at around 2.5 seconds.
+**TODO why? -> it sends packets more sporadically -> it takes more time for the initial packets in the queue to get sent**
 
 Now lets take a look at jitter:
 
@@ -274,19 +275,27 @@ Now lets take a look at jitter:
 .. figure:: jitter_nonqos.png
    :width: 100%
 
+.. figure:: jitter_nonqos_.png
+   :width: 100%
+
 .. figure:: jitter_r_q.png
    :width: 100%
 
 .. figure:: jitter_qos.png
    :width: 100%
 
+.. figure:: jitter_qos_.png
+   :width: 100%
+
 The jitter data points are scattered with the same pattern for all four traffic
 categories in the non-QoS case. In the QoS case, the jitter is low for the video
-and voice categories (lowest for voice), and high for background and best effort. Actually, at the
-beginning of the simulation, there are very few background and best effort packets
-sent, thus there are very few data points. After the video and voice traffic stops,
-the background and best effort categories have the same low jitter as the high
-priority categories had.
+and voice categories (lowest for voice), and high for background and best effort.
+
+.. Actually, at the
+   beginning of the simulation, there are very few background and best effort packets
+   sent, thus there are very few data points. After the video and voice traffic stops,
+   the background and best effort categories have the same low jitter as the high
+   priority categories had.
 
 The jitter for all access categories in the non-QoS case, and for the video and voice in the QoS
 case are about the same, around 1 ms.
