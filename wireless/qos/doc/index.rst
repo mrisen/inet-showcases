@@ -61,7 +61,7 @@ the packet is classified into that category.
 
 .. note:: QoS needs to be enabled in all devices that partake in the communication, because
           otherwise some of them wouldn't be able to make sense of some of the features that the
-          :ned:`Hcf` might use, such as block acknowledgement requests, TXOP, aggregate frames, etc.
+          :ned:`Hcf` might use, such as block acknowledgement requests, aggregate frames, etc.
 
 The Model
 ---------
@@ -206,28 +206,28 @@ case are about the same, around 1 ms.
 In the QoS case, the decreasing jitter of best effort at the end is because of the decreasing delay,
 as shown on the delay chart.
 
-Next, let's take a look at the application level throughput:
+.. Next, let's take a look at the application level throughput:
 
-.. figure:: throughput_e_nq.png
-   :width: 100%
+   .. figure:: throughput_e_nq.png
+      :width: 100%
 
-.. figure:: throughput_e_q.png
-   :width: 100%
+   .. figure:: throughput_e_q.png
+      :width: 100%
 
-As expected, the throughput in the non-QoS case is the same for all four access categories,
-as they are treated the same by the MAC. In the QoS case, the video and voice categories own the channel
-most of the time and thus have high throughput, compared to the low throughput of background
-and best effort.
+   As expected, the throughput in the non-QoS case is the same for all four access categories,
+   as they are treated the same by the MAC. In the QoS case, the video and voice categories own the channel
+   most of the time and thus have high throughput, compared to the low throughput of background
+   and best effort.
 
-The MAC prioritizes the video and voice categories above the others. For example, by default,
-the background and best effort categories don't have TXOP, they can send just one frame before
-having to contend for the channel. The video and voice categories have a max TXOP duration of
-3 and 1.5 ms, respectively.
+   The MAC prioritizes the video and voice categories above the others. For example, by default,
+   the background and best effort categories don't have TXOP, they can send just one frame before
+   having to contend for the channel. The video and voice categories have a max TXOP duration of
+   3 and 1.5 ms, respectively.
 
-After the traffic stops and the remaining high priority packets are sent,
-the packets left in the lower priority queues can be transmitted.
+   After the traffic stops and the remaining high priority packets are sent,
+   the packets left in the lower priority queues can be transmitted.
 
-.. note:: The traffic passes through an access point, so the throughput is lower than it would be if the hosts were communicating directly.
+   .. note:: The traffic passes through an access point, so the throughput is lower than it would be if the hosts were communicating directly.
 
 Realistic bitrate traffic
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -257,15 +257,21 @@ sent first.)
 .. The chart for the non-QoS case is very similar to the one for the equal bitrate traffic non-QoS case.
    The traffic for the different traffic categories are not differentiated.
 
-In the QoS case, the delay for the high priority access categories (voice, video) is low,
-but there are more lower priority packets sent than in the equal bitrate case.
-The reason is that the high priority traffic has lower bitrate than in the equal bitrate case,
-and doesn't saturate the channel. There is more bandwidth available for the lower priority packets. **TODO rewrite**
+.. In the QoS case, the delay for the high priority access categories (voice, video) is low,
+   but there are more lower priority packets sent than in the equal bitrate case.
+   The reason is that the high priority traffic has lower bitrate than in the equal bitrate case,
+   and doesn't saturate the channel. There is more bandwidth available for the lower priority packets. **TODO rewrite**
 
 The best effort category is prioritized over the background priority, the best effort has lower delay.
 At around 1.3 seconds, the best effort queue runs out of the earliest packets, and the delay starts to
-fluctuate more. The same happens to the background queue at around 2.5 seconds.
-**TODO why? -> it sends packets more sporadically -> it takes more time for the initial packets in the queue to get sent**
+fluctuate. The same thing happens to the background queue at around 2.5 seconds.
+It takes more time for the background priority curve to start to fluctuate, because the background frames are sent more sporadically, so that it takes more time for the early packets in the queue to be sent.
+
+.. **TODO why? -> it sends packets more sporadically -> it takes more time for the initial packets in the queue to get sent**
+
+.. The video and voice priority traffic have lower bitrate than the best effort and background traffic. The higher priority traffic is sent first, but since it doesn't saturate the channel, there is lower priority traffic as well. The linear part of the curve at the beginning for the best effort and background categories
+
+.. The linearly increasing part at the beginning of the curve is shorter for the best effort category than for the background, because the best effort frames are sent more freuently and the best effort queue runs out of early packets faster (i.e. packets that got into the queue when it was filling up for the first time). After there are no more early packets left in the queues, the best effort and background curves start to fluctuate. **is this needed?**
 
 Now lets take a look at jitter:
 
