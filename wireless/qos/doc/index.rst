@@ -366,6 +366,8 @@ The bitrate of video and voice is lower than the others, but the others generate
 to saturate the channel on their own. Thus the video and voice categories still need QoS to
 sustain nominal throughput.
 
+**TODO explain**
+
 Sources: :download:`omnetpp.ini <../omnetpp.ini>`, :download:`QosShowcase.ned <../QosShowcase.ned>`
 
 Discussion
