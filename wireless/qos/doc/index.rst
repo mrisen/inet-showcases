@@ -8,11 +8,13 @@ Goals
 
 The IEEE 802.11 MAC has Quality of service (QoS) features, i.e. packets can belong
 to different priority categories, with higher priority packets being more
-likely to be sent before lower priority packets. This feature is useful for
-applications which require a certain service quality, e.g. low delay, such as
-VoIP or live video streaming does.
-This feature is useful for application requiring low delay, such as VoIP or
+likely to be sent before lower priority packets.
+This feature is useful for applications requiring low delay, such as VoIP or
 live video streaming.
+
+.. This feature is useful for
+   applications which require a certain service quality, e.g. low delay, such as
+   VoIP or live video streaming does.
 
 This showcase demonstrates the QoS features of the 802.11 MAC model in INET,
 with example simulations.
@@ -45,7 +47,7 @@ parameter to ``true`` in :ned:`Ieee80211Mac`. When this parameter is set to ``tr
 the MAC uses the :ned:`Hcf` submodule, instead of :ned:`Dcf`.
 
 Also, a classifier module is required to sort packets into access categories.
-The classifier is an optional submodule of :ned:`Ieee80211Interface`
+The classifier is an optional submodule of :ned:`Ieee80211Interface`.
 The example simulation uses the :ned:`QosClassifier` module for this purpose.
 :ned:`QosClassifier` classifies packets according to their source and
 destination ports. The port-access category mapping is according to the classifier's parameters.
@@ -70,23 +72,28 @@ The showcase contains an example simulation featuring a wireless network,
 with two hosts communicating through an access point. One of the hosts
 sends data to the other via UDP, using four UDP streams, each
 corresponding to an access category. We'll run the simulation with
-QoS disabled, then with QoS enabled. Traffic is configured with realistic bitrates,
-e.g. the voice data rate is less than the video data rate. **TODO rewrite**
+QoS disabled, then with QoS enabled.
 Traffic is configured with realistic bitrates, i.e. high background and best effort,
 lower video, and even lower voice traffic.
+
+.. Traffic is configured with realistic bitrates,
+   e.g. the voice data rate is less than the video data rate. **TODO rewrite**
 
 After running the simulations, we analyze the results. We take a look at the following metrics:
 
 - End-to-end delay
-- Instantaneous packet delay variation: the difference between the end-to-end delay of consecutive packets, effectively jitter
+- Instantaneous packet delay variation: the difference between the end-to-end delay of consecutive packets; effectively jitter
 - Application level throughput
 
-These metrics for each priority category can be analyzed and compared, examining how QoS affects
-and improves them.
+These metrics for each priority category can be analyzed and compared, examining how QoS affects them.
+
+.. and improves
 
 It is expected that there will be no difference between the access categories in the non-QoS case,
 because the MAC doesn't differentiate between the categories. Also, there should be less delay and higher
 throughput for the higher priority packets in the QoS cases.
+
+**TODO rewrite**
 
 The configuration
 ~~~~~~~~~~~~~~~~~
@@ -97,7 +104,7 @@ The example simulation uses the following network:
    :width: 100%
    :align: center
 
-It contains two :ned:`WirelessHost`'s, named ``client`` and ``server``,
+It contains two :ned:`WirelessHost`'s named ``client`` and ``server``,
 and an :ned:`AccessPoint`.
 
 .. It also contains an :ned:`Ieee80211ScalarRadioMedium`,
